@@ -222,15 +222,15 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
     {
         $this->twitter->setTimeouts(60, 30);
         // Image source https://www.flickr.com/photos/titrans/8548825587/
-        $file_path = __DIR__ . '/kitten.jpg';
+        $file_path = __DIR__.'/kitten.jpg';
         $result = $this->twitter->upload('media/upload', ['media' => $file_path]);
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
         $this->assertObjectHasAttribute('media_id_string', $result);
-        $parameters = ['status' => 'Hello World ' . time(), 'media_ids' => $result->media_id_string];
+        $parameters = ['status' => 'Hello World '.time(), 'media_ids' => $result->media_id_string];
         $result = $this->twitter->post('statuses/update', $parameters);
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
         if ($this->twitter->getLastHttpCode() == 200) {
-            $result = $this->twitter->post('statuses/destroy/' . $result->id_str);
+            $result = $this->twitter->post('statuses/destroy/'.$result->id_str);
         }
         return $result;
     }
@@ -238,7 +238,7 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
     public function testPostStatusUpdateWithInvalidMediaThrowsException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $file_path = __DIR__ . '/12345678900987654321.jpg';
+        $file_path = __DIR__.'/12345678900987654321.jpg';
         $this->assertFalse(\is_readable($file_path));
         $result = $this->twitter->upload('media/upload', ['media' => $file_path]);
     }
@@ -247,22 +247,22 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
     {
         $this->twitter->setTimeouts(60, 30);
         // Video source http://www.sample-videos.com/
-        $file_path = __DIR__ . '/video.mp4';
+        $file_path = __DIR__.'/video.mp4';
         $result = $this->twitter->upload('media/upload', ['media' => $file_path, 'media_type' => 'video/mp4'], true);
         $this->assertEquals(201, $this->twitter->getLastHttpCode());
         $this->assertObjectHasAttribute('media_id_string', $result);
-        $parameters = ['status' => 'Hello World ' . time(), 'media_ids' => $result->media_id_string];
+        $parameters = ['status' => 'Hello World '.time(), 'media_ids' => $result->media_id_string];
         $result = $this->twitter->post('statuses/update', $parameters);
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
         if ($this->twitter->getLastHttpCode() == 200) {
-            $result = $this->twitter->post('statuses/destroy/' . $result->id_str);
+            $result = $this->twitter->post('statuses/destroy/'.$result->id_str);
         }
         return $result;
     }
 
     public function testPostStatusesUpdateUtf8()
     {
-        $result = $this->twitter->post('statuses/update', ['status' => 'xこんにちは世界 ' . time()]);
+        $result = $this->twitter->post('statuses/update', ['status' => 'xこんにちは世界 '.time()]);
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
         return $result;
     }
@@ -272,7 +272,7 @@ class TwitterOAuthTest extends \PHPUnit_Framework_TestCase
      */
     public function testPostStatusesDestroy($status)
     {
-        $this->twitter->post('statuses/destroy/' . $status->id_str);
+        $this->twitter->post('statuses/destroy/'.$status->id_str);
         $this->assertEquals(200, $this->twitter->getLastHttpCode());
     }
 

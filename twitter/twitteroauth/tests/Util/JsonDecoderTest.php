@@ -26,7 +26,7 @@ class JsonDecoderTest extends \PHPUnit_Framework_TestCase
                 '[{"id": 556179961825226750}]',
                 false,
                 [
-                    $this->getClass(function ($object) {
+                    $this->getClass(function($object) {
                         $object->id = 556179961825226750;
                         return $object;
                     })

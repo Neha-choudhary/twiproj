@@ -181,7 +181,7 @@ class Request
         $postData = $this->toPostdata();
         $out = $this->getNormalizedHttpUrl();
         if ($postData) {
-            $out .= '?' . $postData;
+            $out .= '?'.$postData;
         }
         return $out;
     }
@@ -214,7 +214,7 @@ class Request
                 throw new TwitterOAuthException('Arrays not supported in headers');
             }
             $out .= ($first) ? ' ' : ', ';
-            $out .= Util::urlencodeRfc3986($k) . '="' . Util::urlencodeRfc3986($v) . '"';
+            $out .= Util::urlencodeRfc3986($k).'="'.Util::urlencodeRfc3986($v).'"';
             $first = false;
         }
         return $out;
@@ -257,6 +257,6 @@ class Request
      */
     public static function generateNonce()
     {
-        return md5(microtime() . mt_rand());
+        return md5(microtime().mt_rand());
     }
 }

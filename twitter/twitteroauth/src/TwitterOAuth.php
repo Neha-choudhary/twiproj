@@ -189,7 +189,7 @@ class TwitterOAuth extends Config
         $this->response->setApiPath($path);
         $url = sprintf('%s/%s', self::API_HOST, $path);
         $request = Request::fromConsumerAndToken($this->consumer, $this->token, $method, $url, $parameters);
-        $authorization = 'Authorization: Basic ' . $this->encodeAppAuthorization($this->consumer);
+        $authorization = 'Authorization: Basic '.$this->encodeAppAuthorization($this->consumer);
         $result = $this->request($request->getNormalizedHttpUrl(), $method, $authorization, $parameters);
         $response = JsonDecoder::decode($result, $this->decodeJsonAsArray);
         $this->response->setBody($response);
@@ -292,7 +292,7 @@ class TwitterOAuth extends Config
      */
     private function uploadMediaNotChunked($path, array $parameters)
     {
-        if (! is_readable($parameters['media']) ||
+        if (!is_readable($parameters['media']) ||
             ($file = file_get_contents($parameters['media'])) === false) {
             throw new \InvalidArgumentException('You must supply a readable file');
         }
@@ -457,7 +457,7 @@ class TwitterOAuth extends Config
                 unset($parameters['oauth_verifier']);
             }
         } else {
-            $authorization = 'Authorization: Bearer ' . $this->bearer;
+            $authorization = 'Authorization: Bearer '.$this->bearer;
         }
         return $this->request($request->getNormalizedHttpUrl(), $method, $authorization, $parameters, $json);
     }
@@ -481,7 +481,7 @@ class TwitterOAuth extends Config
         ];
 
         if ($this->useCAFile()) {
-            $options[CURLOPT_CAINFO] = __DIR__ . DIRECTORY_SEPARATOR . 'cacert.pem';
+            $options[CURLOPT_CAINFO] = __DIR__.DIRECTORY_SEPARATOR.'cacert.pem';
         }
 
         if ($this->gzipEncoding) {
@@ -538,7 +538,7 @@ class TwitterOAuth extends Config
         }
 
         if (in_array($method, ['GET', 'PUT', 'DELETE']) && !empty($postfields)) {
-            $options[CURLOPT_URL] .= '?' . Util::buildHttpQuery($postfields);
+            $options[CURLOPT_URL] .= '?'.Util::buildHttpQuery($postfields);
         }
 
 
@@ -593,7 +593,7 @@ class TwitterOAuth extends Config
     {
         $key = rawurlencode($consumer->key);
         $secret = rawurlencode($consumer->secret);
-        return base64_encode($key . ':' . $secret);
+        return base64_encode($key.':'.$secret);
     }
 
     /**
