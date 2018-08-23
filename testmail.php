@@ -5,7 +5,7 @@
     require './PHPMailer-master/src/SMTP.php';
 
     $mail = new PHPMailer\PHPMailer\PHPMailer();
-  //  $mail->IsSMTP(); // enable SMTP
+    //  $mail->IsSMTP(); // enable SMTP
 
     $mail->IsMail();
     $mail->Host = 'relay-hosting.secureserver.net';
@@ -21,12 +21,12 @@
     $mail->AltBody = "";
     $mail->AddAddress("niraj.visana@gmail.com");
     $mail->MsgHTML("Your requested follower data is in file attached below");
-   // $mail->AddAttachment(__DIR__."/".FILE_NAME.'.'.$format);
+    // $mail->AddAttachment(__DIR__."/".FILE_NAME.'.'.$format);
 
-     if(!$mail->Send()) {
+        if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
-     } else {
+        } else {
         echo "Message has been sent";
-     }
+        }
 
 ?>

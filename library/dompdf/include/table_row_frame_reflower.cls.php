@@ -16,17 +16,17 @@
 class Table_Row_Frame_Reflower extends Frame_Reflower {
 
 
-  function __construct(Table_Row_Frame_Decorator $frame) {
+    function __construct(Table_Row_Frame_Decorator $frame) {
     parent::__construct($frame);
-  }
+    }
 
-  //........................................................................
+    //........................................................................
 
-  function reflow(Frame_Decorator $block = null) {
+    function reflow(Frame_Decorator $block = null) {
     $page = $this->_frame->get_root();
 
     if ( $page->is_full() )
-      return;
+        return;
 
     $this->_frame->position();
     $style = $this->_frame->get_style();
@@ -34,16 +34,16 @@ class Table_Row_Frame_Reflower extends Frame_Reflower {
 
     foreach ($this->_frame->get_children() as $child) {
 
-      if ( $page->is_full() )
+        if ( $page->is_full() )
         return;
 
-      $child->set_containing_block($cb);
-      $child->reflow();
+        $child->set_containing_block($cb);
+        $child->reflow();
 
     }
 
     if ( $page->is_full() )
-      return;
+        return;
 
     $table = Table_Frame_Decorator::find_parent_table($this->_frame);
     $cellmap = $table->get_cellmap();
@@ -52,11 +52,11 @@ class Table_Row_Frame_Reflower extends Frame_Reflower {
 
     $this->_frame->set_position($cellmap->get_frame_position($this->_frame));
 
-  }
+    }
 
-  //........................................................................
+    //........................................................................
 
-  function get_min_max_width() {
+    function get_min_max_width() {
     throw new DOMPDF_Exception("Min/max width is undefined for table rows");
-  }
+    }
 }

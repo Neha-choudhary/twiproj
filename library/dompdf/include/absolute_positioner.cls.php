@@ -12,9 +12,9 @@
  */
 class Absolute_Positioner extends Positioner {
 
-  function __construct(Frame_Decorator $frame) { parent::__construct($frame); }
+    function __construct(Frame_Decorator $frame) { parent::__construct($frame); }
 
-  function position() {
+    function position() {
 
     $frame = $this->_frame;
     $style = $frame->get_style();
@@ -29,8 +29,8 @@ class Absolute_Positioner extends Positioner {
     $left   = $style->length_in_pt($style->left,   $w);
     
     if ( $p && !($left === "auto" && $right === "auto") ) {
-      // Get the parent's padding box (see http://www.w3.org/TR/CSS21/visuren.html#propdef-top)
-      list($x, $y, $w, $h) = $p->get_padding_box();
+        // Get the parent's padding box (see http://www.w3.org/TR/CSS21/visuren.html#propdef-top)
+        list($x, $y, $w, $h) = $p->get_padding_box();
     }
     
     list($width, $height) = array($frame->get_margin_width(), $frame->get_margin_height());
@@ -54,72 +54,72 @@ class Absolute_Positioner extends Positioner {
     *****************************/
     
     if ( $left === "auto" ) {
-      if ( $right === "auto" ) {
+        if ( $right === "auto" ) {
         // A or E - Keep the frame at the same position
-      }
-      else {
-        if ( $orig_width === "auto" ) {
-          // C
-          $x += $w - $width - $right;
         }
         else {
-          // G
-          $x += $w - $width - $right;
+        if ( $orig_width === "auto" ) {
+            // C
+            $x += $w - $width - $right;
         }
-      }
+        else {
+            // G
+            $x += $w - $width - $right;
+        }
+        }
     }
     else {
-      if ( $right === "auto" ) {
+        if ( $right === "auto" ) {
         // B or F
         $x += $left;
-      }
-      else {
-        if ( $orig_width === "auto" ) {
-          // D - TODO change width
-          $x += $left;
         }
         else {
-          // H - Everything is fixed: left + width win
-          $x += $left;
+        if ( $orig_width === "auto" ) {
+            // D - TODO change width
+            $x += $left;
         }
-      }
+        else {
+            // H - Everything is fixed: left + width win
+            $x += $left;
+        }
+        }
     }
     
     // The same vertically
     if ( $top === "auto" ) {
-      if ( $bottom === "auto" ) {
+        if ( $bottom === "auto" ) {
         // A or E - Keep the frame at the same position
         $y = $frame->get_parent()->get_current_line_box()->y;
-      }
-      else {
-        if ( $orig_height === "auto" ) {
-          // C
-          $y += $h - $height - $bottom;
         }
         else {
-          // G
-          $y += $h - $height - $bottom;
+        if ( $orig_height === "auto" ) {
+            // C
+            $y += $h - $height - $bottom;
         }
-      }
+        else {
+            // G
+            $y += $h - $height - $bottom;
+        }
+        }
     }
     else {
-      if ( $bottom === "auto" ) {
+        if ( $bottom === "auto" ) {
         // B or F
         $y += $top;
-      }
-      else {
-        if ( $orig_height === "auto" ) {
-          // D - TODO change height
-          $y += $top;
         }
         else {
-          // H - Everything is fixed: top + height win
-          $y += $top;
+        if ( $orig_height === "auto" ) {
+            // D - TODO change height
+            $y += $top;
         }
-      }
+        else {
+            // H - Everything is fixed: top + height win
+            $y += $top;
+        }
+        }
     }
     
     $frame->set_position($x, $y);
 
-  }
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors',1); 
+ini_set('display_errors', 1); 
 error_reporting(E_ALL);
 
 
@@ -11,9 +11,9 @@ require_once("controller.php");
 //cron format cursor screen_name email
 
 $path = $argv[0];
-$format=$argv[1];
+$format = $argv[1];
 $int_cursor = $argv[2];
-$screen_name=$argv[3];
+$screen_name = $argv[3];
 $email = $argv[4];
 
 // var_dump($argv);
@@ -30,16 +30,16 @@ $email = $argv[4];
 
 
 
- // $path = "/home/bme2kggy0iwu/public_html/twiproj/flwdwn.php";
- // $format="csv";
- // $int_cursor = "-1";
- // $screen_name= "aakashnagar9797";
- // $email = "niraj.visana@gmail.com";
+    // $path = "/home/bme2kggy0iwu/public_html/twiproj/flwdwn.php";
+    // $format="csv";
+    // $int_cursor = "-1";
+    // $screen_name= "aakashnagar9797";
+    // $email = "niraj.visana@gmail.com";
 
 
 
 shell_exec("echo '$argv[0] $argv[1] $argv[2] $argv[3] $argv[4]' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
- //shell_exec("sudo touch /var/www/html/rtcamp/tmp");
+    //shell_exec("sudo touch /var/www/html/rtcamp/tmp");
 
 
 //die();
@@ -51,13 +51,13 @@ define("ROOT", "Follower");
 $cursor = $int_cursor;
 
 
-if(!isset($_SESSION['access_token']))
+if (!isset($_SESSION['access_token']))
 {
-    $connection = new TwitterOAuth(CONSUMER_KEY,CONSUMER_SECRET);
-    $request_token = $connection->oauth('oauth/request_token',array('oauth_callback'=>OAUTH_CALLBACK));
+    $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
+    $request_token = $connection->oauth('oauth/request_token', array('oauth_callback'=>OAUTH_CALLBACK));
     $_SESSION['oauth_token'] = $request_token['oauth_token'];
     $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-    $url=$connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token'] ));
+    $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
 }
 else
 {
@@ -65,14 +65,14 @@ else
     $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $accesstoken['oauth_token'], $accesstoken['oauth_token_secret']);
 }
 
-if($cursor!=0)
+if ($cursor != 0)
 {
 
     // $flwdwn=$connection->get('followers/list',["screen_name"=>$_SESSION['flwdwn'],"count"=>200,"cursor"=>$cursor]);
     $td_t = array();
-    for ($i=1; $cursor!=0; $i++) { 
-        $flwdwn=$connection->get('followers/list',["screen_name"=>$screen_name,"count"=>200,"cursor"=>$cursor]);
-        if(!isset($flwdwn->users))
+    for ($i = 1; $cursor != 0; $i++) { 
+        $flwdwn = $connection->get('followers/list', ["screen_name"=>$screen_name, "count"=>200, "cursor"=>$cursor]);
+        if (!isset($flwdwn->users))
         {
             $reading = fopen(__DIR__.'/cron.txt', 'r');
             $writing = fopen(__DIR__.'/cron.tmp', 'w');
@@ -81,7 +81,7 @@ if($cursor!=0)
             
             while (!feof($reading)) {
             $line = fgets($reading);
-            if (stristr($line,"*/15 * * * * php $path $format $int_cursor $screen_name $email ")) {
+            if (stristr($line, "*/15 * * * * php $path $format $int_cursor $screen_name $email ")) {
                 $line = "*/15 * * * * php $path $format $cursor $screen_name $email \n";
                 $replaced = true;
             }
@@ -101,19 +101,19 @@ if($cursor!=0)
             break;
         }
         foreach ($flwdwn->users as $f) {
-            $tmp=new stdClass;
-            $tmp->id_str=$f->name;
-            $tmp->text=$f->screen_name;
+            $tmp = new stdClass;
+            $tmp->id_str = $f->name;
+            $tmp->text = $f->screen_name;
             array_push($td_t, [$tmp]);
         }
         $cursor = $flwdwn->next_cursor;
     }
 
-    if($format == "xml")
+    if ($format == "xml")
     {
-        if($int_cursor == -1)
+        if ($int_cursor == -1)
         {
-            $file=new SimpleXMLElement('<xml/>');
+            $file = new SimpleXMLElement('<xml/>');
         }
         else
         {
@@ -122,34 +122,34 @@ if($cursor!=0)
         
         foreach ($td_t as $rows) {
             foreach ($rows as $row) {
-                $tid=$file->addChild(ROOT);
-                $tid->addChild(ID,$row->id_str);
-                $tid->addChild(VALUE,$row->text);
+                $tid = $file->addChild(ROOT);
+                $tid->addChild(ID, $row->id_str);
+                $tid->addChild(VALUE, $row->text);
             }
         }
 
         $file->saveXML(__DIR__."/".FILE_NAME.'.'.$format);
     }
-    else if($format == "json")
+    else if ($format == "json")
     {
-        $file=fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
+        $file = fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
         
-        $result = json_decode(file_get_contents(__DIR__."/".FILE_NAME.'.'.$format),true);
+        $result = json_decode(file_get_contents(__DIR__."/".FILE_NAME.'.'.$format), true);
         foreach ($td_t as $rows) {
             foreach ($rows as $row) {
-                array_push($result, [ID=>$row->id_str,VALUE=>$row->text]);
+                array_push($result, [ID=>$row->id_str, VALUE=>$row->text]);
             }
         }
 
         fwrite($file, json_encode($result));
         fclose($file);
     }
-    else if($format == "xls")
+    else if ($format == "xls")
     {
 
         $file = fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
 
-        if($int_cursor == -1)
+        if ($int_cursor == -1)
         {
             fputcsv($file, array(ID, VALUE));
         }
@@ -157,17 +157,16 @@ if($cursor!=0)
         foreach ($td_t as $rows)
         {
             foreach ($rows as $row) {
-                fputcsv($file, array($row->id_str,$row->text));
+                fputcsv($file, array($row->id_str, $row->text));
             }
         }
 
         fclose($file);
-    }
-    else
+    } else
     {
         $file = fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
         
-        if($int_cursor == -1)
+        if ($int_cursor == -1)
         {
             fputcsv($file, array(ID, VALUE));
         }
@@ -175,7 +174,7 @@ if($cursor!=0)
         foreach ($td_t as $rows)
         {
             foreach ($rows as $row) {
-                fputcsv($file, array($row->id_str,$row->text));
+                fputcsv($file, array($row->id_str, $row->text));
             }
         }
 
@@ -184,7 +183,7 @@ if($cursor!=0)
     }
 }
 
-if($cursor == 0)
+if ($cursor == 0)
 {
     require './PHPMailer-master/src/Exception.php';
     require './PHPMailer-master/src/PHPMailer.php';
@@ -208,11 +207,11 @@ if($cursor == 0)
     $mail->MsgHTML("Your requested follower data is in file attached below");
     $mail->AddAttachment(__DIR__."/".FILE_NAME.'.'.$format);
 
-     if(!$mail->Send()) {
+        if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
-     } else {
+        } else {
         echo "Message has been sent";
-     } 
+        } 
        
     if($mail->Send()){
         $reading = fopen(__DIR__.'/cron.txt', 'r');
@@ -222,7 +221,7 @@ if($cursor == 0)
         
         while (!feof($reading)) {
         $line = fgets($reading);
-        if (stristr($line,"*/15 * * * * php $path $format $int_cursor $screen_name $email ")) {
+        if (stristr($line, "*/15 * * * * php $path $format $int_cursor $screen_name $email ")) {
             $line = "";
             $replaced = true;
         }
@@ -241,7 +240,7 @@ if($cursor == 0)
         shell_exec($cmd);
         unlink(__DIR__."/".FILE_NAME.'.'.$format);
     }
-    else{
+    else {
         echo "Error while sending mail : ".$mail->ErrorInfo;
     }
 

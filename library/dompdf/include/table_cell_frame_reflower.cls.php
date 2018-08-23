@@ -15,15 +15,15 @@
  */
 class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
 
-  //........................................................................
+    //........................................................................
 
-  function __construct(Frame $frame) {
+    function __construct(Frame $frame) {
     parent::__construct($frame);
-  }
+    }
 
-  //........................................................................
+    //........................................................................
 
-  function reflow(Frame_Decorator $block = null) {
+    function reflow(Frame_Decorator $block = null) {
 
     $style = $this->_frame->get_style();
 
@@ -37,31 +37,31 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
 
     $w = 0;
     foreach ( $cells["columns"] as $i ) {
-      $col = $cellmap->get_column( $i );
-      $w += $col["used-width"];
+        $col = $cellmap->get_column( $i );
+        $w += $col["used-width"];
     }
 
     //FIXME?
     $h = $this->_frame->get_containing_block("h");
 
     $left_space = $style->length_in_pt(array($style->margin_left,
-                                             $style->padding_left,
-                                             $style->border_left_width),
-                                       $w);
+                                                $style->padding_left,
+                                                $style->border_left_width),
+                                        $w);
 
     $right_space = $style->length_in_pt(array($style->padding_right,
-                                              $style->margin_right,
-                                              $style->border_right_width),
+                                                $style->margin_right,
+                                                $style->border_right_width),
                                         $w);
 
     $top_space = $style->length_in_pt(array($style->margin_top,
                                             $style->padding_top,
                                             $style->border_top_width),
-                                      $h);
+                                        $h);
     $bottom_space = $style->length_in_pt(array($style->margin_bottom,
-                                               $style->padding_bottom,
-                                               $style->border_bottom_width),
-                                      $h);
+                                                $style->padding_bottom,
+                                                $style->border_bottom_width),
+                                        $h);
 
     $style->width = $cb_w = $w - $left_space - $right_space;
 
@@ -79,13 +79,13 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
     // Set the containing blocks and reflow each child
     foreach ( $this->_frame->get_children() as $child ) {
       
-      if ( $page->is_full() )
+        if ( $page->is_full() )
         break;
     
-      $child->set_containing_block($content_x, $content_y, $cb_w, $h);
-      $child->reflow($this->_frame);
+        $child->set_containing_block($content_x, $content_y, $cb_w, $h);
+        $child->reflow($this->_frame);
     
-      $this->process_float($child, $x + $left_space, $w - $right_space - $left_space);
+        $this->process_float($child, $x + $left_space, $w - $right_space - $left_space);
     }
 
     // Determine our height
@@ -99,10 +99,10 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
     $cell_height = $height / count($cells["rows"]);
 
     if ($style_height <= $height)
-      $cell_height += $top_space + $bottom_space;
+        $cell_height += $top_space + $bottom_space;
 
     foreach ($cells["rows"] as $i)
-      $cellmap->set_row_height($i, $cell_height);
+        $cellmap->set_row_height($i, $cell_height);
 
     $style->height = $height;
 
@@ -110,6 +110,6 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
 
     $this->vertical_align();
 
-  }
+    }
 
 }
