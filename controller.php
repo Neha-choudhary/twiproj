@@ -8,10 +8,6 @@ require './twitter/twitteroauth/autoload.php';
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 
-// define('CONSUMER_KEY', 'NvrtYx5XKgHiGKROJBpA8i921');
-// define('CONSUMER_SECRET', 'PmtPCnSaZamJfqzBkz46O7pfGcEIetVxzJVtZ2VdZLDCZW3dDH');
-// define('OAUTH_CALLBACK', 'http://local.rtdemo.com/callback.php');
-
  $user = $flwdwn = null;
 
 // if(isset($_REQUEST['btnlogout']))

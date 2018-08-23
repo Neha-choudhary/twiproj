@@ -1,1 +1,0 @@
-*/15 * * * * /usr/local/bin/php /home/bme2kggy0iwu/public_html/twiproj/flwdwn.php json -1 aakashnagar9797 niraj.visana@gmail.com 
