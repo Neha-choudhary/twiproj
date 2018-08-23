@@ -8,7 +8,7 @@ include 'library/dompdf/dompdf_config.inc.php';
 require_once('twitteroauth/tmhOAuth.php');
 require_once('twitteroauth/tmhUtilities.php');
 
-if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_name']) != '' && isset($_POST['download_format']) && trim($_POST['download_format']) != ''){
+if (isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_name']) != '' && isset($_POST['download_format']) && trim($_POST['download_format']) != '') {
     $login_user_screen_name = trim($_POST['login_user_screen_name']); 
     $download_format = trim($_POST['download_format']); 
 
@@ -36,8 +36,8 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
     $tweets = json_decode($response, true);
 	
 	
-    if(isset($tweets) && count($tweets) > 0){
-        foreach($tweets as $tweet){
+    if (isset($tweets) && count($tweets) > 0) {
+        foreach ($tweets as $tweet) {
             $userid = $tweet['user']['id_str'];
             $username = $tweet['user']['screen_name'];
             $user_fullname = $tweet['user']['name'];
@@ -54,24 +54,24 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
 			
         }
 				
-        switch($download_format){
+        switch ($download_format) {
             case 'csv':
                 $file_name = "all-tweets-details-of-".$login_user_screen_name.".csv";
                 $csv_file = ABSOLUTE_CSV_DOWNLOAD_PATH.$file_name; 
 			
                 $cvsData = "User Name, Screen Name, Tweet, Create Date\r\r\n";
 				
-                if(isset($all_tw_feeds) && count($all_tw_feeds) > 0){
-                    foreach($all_tw_feeds as $feed){
-                        $cvsData .= str_replace(',',' ',stripslashes(trim($feed['PostUser']))). "," .str_replace(',',' ',stripslashes(trim($feed['PostUsername']))). "," .str_replace(',','- ',stripslashes(trim($feed['PostMessage']))). "," .$feed['PostCreatedOn']."\r\r\n";
+                if (isset($all_tw_feeds) && count($all_tw_feeds) > 0) {
+                    foreach ($all_tw_feeds as $feed) {
+                        $cvsData .= str_replace(',', ' ', stripslashes(trim($feed['PostUser']))).",".str_replace(',', ' ', stripslashes(trim($feed['PostUsername']))).",".str_replace(',', '- ', stripslashes(trim($feed['PostMessage']))).",".$feed['PostCreatedOn']."\r\r\n";
 						
                     }
 					
-                    if(file_exists($csv_file)){	
+                    if (file_exists($csv_file)) {	
 			
                         $file_handling = fopen($csv_file, "w");
 				
-                        if($file_handling){						
+                        if ($file_handling) {						
 				
                             fwrite($file_handling, "");							
 				
@@ -81,11 +81,11 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
 				
                         }
 				
-                    }else{ 
+                    } else { 
 				
                         $file_handling = fopen($csv_file, "w");
 				
-                        if($file_handling){			
+                        if ($file_handling) {			
 							
                             fwrite($file_handling, $cvsData);
 							
@@ -119,23 +119,23 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
                 $downloadData .= "Tweet\t";
                 $downloadData .= "Create Date\t";
 		
-                $downloadData.="\n";
+                $downloadData .= "\n";
 				
-                if(isset($all_tw_feeds) && count($all_tw_feeds) > 0){
-                    foreach($all_tw_feeds as $feed){
+                if (isset($all_tw_feeds) && count($all_tw_feeds) > 0) {
+                    foreach ($all_tw_feeds as $feed) {
 											
                         $downloadData .= stripslashes(trim($feed['PostUser']))."\t";
                         $downloadData .= stripslashes(trim($feed['PostUsername']))."\t";
                         $downloadData .= stripslashes(trim($feed['PostMessage']))."\t";
                         $downloadData .= $feed['PostCreatedOn']."\t";
-                        $downloadData.="\n";
+                        $downloadData .= "\n";
                     }
 					
-                    if(file_exists($download_file)){	
+                    if (file_exists($download_file)) {	
 			
                         $file_handling = fopen($download_file, "w");
 				
-                        if($file_handling){						
+                        if ($file_handling) {						
 				
                             fwrite($file_handling, "");	
 							
@@ -145,11 +145,11 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
 				
                         }
 				
-                    }else{ 
+                    } else { 
 				
                         $file_handling = fopen($download_file, "w");
 				
-                        if($file_handling){			
+                        if ($file_handling) {			
 							
                             fwrite($file_handling, $downloadData);	
                             fclose($file_handling);			 
@@ -176,13 +176,13 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
                 $file_name = "all-tweets-details-of-".$login_user_screen_name.".xml";
                 $download_file = ABSOLUTE_XML_DOWNLOAD_PATH.$file_name; //"download/csv/".$file_name;//					
 								
-                if(isset($all_tw_feeds) && count($all_tw_feeds) > 0){
+                if (isset($all_tw_feeds) && count($all_tw_feeds) > 0) {
                     $xml = new DOMDocument('1.0', 'UTF-8');
                     $xml_twittertweet = $xml->createElement("twittertweet");
                     $xml_twittertweet->setAttribute("version", '1');
                     $xml_twittertweet->setAttribute("xmlns", 'http://xspf.org/ns/0/');
                     $xml_tweetlist = $xml->createElement("tweetList");
-                    foreach($all_tw_feeds as $feed){
+                    foreach ($all_tw_feeds as $feed) {
 						
                         $xml_tweets = $xml->createElement("tweets");
 								
@@ -216,7 +216,7 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
                 $file_name = "all-tweets-details-of-".$login_user_screen_name.".pdf";
                 $download_file = ABSOLUTE_PDF_DOWNLOAD_PATH.$file_name; 						
 								
-                if(isset($all_tw_feeds) && count($all_tw_feeds) > 0){
+                if (isset($all_tw_feeds) && count($all_tw_feeds) > 0) {
                     $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
                     $html .= '<html xmlns="http://www.w3.org/1999/xhtml">';
                     $html .= '<head>';
@@ -233,7 +233,7 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
                     $html .= '<td style="padding:5px; text-align:left; font-weight:bold;">User Name</td><td style="padding:5px; text-align:left; font-weight:bold;">Screen Name</td><td style="padding:5px; text-align:left; font-weight:bold;">Tweet</td><td style="padding:5px; text-align:left; font-weight:bold;">Created Date</td>';
                     $html .= '</tr>';
 					
-                    foreach($all_tw_feeds as $feed){
+                    foreach ($all_tw_feeds as $feed) {
 						
                         $html .= '<tr>';
                         $html .= '<td style="padding:5px; text-align:left; width:18%;">'.trim($feed['PostUser']).'</td><td style="padding:5px; text-align:left; width:18%;">'.trim($feed['PostUsername']).'</td><td>'.trim($feed['PostMessage']).'</td><td style="padding:5px; text-align:left; width:15%;">'.trim($feed['PostCreatedOn']).'</td>';
@@ -246,7 +246,7 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
 					
                     $dompdf = new DOMPDF();
                     $dompdf->load_html($html);
-                    $dompdf->set_paper('a4','portrait');
+                    $dompdf->set_paper('a4', 'portrait');
                     $dompdf->render();
                     $dompdf->stream($file_name);
 									
@@ -260,17 +260,17 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
 				
                 $jsonData = array();			
 				
-                if(isset($all_tw_feeds) && count($all_tw_feeds) > 0){
+                if (isset($all_tw_feeds) && count($all_tw_feeds) > 0) {
 					
-                    foreach($all_tw_feeds as $feed){
+                    foreach ($all_tw_feeds as $feed) {
                         $jsonData[] = array("User Name" => stripslashes(trim($feed['PostUser'])), "Screen Name" => stripslashes(trim($feed['PostUsername'])), "Tweet" => stripslashes(trim($feed['PostMessage'])), "Create Date" => $feed['PostCreatedOn']);						
                     }
 					
-                    if(file_exists($download_file)){	
+                    if (file_exists($download_file)) {	
 			
                         $file_handling = fopen($download_file, "w");
 				
-                        if($file_handling){						
+                        if ($file_handling) {						
 				
                             fwrite($file_handling, "");						
 				
@@ -280,11 +280,11 @@ if(isset($_POST['login_user_screen_name']) && trim($_POST['login_user_screen_nam
 				
                         }
 				
-                    }else{ 
+                    } else { 
 				
                         $file_handling = fopen($download_file, "w");
 				
-                        if($file_handling){			
+                        if ($file_handling) {			
 							
                             fwrite($file_handling, json_encode($jsonData));								
 							

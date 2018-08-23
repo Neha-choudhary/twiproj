@@ -53,17 +53,17 @@ class Image_Cache {
     try {
       
         // Remote not allowed and is not DataURI
-        if ( !DOMPDF_ENABLE_REMOTE && $remote && !$datauri ) {
+        if (!DOMPDF_ENABLE_REMOTE && $remote && !$datauri) {
         throw new DOMPDF_Image_Exception("DOMPDF_ENABLE_REMOTE is set to FALSE");
         } 
       
         // Remote allowed or DataURI
-        else if ( DOMPDF_ENABLE_REMOTE && $remote || $datauri ) {
+        else if (DOMPDF_ENABLE_REMOTE && $remote || $datauri) {
         // Download remote files to a temporary directory
         $full_url = build_url($proto, $host, $base_path, $url);
   
         // From cache
-        if ( isset(self::$_cache[$full_url]) ) {
+        if (isset(self::$_cache[$full_url])) {
             $resolved_url = self::$_cache[$full_url];
         }
         
@@ -75,15 +75,14 @@ class Image_Cache {
             if ($parsed_data_uri = parse_data_uri($url)) {
                 $image = $parsed_data_uri['data'];
             }
-            }
-            else {
+            } else {
             $old_err = set_error_handler("record_warnings");
             $image = file_get_contents($full_url);
             restore_error_handler();
             }
   
             // Image not found or invalid
-            if ( strlen($image) == 0 ) {
+            if (strlen($image) == 0) {
             $msg = ($datauri ? "Data-URI could not be parsed" : "Image not found");
             throw new DOMPDF_Image_Exception($msg);
             }
@@ -107,7 +106,7 @@ class Image_Cache {
   
   
         // Check if the local file is readable
-        if ( !is_readable($resolved_url) || !filesize($resolved_url) ) {
+        if (!is_readable($resolved_url) || !filesize($resolved_url)) {
         throw new DOMPDF_Image_Exception("Image not readable or empty");
         }
       
@@ -116,10 +115,10 @@ class Image_Cache {
         list($width, $height, $type) = dompdf_getimagesize($resolved_url);
         
         // Known image type
-        if ( $width && $height && in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_BMP)) ) {
+        if ($width && $height && in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_BMP))) {
             //Don't put replacement image into cache - otherwise it will be deleted on cache cleanup.
             //Only execute on successfull caching of remote image.
-            if ( DOMPDF_ENABLE_REMOTE && $remote ) {
+            if (DOMPDF_ENABLE_REMOTE && $remote) {
             self::$_cache[$full_url] = $resolved_url;
             }
         }
@@ -131,7 +130,7 @@ class Image_Cache {
         }
         }
     }
-    catch(DOMPDF_Image_Exception $e) {
+    catch (DOMPDF_Image_Exception $e) {
         $resolved_url = self::$broken_image;
         $type = IMAGETYPE_PNG;
         $message = $e->getMessage()." \n $url";
@@ -145,9 +144,9 @@ class Image_Cache {
      * or converted)
      */
     static function clear() {
-    if ( empty(self::$_cache) || DEBUGKEEPTEMP ) return;
+    if (empty(self::$_cache) || DEBUGKEEPTEMP) return;
     
-    foreach ( self::$_cache as $file ) {
+    foreach (self::$_cache as $file) {
         if (DEBUGPNG) print "[clear unlink $file]";
         unlink($file);
     }

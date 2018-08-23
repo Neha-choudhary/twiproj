@@ -24,7 +24,7 @@ class Table_Row_Positioner extends Positioner {
     $cb = $this->_frame->get_containing_block();    
     $p = $this->_frame->get_prev_sibling();
 
-    if ( $p ) 
+    if ($p) 
         $y = $p->get_position("y") + $p->get_margin_height();
 
     else

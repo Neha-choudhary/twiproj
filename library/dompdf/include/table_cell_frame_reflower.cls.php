@@ -36,8 +36,8 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
     $cells = $cellmap->get_spanned_cells($this->_frame);
 
     $w = 0;
-    foreach ( $cells["columns"] as $i ) {
-        $col = $cellmap->get_column( $i );
+    foreach ($cells["columns"] as $i) {
+        $col = $cellmap->get_column($i);
         $w += $col["used-width"];
     }
 
@@ -77,9 +77,9 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
     $this->_frame->set_current_line($line_y);
     
     // Set the containing blocks and reflow each child
-    foreach ( $this->_frame->get_children() as $child ) {
+    foreach ($this->_frame->get_children() as $child) {
       
-        if ( $page->is_full() )
+        if ($page->is_full())
         break;
     
         $child->set_containing_block($content_x, $content_y, $cb_w, $h);
@@ -98,11 +98,13 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
     // Let the cellmap know our height
     $cell_height = $height / count($cells["rows"]);
 
-    if ($style_height <= $height)
-        $cell_height += $top_space + $bottom_space;
+    if ($style_height <= $height) {
+            $cell_height += $top_space + $bottom_space;
+    }
 
-    foreach ($cells["rows"] as $i)
-        $cellmap->set_row_height($i, $cell_height);
+    foreach ($cells["rows"] as $i) {
+            $cellmap->set_row_height($i, $cell_height);
+    }
 
     $style->height = $height;
 

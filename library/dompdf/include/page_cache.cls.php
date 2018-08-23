@@ -25,13 +25,13 @@ class Page_Cache {
     static private $__connection = null;
   
     function init() {
-    if ( is_null(self::$__connection) ) {
-        $con_str = "host=" . DB_HOST .
-        " dbname=" . self::DB_NAME .
-        " user=" . self::DB_USER .
-        " password=" . self::DB_PASS;
+    if (is_null(self::$__connection)) {
+        $con_str = "host=".DB_HOST.
+        " dbname=".self::DB_NAME.
+        " user=".self::DB_USER.
+        " password=".self::DB_PASS;
       
-        if ( !self::$__connection = pg_connect($con_str) )
+        if (!self::$__connection = pg_connect($con_str))
         throw new Exception("Database connection failed.");
     }
     }
@@ -39,36 +39,36 @@ class Page_Cache {
     function __construct() { throw new Exception("Can not create instance of Page_Class.  Class is static."); }
 
     private static function __query($sql) {
-    if ( !($res = pg_query(self::$__connection, $sql)) )
+    if (!($res = pg_query(self::$__connection, $sql)))
         throw new Exception(pg_last_error(self::$__connection));
     return $res;
     }
   
     static function store_page($id, $page_num, $data) {
-    $where = "WHERE id='" . pg_escape_string($id) . "' AND ".
-        "page_num=". pg_escape_string($page_num);
+    $where = "WHERE id='".pg_escape_string($id)."' AND ".
+        "page_num=".pg_escape_string($page_num);
 
-    $res = self::__query("SELECT timestamp FROM page_cache ". $where);
+    $res = self::__query("SELECT timestamp FROM page_cache ".$where);
 
     $row = pg_fetch_assoc($res);
     
-    if ( $row ) 
-        self::__query("UPDATE page_cache SET data='" . pg_escape_string($data) . "' " . $where);
+    if ($row) 
+        self::__query("UPDATE page_cache SET data='".pg_escape_string($data)."' ".$where);
     else 
-        self::__query("INSERT INTO page_cache (id, page_num, data) VALUES ('" . pg_escape_string($id) . "', ".
-                        pg_escape_string($page_num) . ", ".
-                        "'". pg_escape_string($data) . "')");
+        self::__query("INSERT INTO page_cache (id, page_num, data) VALUES ('".pg_escape_string($id)."', ".
+                        pg_escape_string($page_num).", ".
+                        "'".pg_escape_string($data)."')");
 
     }
 
     static function store_fonts($id, $fonts) {
     self::__query("BEGIN");
     // Update the font information
-    self::__query("DELETE FROM page_fonts WHERE id='" . pg_escape_string($id) . "'");
+    self::__query("DELETE FROM page_fonts WHERE id='".pg_escape_string($id)."'");
 
     foreach (array_keys($fonts) as $font)
-        self::__query("INSERT INTO page_fonts (id, font_name) VALUES ('" .
-                    pg_escape_string($id) . "', '" . pg_escape_string($font) . "')");
+        self::__query("INSERT INTO page_fonts (id, font_name) VALUES ('".
+                    pg_escape_string($id)."', '".pg_escape_string($font)."')");
     self::__query("COMMIT");
     }
   
@@ -84,8 +84,8 @@ class Page_Cache {
 //   }
 
     static function get_page_timestamp($id, $page_num) {
-    $res = self::__query("SELECT timestamp FROM page_cache WHERE id='" . pg_escape_string($id) . "' AND ".
-                            "page_num=". pg_escape_string($page_num));
+    $res = self::__query("SELECT timestamp FROM page_cache WHERE id='".pg_escape_string($id)."' AND ".
+                            "page_num=".pg_escape_string($page_num));
 
     $row = pg_fetch_assoc($res);
 
@@ -95,22 +95,22 @@ class Page_Cache {
 
     // Adds the cached document referenced by $id to the provided pdf
     static function insert_cached_document(CPDF_Adapter $pdf, $id, $new_page = true) {
-    $res = self::__query("SELECT font_name FROM page_fonts WHERE id='" . pg_escape_string($id) . "'");
+    $res = self::__query("SELECT font_name FROM page_fonts WHERE id='".pg_escape_string($id)."'");
 
     // Ensure that the fonts needed by the cached document are loaded into
     // the pdf
     while ($row = pg_fetch_assoc($res)) 
         $pdf->get_cpdf()->selectFont($row["font_name"]);
     
-    $res = self::__query("SELECT data FROM page_cache WHERE id='" . pg_escape_string($id) . "'");
+    $res = self::__query("SELECT data FROM page_cache WHERE id='".pg_escape_string($id)."'");
 
-    if ( $new_page )
+    if ($new_page)
         $pdf->new_page();
 
     $first = true;
     while ($row = pg_fetch_assoc($res)) {
 
-        if ( !$first ) 
+        if (!$first) 
         $pdf->new_page();
         else 
         $first = false;        

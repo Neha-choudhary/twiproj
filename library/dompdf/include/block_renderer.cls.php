@@ -21,9 +21,9 @@ class Block_Renderer extends Abstract_Renderer {
     $style = $frame->get_style(); 
     list($x, $y, $w, $h) = $frame->get_border_box();
     
-    $this->_set_opacity( $frame->get_opacity( $style->opacity ) );
+    $this->_set_opacity($frame->get_opacity($style->opacity));
 
-    if ( $frame->get_node()->nodeName === "body" ) {
+    if ($frame->get_node()->nodeName === "body") {
         $h = $frame->get_containing_block("h") - $style->length_in_pt(array(
         $style->margin_top,
         $style->padding_top,
@@ -35,11 +35,11 @@ class Block_Renderer extends Abstract_Renderer {
     }
     
     // Draw our background, border and content
-    if ( ($bg = $style->background_color) !== "transparent" ) {
-        $this->_canvas->filled_rectangle( $x, $y, $w, $h, $bg );
+    if (($bg = $style->background_color) !== "transparent") {
+        $this->_canvas->filled_rectangle($x, $y, $w, $h, $bg);
     }
 
-    if ( ($url = $style->background_image) && $url !== "none" )
+    if (($url = $style->background_image) && $url !== "none")
         $this->_background_image($url, $x, $y, $w, $h, $style);
 
     $this->_render_border($frame);
@@ -67,12 +67,12 @@ class Block_Renderer extends Abstract_Renderer {
     // If all the borders are "solid" with the same color and style, we'd better draw a rectangle
     if (
         in_array($bp["top"]["style"], array("solid", "dashed", "dotted")) && 
-      $bp["top"]    == $bp["right"] &&
-      $bp["right"]  == $bp["bottom"] &&
+      $bp["top"] == $bp["right"] &&
+      $bp["right"] == $bp["bottom"] &&
       $bp["bottom"] == $bp["left"]
     ) {
         $props = $bp["top"];
-        if ( $props["color"] === "transparent" || $props["width"] <= 0 ) return;
+        if ($props["color"] === "transparent" || $props["width"] <= 0) return;
       
         list($x, $y, $w, $h) = $bbox;
         $width = $style->length_in_pt($props["width"]);
@@ -93,31 +93,31 @@ class Block_Renderer extends Abstract_Renderer {
             $props["style"] === "none" || 
             $props["width"] <= 0 || 
             $props["color"] == "transparent" ) {
-              continue;
-      }
+                continue;
+        }
 
         switch($side) {
-        case "top":
-        $length = $w;
-        break;
+            case "top":
+            $length = $w;
+            break;
 
-        case "bottom":
-        $length = $w;
-        $y += $h;
-        break;
+            case "bottom":
+            $length = $w;
+            $y += $h;
+            break;
 
-        case "left":
-        $length = $h;
-        break;
+            case "left":
+            $length = $h;
+            break;
 
-        case "right":
-        $length = $h;
-        $x += $w;
-        break;
-        default:
-        break;
+            case "right":
+            $length = $h;
+            $x += $w;
+            break;
+            default:
+            break;
         }
-        $method = "_border_" . $props["style"];
+        $method = "_border_".$props["style"];
 
         $this->$method($x, $y, $length, $props["color"], $widths, $side, $corner_style);
     }
@@ -132,7 +132,7 @@ class Block_Renderer extends Abstract_Renderer {
         "color" => $style->outline_color,
     );
     
-    if ( !$props["style"] || $props["style"] === "none" || $props["width"] <= 0 )
+    if (!$props["style"] || $props["style"] === "none" || $props["width"] <= 0)
         return;
       
     $bbox = $frame->get_border_box();
@@ -140,7 +140,7 @@ class Block_Renderer extends Abstract_Renderer {
     $pattern = $this->_get_dash_pattern($props["style"], $offset);
 
     // If the outline style is "solid" we'd better draw a rectangle
-    if ( in_array($props["style"], array("solid", "dashed", "dotted")) ) {
+    if (in_array($props["style"], array("solid", "dashed", "dotted"))) {
         $bbox[0] -= $offset / 2;
         $bbox[1] -= $offset / 2;
         $bbox[2] += $offset;
@@ -164,25 +164,25 @@ class Block_Renderer extends Abstract_Renderer {
         list($x, $y, $w, $h) = $bbox;
 
         switch($side) {
-        case "top":
-        $length = $w;
-        break;
+            case "top":
+            $length = $w;
+            break;
 
-        case "bottom":
-        $length = $w;
-        $y += $h;
-        break;
+            case "bottom":
+            $length = $w;
+            $y += $h;
+            break;
 
-        case "left":
-        $length = $h;
-        break;
+            case "left":
+            $length = $h;
+            break;
 
-        case "right":
-        $length = $h;
-        $x += $w;
-        break;
-        default:
-        break;
+            case "right":
+            $length = $h;
+            $x += $w;
+            break;
+            default:
+            break;
         }
 
         $this->$method($x, $y, $length, $props["color"], $widths, $side, $corner_style);

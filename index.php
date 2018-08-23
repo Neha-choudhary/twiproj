@@ -21,7 +21,7 @@ $today = time();
 
 
 if (!isset($_SESSION['access_token'])) {
-    $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET); 	//establishing connection
+    $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET); //establishing connection
 
     //obtaining request token
     $request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => OAUTH_CALLBACK));
@@ -35,13 +35,13 @@ if (!isset($_SESSION['access_token'])) {
     // above is the authentication url
     echo "<a href='$url'><img src='twitter-login-blue.png' style='margin-left:4%; margin-top: 4%'></a>";
 } 
-else{
+else {
 
     $access_token = $_SESSION['access_token'];
 
     $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);	
 
-    $login_user_details = $connection->get('account/verify_credentials');	//user details if we need any
+    $login_user_details = $connection->get('account/verify_credentials'); //user details if we need any
 
         //print_r ($login_user_details);
 		
@@ -59,7 +59,7 @@ else{
 
 
             //fetching tweets
-            $login_user_homeline_tweets = $connection->get('statuses/home_timeline', array('screen_name' => $_SESSION['access_token']['screen_name'],'count' => 10,'include_rts' => true,'include_entities' => true));
+            $login_user_homeline_tweets = $connection->get('statuses/home_timeline', array('screen_name' => $_SESSION['access_token']['screen_name'], 'count' => 10, 'include_rts' => true, 'include_entities' => true));
 
 
             //fetching followers details, scrren name and ids and storing them in array,change No_OF_FOLLOWERS constant in config file to change count
@@ -68,21 +68,21 @@ else{
             $login_user_all_follower_lists = $connection->get('followers/ids');
             $login_user_all_follower_ids = $login_user_all_follower_lists->ids;
 
-            if(count($login_user_all_follower_ids) >= 10){
+            if (count($login_user_all_follower_ids) >= 10) {
                 $random_keys = array_rand($login_user_all_follower_ids, NO_OF_FOLLOWERS);
-                foreach($random_keys as $key){
+                foreach ($random_keys as $key) {
                     $login_user_follower_ids[] = $login_user_all_follower_ids[$key];								
                 }
 				
 
 				
-                if(isset($login_user_follower_ids) && count($login_user_follower_ids) > 0){
-                    foreach($login_user_follower_ids as $follower_ids){
+                if (isset($login_user_follower_ids) && count($login_user_follower_ids) > 0) {
+                    foreach ($login_user_follower_ids as $follower_ids) {
                         $friend_realtion_details = array();
                         $friend_realtion_details = $connection->get('friendships/show', array('target_id' => $follower_ids));
 
 						
-                        if(isset($friend_realtion_details->relationship->target->screen_name)){
+                        if (isset($friend_realtion_details->relationship->target->screen_name)) {
                             $friend_screen_name_details[] = array('id'=>$follower_ids, 'screen_name'=>$friend_realtion_details->relationship->target->screen_name);
 							
                             $friend_name_details[] = array('name'=>$follower_ids, 'screen_name'=>$friend_realtion_details->relationship->target->screen_name);
@@ -92,9 +92,9 @@ else{
                 }
 
 				
-                if(isset($friend_screen_name_details) && count($friend_screen_name_details) > 0){
-                    foreach($friend_screen_name_details as $friend_screen_name){						
-                        $friend_details[] = $connection->get('users/show', array('user_id' => $friend_screen_name['id'],'screen_name' => $friend_screen_name['screen_name']));
+                if (isset($friend_screen_name_details) && count($friend_screen_name_details) > 0) {
+                    foreach ($friend_screen_name_details as $friend_screen_name) {						
+                        $friend_details[] = $connection->get('users/show', array('user_id' => $friend_screen_name['id'], 'screen_name' => $friend_screen_name['screen_name']));
 						 	
                     }
                 }
@@ -107,9 +107,9 @@ else{
             $login_user_all_following_lists = $connection->get('friends/ids');
             $login_user_all_following_lists = $login_user_all_following_lists->ids;
 
-            if(count($login_user_all_following_lists) >= 10){
+            if (count($login_user_all_following_lists) >= 10) {
                 $random_keys = array_rand($login_user_all_following_lists, NO_OF_FOLLOWERS);
-                foreach($random_keys as $key){
+                foreach ($random_keys as $key) {
                     $login_user_following_ids[] = $login_user_all_following_lists[$key];								
                 }
             }
@@ -117,14 +117,14 @@ else{
 
 
 				
-                if(isset($login_user_following_ids) && count($login_user_following_ids) > 0){
-                    foreach($login_user_following_ids as $following_ids){
+                if (isset($login_user_following_ids) && count($login_user_following_ids) > 0) {
+                    foreach ($login_user_following_ids as $following_ids) {
                         $friend_realtion_following_details = array();
                         $friend_realtion_following_details = $connection->get('friendships/show', array('target_id' => $following_ids));
 
 
 						
-                        if(isset($friend_realtion_following_details->relationship->target->screen_name)){
+                        if (isset($friend_realtion_following_details->relationship->target->screen_name)) {
                             $following_screen_name_details[] = array('id'=>$following_ids, 'screen_name'=>$friend_realtion_following_details->relationship->target->screen_name);
 
 							
@@ -135,9 +135,9 @@ else{
                 }
 				
 				
-                if(isset($following_screen_name_details) && count($following_screen_name_details) > 0){
-                    foreach($following_screen_name_details as $following_screen_name){						
-                        $following_details[] = $connection->get('users/show', array('user_id' => $following_screen_name['id'],'screen_name' => $following_screen_name['screen_name']));
+                if (isset($following_screen_name_details) && count($following_screen_name_details) > 0) {
+                    foreach ($following_screen_name_details as $following_screen_name) {						
+                        $following_details[] = $connection->get('users/show', array('user_id' => $following_screen_name['id'], 'screen_name' => $following_screen_name['screen_name']));
 						 	
                     }
                 }
@@ -146,12 +146,12 @@ else{
 				
                 ////get followers 
 
-    $follower=$connection->get('followers/list',["count"=>200]);
+    $follower = $connection->get('followers/list', ["count"=>200]);
     $follower_name = array();
-    if(isset($follower->users))
+    if (isset($follower->users))
     {
         foreach ($follower->users as $f) {
-            array_push($follower_name, ["name"=>$f->name,"screen_name"=>$f->screen_name,"profile"=>$f->profile_image_url_https]);
+            array_push($follower_name, ["name"=>$f->name, "screen_name"=>$f->screen_name, "profile"=>$f->profile_image_url_https]);
         }
     }
     $follower_name = json_encode($follower_name);
@@ -336,21 +336,21 @@ else{
                     </div>
                     <br clear="all" />
                     <?php
-                    if(count($login_user_homeline_tweets) > 0){						
+                    if (count($login_user_homeline_tweets) > 0) {						
                     ?>
                     <div class="slider4" id="slider_tweet_content">
                     	<?php						
-                        foreach($login_user_homeline_tweets as $homeline_tweet){
+                        foreach ($login_user_homeline_tweets as $homeline_tweet) {
                             $timeDiff = $func->dateDiff($today, $homeline_tweet->created_at, 1);
                             $tweet_text = $homeline_tweet->text;
                             # Turn URLs into links
                             $tweet_text = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\./-]*(\?\S+)?)?)?)@', '<a target="blank" title="$1" href="$1">$1</a>', $tweet_text);
 				
                             #Turn hashtags into links
-                                $tweet_text = preg_replace('/#([0-9a-zA-Z_-]+)/', "<a target='blank' title='$1' href=\"http://twitter.com/search?q=%23$1\">#$1</a>",  $tweet_text);
+                                $tweet_text = preg_replace('/#([0-9a-zA-Z_-]+)/', "<a target='blank' title='$1' href=\"http://twitter.com/search?q=%23$1\">#$1</a>", $tweet_text);
 				
                             #Turn @replies into links
-                                $tweet_text = preg_replace("/@([0-9a-zA-Z_-]+)/", "<a target='blank' title='$1' href=\"http://twitter.com/$1\">@$1</a>",  $tweet_text);
+                                $tweet_text = preg_replace("/@([0-9a-zA-Z_-]+)/", "<a target='blank' title='$1' href=\"http://twitter.com/$1\">@$1</a>", $tweet_text);
                         ?>
                         <div class="slide">
                             <div style="background-color:#CCC; height:140px; padding:5px;">
@@ -388,11 +388,11 @@ else{
                         </div>
                     </div>
                     <?php
-                    if(isset($friend_details) && count($friend_details) >=10){
+                    if (isset($friend_details) && count($friend_details) >= 10) {
                     ?>
                     <div>
                     	<?php	
-                        foreach($friend_details as $friend_detail){
+                        foreach ($friend_details as $friend_detail) {
                         ?>
                     	<div style="width:28%; display:inline; float:left; background-color:#EEA61C; color:#000; padding:10px; height:50px; margin:9px; 4px; border:1px solid #000;">
                         	<div style="width:50px; height:50px; float:left; display:inline; margin-right:2px;">
@@ -414,8 +414,7 @@ else{
                     </div>
                     <br clear="all" />
                     <?php
-                    }
-                    else
+                    } else
                     {
                         echo "you have less then 10 followers";
                     }
@@ -430,11 +429,11 @@ else{
                         </div>
                     </div>
                     <?php
-                    if(isset($following_details) && count($following_details) >=10){
+                    if (isset($following_details) && count($following_details) >= 10) {
                     ?>
                     <div>
                     	<?php	
-                        foreach($following_details as $following_detail){
+                        foreach ($following_details as $following_detail) {
                         ?>
                     	<div style="width:28%; display:inline; float:left; background-color:#EEA61C; color:#000; padding:10px; height:50px; margin:9px; 4px; border:1px solid #000;">
                         	<div style="width:50px; height:50px; float:left; display:inline; margin-right:2px;">
@@ -456,8 +455,7 @@ else{
                     </div>
                     <br clear="all" />
                     <?php
-                    }
-                    else
+                    } else
                     {
                         echo "you follow less then 10 people";
                     }

@@ -23,8 +23,8 @@
     $mail->MsgHTML("Your requested follower data is in file attached below");
     // $mail->AddAttachment(__DIR__."/".FILE_NAME.'.'.$format);
 
-        if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
+        if (!$mail->Send()) {
+        echo "Mailer Error: ".$mail->ErrorInfo;
         } else {
         echo "Message has been sent";
         }
