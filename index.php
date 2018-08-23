@@ -19,15 +19,6 @@ $today = time();
 
 //include And namespace part end
 
-//define('CONSUMER_KEY', 'VYjyS0kyIAQtO9wMmH9Xcc73k'); 	// add your app consumer key between single quotes
-
-//define('CONSUMER_SECRET', '5fEwBA8OO3mjSkKhbeTfu6W4tXY81gGaO8EBUi5FWi7xGEGX92'); 
-
-//define('OAUTH_CALLBACK', 'http://visana.xyz/twiproj/callback.php'); // your app callback URL 
-
-//define('oauth_token', '842987337353052160-LL8z2AHxYRP7lHo8iDaq8cLNzeSu8OP');
-
-//define('oauth_token_secret', '6eZZno5qC6d8E5Gtc9jakmhEgvP07F3MfxOBwJ5ysLm8x');
 
 if (!isset($_SESSION['access_token'])) {
 	$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET); 	//establishing connection
