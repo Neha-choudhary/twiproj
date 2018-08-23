@@ -60,31 +60,31 @@ class Renderer extends Abstract_Renderer {
     function render(Frame $frame, $stacking = false) {
     global $_dompdf_debug;
 
-    if ( $_dompdf_debug ) {
+    if ($_dompdf_debug) {
         echo $frame;
         flush();
     }
     
     $style = $frame->get_style();
     
-    if ( in_array($style->visibility, array("hidden", "collapse")) ) {
+    if (in_array($style->visibility, array("hidden", "collapse"))) {
         return;
     }
 
     $render_self = self::$stacking_first_pass && !$stacking || !self::$stacking_first_pass;
     
-    if ( $render_self ) {
+    if ($render_self) {
         $display = $style->display;
       
         // Starts the CSS transformation
-        if ( $style->transform && is_array($style->transform) ) {
+        if ($style->transform && is_array($style->transform)) {
         $this->_canvas->save();
         list($x, $y, $w, $h) = $frame->get_padding_box();
         $origin = $style->transform_origin;
         
-        foreach($style->transform as $transform) {
+        foreach ($style->transform as $transform) {
             list($function, $values) = $transform;
-            if ( $function === "matrix" ) {
+            if ($function === "matrix") {
             $function = "transform";
             }
           
@@ -98,7 +98,7 @@ class Renderer extends Abstract_Renderer {
     
         switch ($display) {
         
-        case "block":
+            case "block":
       case "list-item":
       case "inline-block":
       case "table":
@@ -106,53 +106,53 @@ class Renderer extends Abstract_Renderer {
         $this->_render_frame("block", $frame);
         break;
   
-        case "inline":
-        if ( $frame->is_text_node() )
-            $this->_render_frame("text", $frame);
-        else
-            $this->_render_frame("inline", $frame);
-        break;
+            case "inline":
+            if ( $frame->is_text_node() )
+                $this->_render_frame("text", $frame);
+            else
+                $this->_render_frame("inline", $frame);
+            break;
   
-        case "table-cell":
-        $this->_render_frame("table-cell", $frame);
-        break;
+            case "table-cell":
+            $this->_render_frame("table-cell", $frame);
+            break;
   
-        case "table-row-group":
+            case "table-row-group":
       case "table-header-group":
       case "table-footer-group":
         $this->_render_frame("table-row-group", $frame);
         break;
   
-        case "-dompdf-list-bullet":
-        $this->_render_frame("list-bullet", $frame);
-        break;
+            case "-dompdf-list-bullet":
+            $this->_render_frame("list-bullet", $frame);
+            break;
   
-        case "-dompdf-image":
-        $this->_render_frame("image", $frame);
-        break;
+            case "-dompdf-image":
+            $this->_render_frame("image", $frame);
+            break;
         
-        case "none":
-        $node = $frame->get_node();
+            case "none":
+            $node = $frame->get_node();
             
-        if ( $node->nodeName === "script" ) {
-            if ( $node->getAttribute("type") === "text/php" ||
-               $node->getAttribute("language") === "php" ) {
-            // Evaluate embedded php scripts
-            $this->_render_frame("php", $frame);
-            }
+            if ( $node->nodeName === "script" ) {
+                if ( $node->getAttribute("type") === "text/php" ||
+                   $node->getAttribute("language") === "php" ) {
+                // Evaluate embedded php scripts
+                $this->_render_frame("php", $frame);
+                }
           
-            elseif ( $node->getAttribute("type") === "text/javascript" ||
-               $node->getAttribute("language") === "javascript" ) {
-            // Insert JavaScript
-            $this->_render_frame("javascript", $frame);
+                elseif ( $node->getAttribute("type") === "text/javascript" ||
+                   $node->getAttribute("language") === "javascript" ) {
+                // Insert JavaScript
+                $this->_render_frame("javascript", $frame);
+                }
             }
-        }
   
-        // Don't render children, so skip to next iter
-        return;
+            // Don't render children, so skip to next iter
+            return;
         
-        default:
-        break;
+            default:
+            break;
   
         }
   
@@ -160,7 +160,7 @@ class Renderer extends Abstract_Renderer {
         $this->_check_callbacks("begin_frame", $frame);
       
         // Starts the overflow: hidden box
-        if ( $style->overflow === "hidden" ) {
+        if ($style->overflow === "hidden") {
         list($x, $y, $w, $h) = $frame->get_padding_box();
         $this->_canvas->clipping_rectangle($x, $y, $w, $h);
         }
@@ -173,10 +173,10 @@ class Renderer extends Abstract_Renderer {
         $_stacking = $stacking;
       
         // Stacking context
-        if ( self::$stacking_first_pass && (
+        if (self::$stacking_first_pass && (
             $child_style->z_index !== "auto" || 
            $child_style->float !== "none" || 
-           $child->is_positionned()) ) {
+           $child->is_positionned())) {
         $z_index = ($child_style->z_index === "auto") ? 0 : intval($child_style->z_index);
         $page->add_frame_to_stacking_context($child, $z_index);
         $_stacking = true;
@@ -185,13 +185,13 @@ class Renderer extends Abstract_Renderer {
         $this->render($child, $_stacking);
     }
      
-    if ( $render_self ) {
+    if ($render_self) {
         // Ends the overflow: hidden box
-        if ( $style->overflow === "hidden" ) {
+        if ($style->overflow === "hidden") {
         $this->_canvas->clipping_end();
         }
   
-        if ( $style->transform && is_array($style->transform) ) {
+        if ($style->transform && is_array($style->transform)) {
         $this->_canvas->restore();
         }
   
@@ -241,41 +241,41 @@ class Renderer extends Abstract_Renderer {
     if (!isset($this->_renderers[$type])) {
       
         switch ($type) {
-        case "block":
-        $this->_renderers[$type] = new Block_Renderer($this->_dompdf);
-        break;
+            case "block":
+            $this->_renderers[$type] = new Block_Renderer($this->_dompdf);
+            break;
 
-        case "inline":
-        $this->_renderers[$type] = new Inline_Renderer($this->_dompdf);
-        break;
+            case "inline":
+            $this->_renderers[$type] = new Inline_Renderer($this->_dompdf);
+            break;
 
-        case "text":
-        $this->_renderers[$type] = new Text_Renderer($this->_dompdf);
-        break;
+            case "text":
+            $this->_renderers[$type] = new Text_Renderer($this->_dompdf);
+            break;
 
-        case "image":
-        $this->_renderers[$type] = new Image_Renderer($this->_dompdf);
-        break;
+            case "image":
+            $this->_renderers[$type] = new Image_Renderer($this->_dompdf);
+            break;
       
-        case "table-cell":
-        $this->_renderers[$type] = new Table_Cell_Renderer($this->_dompdf);
-        break;
+            case "table-cell":
+            $this->_renderers[$type] = new Table_Cell_Renderer($this->_dompdf);
+            break;
       
-        case "table-row-group":
-        $this->_renderers[$type] = new Table_Row_Group_Renderer($this->_dompdf);
-        break;
+            case "table-row-group":
+            $this->_renderers[$type] = new Table_Row_Group_Renderer($this->_dompdf);
+            break;
 
-        case "list-bullet":
-        $this->_renderers[$type] = new List_Bullet_Renderer($this->_dompdf);
-        break;
+            case "list-bullet":
+            $this->_renderers[$type] = new List_Bullet_Renderer($this->_dompdf);
+            break;
 
-        case "php":
-        $this->_renderers[$type] = new PHP_Evaluator($this->_canvas);
-        break;
+            case "php":
+            $this->_renderers[$type] = new PHP_Evaluator($this->_canvas);
+            break;
 
-        case "javascript":
-        $this->_renderers[$type] = new Javascript_Embedder($this->_dompdf);
-        break;
+            case "javascript":
+            $this->_renderers[$type] = new Javascript_Embedder($this->_dompdf);
+            break;
         
         }
     }

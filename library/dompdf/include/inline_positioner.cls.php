@@ -34,7 +34,7 @@ class Inline_Positioner extends Positioner {
 
     // End debugging
 
-    if ( !$p )
+    if (!$p)
         throw new DOMPDF_Exception("No block-level parent found.  Not good.");
 
     $f = $this->_frame;
@@ -44,8 +44,8 @@ class Inline_Positioner extends Positioner {
 
     // Skip the page break if in a fixed position element
     $is_fixed = false;
-    while($f = $f->get_parent()) {
-        if($f->get_style()->position === "fixed") {
+    while ($f = $f->get_parent()) {
+        if ($f->get_style()->position === "fixed") {
         $is_fixed = true;
         break;
         }
@@ -53,14 +53,14 @@ class Inline_Positioner extends Positioner {
 
     $f = $this->_frame;
 
-    if ( !$is_fixed && $f->get_parent() &&
+    if (!$is_fixed && $f->get_parent() &&
          $f->get_parent() instanceof Inline_Frame_Decorator &&
-         $f->is_text_node() ) {
+         $f->is_text_node()) {
       
         $min_max = $f->get_reflower()->get_min_max_width();
       
         // If the frame doesn't fit in the current line, a line break occurs
-        if ( $min_max["min"] > ($cb["w"] - $line->left - $line->w - $line->right) ) {
+        if ($min_max["min"] > ($cb["w"] - $line->left - $line->w - $line->right)) {
         $p->add_line();
         }
     }

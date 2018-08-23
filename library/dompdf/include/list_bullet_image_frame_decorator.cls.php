@@ -110,8 +110,9 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
     // Small hack to prevent indenting of list text
     // Image Might not exist, then position like on list_bullet_frame_decorator fallback to none. 
     if ($this->_frame->get_style()->list_style_position === "outside" ||
-         $this->_width == 0) 
-        return 0;
+         $this->_width == 0) {
+            return 0;
+    }
     //This aligns the "inside" image position with the text.
     //The text starts to the right of the image.
     //Between the image and the text there is an added margin of image width.

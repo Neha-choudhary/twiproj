@@ -106,14 +106,14 @@ class TCPDF_Adapter implements Canvas {
      */
     function __construct($paper = "letter", $orientation = "portrait") {
    
-    if ( is_array($paper) )
+    if (is_array($paper))
         $size = $paper;
-    else if ( isset(self::$PAPER_SIZES[mb_strtolower($paper)]) )
+    else if (isset(self::$PAPER_SIZES[mb_strtolower($paper)]))
         $size = self::$PAPER_SIZE[$paper];
     else
         $size = self::$PAPER_SIZE["letter"];
 
-    if ( mb_strtolower($orientation) === "landscape" ) {
+    if (mb_strtolower($orientation) === "landscape") {
         list($size[2], $size[3]) = array($size[3], $size[2]);
     }
 
@@ -128,7 +128,7 @@ class TCPDF_Adapter implements Canvas {
     $this->_page_number = $this->_page_count = 1;
     $this->_page_text = array();
 
-    $this->_last_fill_color     =
+    $this->_last_fill_color =
         $this->_last_stroke_color =
         $this->_last_line_width   = null;
 
@@ -152,8 +152,8 @@ class TCPDF_Adapter implements Canvas {
     $colour[1] = round(255 * $colour[1]);
     $colour[2] = round(255 * $colour[2]);
 
-    if ( is_null($this->_last_stroke_color) || $color != $this->_last_stroke_color ) {
-        $this->_pdf->SetDrawColor($color[0],$color[1],$color[2]);
+    if (is_null($this->_last_stroke_color) || $color != $this->_last_stroke_color) {
+        $this->_pdf->SetDrawColor($color[0], $color[1], $color[2]);
         $this->_last_stroke_color = $color;
     }
 
@@ -169,8 +169,8 @@ class TCPDF_Adapter implements Canvas {
     $colour[1] = round(255 * $colour[1]);
     $colour[2] = round(255 * $colour[2]);
 
-    if ( is_null($this->_last_fill_color) || $color != $this->_last_fill_color ) {
-        $this->_pdf->SetDrawColor($color[0],$color[1],$color[2]);
+    if (is_null($this->_last_fill_color) || $color != $this->_last_fill_color) {
+        $this->_pdf->SetDrawColor($color[0], $color[1], $color[2]);
         $this->_last_fill_color = $color;
     }
 
@@ -207,7 +207,7 @@ class TCPDF_Adapter implements Canvas {
      * @param int $count
      */
     function set_page_count($count) {
-    $this->_page_count = (int)$count;
+    $this->_page_count = (int) $count;
     }
 
     /**
@@ -227,7 +227,7 @@ class TCPDF_Adapter implements Canvas {
      */
     function line($x1, $y1, $x2, $y2, $color, $width, $style = null) {
 
-    if ( is_null($this->_last_line_width) || $width != $this->_last_line_width ) {
+    if (is_null($this->_last_line_width) || $width != $this->_last_line_width) {
         $this->_pdf->SetLineWidth($width);
         $this->_last_line_width = $width;
     }
@@ -255,7 +255,7 @@ class TCPDF_Adapter implements Canvas {
      */   
     function rectangle($x1, $y1, $w, $h, $color, $width, $style = null) {
 
-    if ( is_null($this->_last_line_width) || $width != $this->_last_line_width ) {
+    if (is_null($this->_last_line_width) || $width != $this->_last_line_width) {
         $this->_pdf->SetLineWidth($width);
         $this->_last_line_width = $width;
     }
@@ -363,7 +363,7 @@ class TCPDF_Adapter implements Canvas {
      * @param array $color
      * @param float $adjust word spacing adjustment
      */
-    function text($x, $y, $text, $font, $size, $color = array(0,0,0), $adjust = 0) {
+    function text($x, $y, $text, $font, $size, $color = array(0, 0, 0), $adjust = 0) {
     // FIXME
     }
 
@@ -401,7 +401,7 @@ class TCPDF_Adapter implements Canvas {
      */
     function add_info($label, $value) {
     $method = "Set$label";
-    if ( in_array("Title", "Author", "Keywords", "Subject") && method_exists($this->_pdf, $method) ) {
+    if (in_array("Title", "Author", "Keywords", "Subject") && method_exists($this->_pdf, $method)) {
         $this->_pdf->$method($value);
     }
     }

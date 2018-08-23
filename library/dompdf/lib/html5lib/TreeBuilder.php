@@ -157,7 +157,7 @@ class HTML5_TreeBuilder {
         $this->dom->strictErrorChecking = false;
     }
 		
-        public function getQuirksMode(){
+        public function getQuirksMode() {
             return $this->quirks_mode;
         }
 
@@ -1054,11 +1054,15 @@ class HTML5_TreeBuilder {
                             ));
                             if (in_array($a, $this->a_formatting)) {
                                 $a_i = array_search($a, $this->a_formatting, true);
-                                if ($a_i !== false) array_splice($this->a_formatting, $a_i, 1);
+                                if ($a_i !== false) {
+                                    array_splice($this->a_formatting, $a_i, 1);
+                                }
                             }
                             if (in_array($a, $this->stack)) {
                                 $a_i = array_search($a, $this->stack, true);
-                                if ($a_i !== false) array_splice($this->stack, $a_i, 1);
+                                if ($a_i !== false) {
+                                    array_splice($this->stack, $a_i, 1);
+                                }
                             }
                             break;
                         }
@@ -3401,19 +3405,19 @@ class HTML5_TreeBuilder {
     }
 
     private function getElementCategory($node) {
-        if (!is_object($node)) debug_print_backtrace();
+        if (!is_object($node)) {
+            debug_print_backtrace();
+        }
         $name = $node->tagName;
-        if (in_array($name, $this->special))
-            return self::SPECIAL;
-
-        elseif (in_array($name, $this->scoping))
-            return self::SCOPING;
-
-        elseif (in_array($name, $this->formatting))
-            return self::FORMATTING;
-
-        else
-            return self::PHRASING;
+        if (in_array($name, $this->special)) {
+                    return self::SPECIAL;
+        } elseif (in_array($name, $this->scoping)) {
+                    return self::SCOPING;
+        } elseif (in_array($name, $this->formatting)) {
+                    return self::FORMATTING;
+        } else {
+                    return self::PHRASING;
+        }
     }
 
     private function clearStackToTableContext($elements) {

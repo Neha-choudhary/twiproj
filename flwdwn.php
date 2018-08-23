@@ -58,8 +58,7 @@ if (!isset($_SESSION['access_token']))
     $_SESSION['oauth_token'] = $request_token['oauth_token'];
     $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
     $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
-}
-else
+} else
 {
     $accesstoken = $_SESSION['access_token'];
     $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $accesstoken['oauth_token'], $accesstoken['oauth_token_secret']);
@@ -114,8 +113,7 @@ if ($cursor != 0)
         if ($int_cursor == -1)
         {
             $file = new SimpleXMLElement('<xml/>');
-        }
-        else
+        } else
         {
             $file = simplexml_load_file(__DIR__."/".FILE_NAME.'.'.$format);
         }
@@ -129,8 +127,7 @@ if ($cursor != 0)
         }
 
         $file->saveXML(__DIR__."/".FILE_NAME.'.'.$format);
-    }
-    else if ($format == "json")
+    } else if ($format == "json")
     {
         $file = fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
         
@@ -143,8 +140,7 @@ if ($cursor != 0)
 
         fwrite($file, json_encode($result));
         fclose($file);
-    }
-    else if ($format == "xls")
+    } else if ($format == "xls")
     {
 
         $file = fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
@@ -207,13 +203,13 @@ if ($cursor == 0)
     $mail->MsgHTML("Your requested follower data is in file attached below");
     $mail->AddAttachment(__DIR__."/".FILE_NAME.'.'.$format);
 
-        if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
+        if (!$mail->Send()) {
+        echo "Mailer Error: ".$mail->ErrorInfo;
         } else {
         echo "Message has been sent";
         } 
        
-    if($mail->Send()){
+    if ($mail->Send()) {
         $reading = fopen(__DIR__.'/cron.txt', 'r');
         $writing = fopen(__DIR__.'/cron.tmp', 'w');
         
@@ -239,8 +235,7 @@ if ($cursor == 0)
         $cmd = "sudo bash ".__DIR__."/cron.sh";
         shell_exec($cmd);
         unlink(__DIR__."/".FILE_NAME.'.'.$format);
-    }
-    else {
+    } else {
         echo "Error while sending mail : ".$mail->ErrorInfo;
     }
 

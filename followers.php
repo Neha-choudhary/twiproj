@@ -101,21 +101,20 @@ echo $out;
 
 */
 
-if(isset($_SESSION['access_token']))
+if (isset($_SESSION['access_token']))
 {
     $access_token = $_SESSION['access_token'];
     //$connection = new TwitterOAuth(CONSUMER_KEY,CONSUMER_SECRET,$access_token['oauth_token'],$access_token['oauth_token_secret']);
-    $follower=$connection->get('followers/list',["count"=>200]);
+    $follower = $connection->get('followers/list', ["count"=>200]);
     $follower_name = array();
-    if(isset($follower->users))
+    if (isset($follower->users))
     {
         foreach ($follower->users as $f) {
-            array_push($follower_name, ["name"=>$f->name,"screen_name"=>$f->screen_name,"profile"=>$f->profile_image_url_https]);
+            array_push($follower_name, ["name"=>$f->name, "screen_name"=>$f->screen_name, "profile"=>$f->profile_image_url_https]);
         }
     }
     echo $follower_name = json_encode($follower_name);
-}
-else
+} else
 {
     echo "not set session";
 }

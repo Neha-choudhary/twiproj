@@ -20,10 +20,10 @@
     defined('TWITTER_ACCESS_TOKEN_SECRET') || define('TWITTER_ACCESS_TOKEN_SECRET', '5fEwXxxxxxxxxxxxxxxxxxxxxxxxxxxxxx2'); //Add twitter access token secret
     defined('OAUTH_CALLBACK') || define('OAUTH_CALLBACK', 'http://visana.xyz/twiproj/callback.php'); //Add twitter call back page url of your site
 	
-    defined('ABSOLUTE_CSV_DOWNLOAD_PATH') || define('ABSOLUTE_CSV_DOWNLOAD_PATH', ABSOLUTE_PATH . '/download/csv/');
-    defined('ABSOLUTE_XLS_DOWNLOAD_PATH') || define('ABSOLUTE_XLS_DOWNLOAD_PATH', ABSOLUTE_PATH . '/download/xls/');
-    defined('ABSOLUTE_XML_DOWNLOAD_PATH') || define('ABSOLUTE_XML_DOWNLOAD_PATH', ABSOLUTE_PATH . '/download/xml/');
-    defined('ABSOLUTE_PDF_DOWNLOAD_PATH') || define('ABSOLUTE_PDF_DOWNLOAD_PATH', ABSOLUTE_PATH . '/download/pdf/');
-    defined('ABSOLUTE_JSON_DOWNLOAD_PATH') || define('ABSOLUTE_JSON_DOWNLOAD_PATH', ABSOLUTE_PATH . '/download/json/');
+    defined('ABSOLUTE_CSV_DOWNLOAD_PATH') || define('ABSOLUTE_CSV_DOWNLOAD_PATH', ABSOLUTE_PATH.'/download/csv/');
+    defined('ABSOLUTE_XLS_DOWNLOAD_PATH') || define('ABSOLUTE_XLS_DOWNLOAD_PATH', ABSOLUTE_PATH.'/download/xls/');
+    defined('ABSOLUTE_XML_DOWNLOAD_PATH') || define('ABSOLUTE_XML_DOWNLOAD_PATH', ABSOLUTE_PATH.'/download/xml/');
+    defined('ABSOLUTE_PDF_DOWNLOAD_PATH') || define('ABSOLUTE_PDF_DOWNLOAD_PATH', ABSOLUTE_PATH.'/download/pdf/');
+    defined('ABSOLUTE_JSON_DOWNLOAD_PATH') || define('ABSOLUTE_JSON_DOWNLOAD_PATH', ABSOLUTE_PATH.'/download/json/');
 
 ?>

@@ -107,10 +107,10 @@ class Frame_Tree {
      */
     function build_tree() {
     $html = $this->_dom->getElementsByTagName("html")->item(0);
-    if ( is_null($html) )
+    if (is_null($html))
         $html = $this->_dom->firstChild;
 
-    if ( is_null($html) )
+    if (is_null($html))
         throw new DOMPDF_Exception("Requested HTML document contains no data.");
 
     $this->fix_tables();
@@ -122,19 +122,19 @@ class Frame_Tree {
     /**
      * Adds missing TBODYs around TR
      */
-    protected function fix_tables(){
+    protected function fix_tables() {
     $xp = new DOMXPath($this->_dom);
     
     // Move table caption before the table
     // FIXME find a better way to deal with it...
     $captions = $xp->query("//table/caption");
-    foreach($captions as $caption) {
+    foreach ($captions as $caption) {
         $table = $caption->parentNode;
         $table->parentNode->insertBefore($caption, $table);
     }
     
     $rows = $xp->query("//table/tr");
-    foreach($rows as $row) {
+    foreach ($rows as $row) {
         $tbody = $this->_dom->createElement("tbody");
         $tbody = $row->parentNode->insertBefore($tbody, $row);
         $tbody->appendChild($row);
@@ -156,9 +156,9 @@ class Frame_Tree {
     
     $frame = new Frame($node);
     $id = $frame->get_id();
-    $this->_registry[ $id ] = $frame;
+    $this->_registry[$id] = $frame;
     
-    if ( !$node->hasChildNodes() )
+    if (!$node->hasChildNodes())
         return $frame;
 
     // Fixes 'cannot access undefined property for object with
@@ -168,28 +168,29 @@ class Frame_Tree {
 
     // Store the children in an array so that the tree can be modified
     $children = array();
-    for ($i = 0; $i < $node->childNodes->length; $i++)
-        $children[] = $node->childNodes->item($i);
+    for ($i = 0; $i < $node->childNodes->length; $i++) {
+            $children[] = $node->childNodes->item($i);
+    }
 
     foreach ($children as $child) {
         $node_name = mb_strtolower($child->nodeName);
       
         // Skip non-displaying nodes
-        if ( in_array($node_name, self::$_HIDDEN_TAGS) )  {
-        if ( $node_name !== "head" &&
-             $node_name !== "style" ) 
+        if (in_array($node_name, self::$_HIDDEN_TAGS)) {
+        if ($node_name !== "head" &&
+             $node_name !== "style") 
             $child->parentNode->removeChild($child);
         continue;
         }
 
         // Skip empty text nodes
-        if ( $node_name === "#text" && $child->nodeValue == "" ) {
+        if ($node_name === "#text" && $child->nodeValue == "") {
         $child->parentNode->removeChild($child);
         continue;
         }
 
         // Skip empty image nodes
-        if ( $node_name === "img" && $child->getAttribute("src") == "" ) {
+        if ($node_name === "img" && $child->getAttribute("src") == "") {
         $child->parentNode->removeChild($child);
         continue;
         }
@@ -201,10 +202,11 @@ class Frame_Tree {
     }
   
     public function insert_node(DOMNode $node, DOMNode $new_node, $pos) {
-    if ($pos === "after" || !$node->firstChild)
-        $node->appendChild($new_node);
-    else 
-        $node->insertBefore($new_node, $node->firstChild);
+    if ($pos === "after" || !$node->firstChild) {
+            $node->appendChild($new_node);
+    } else {
+            $node->insertBefore($new_node, $node->firstChild);
+    }
     
     $this->_build_tree_r($new_node);
     
@@ -214,10 +216,11 @@ class Frame_Tree {
     $parent_id = $node->getAttribute("frame_id");
     $parent = $this->get_frame($parent_id);
     
-    if ($pos === "before")
-        $parent->prepend_child($frame, false);
-    else 
-        $parent->append_child($frame, false);
+    if ($pos === "before") {
+            $parent->prepend_child($frame, false);
+    } else {
+            $parent->append_child($frame, false);
+    }
       
     return $frame_id;
     }

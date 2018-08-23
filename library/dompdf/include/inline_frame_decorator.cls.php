@@ -20,15 +20,15 @@ class Inline_Frame_Decorator extends Frame_Decorator {
 
     function split($frame = null, $force_pagebreak = false) {
 
-    if ( is_null($frame) ) {
+    if (is_null($frame)) {
         $this->get_parent()->split($this, $force_pagebreak);
         return;
     }
 
-    if ( $frame->get_parent() !== $this )
+    if ($frame->get_parent() !== $this)
         throw new DOMPDF_Exception("Unable to split: frame is not a child of this one.");
         
-    $split = $this->copy( $this->_frame->get_node()->cloneNode() ); 
+    $split = $this->copy($this->_frame->get_node()->cloneNode()); 
     $this->get_parent()->insert_child_after($split, $this);
 
     // Unset the current node's right style properties
@@ -47,8 +47,8 @@ class Inline_Frame_Decorator extends Frame_Decorator {
     //On continuation of inline element on next line,
     //don't repeat non-vertically repeatble background images
     //See e.g. in testcase image_variants, long desriptions
-    if ( ($url = $style->background_image) && $url !== "none"
-         && ($repeat = $style->background_repeat) && $repeat !== "repeat" &&  $repeat !== "repeat-y"
+    if (($url = $style->background_image) && $url !== "none"
+         && ($repeat = $style->background_repeat) && $repeat !== "repeat" && $repeat !== "repeat-y"
         ) {
         $style->background_image = "none";
     }           

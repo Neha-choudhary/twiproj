@@ -49,34 +49,33 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 // 	$follower_name = json_encode($follower_name);
 // }
 
-if(isset($_REQUEST['flwdwn']))
+if (isset($_REQUEST['flwdwn']))
 {
     $token = $_SESSION['access_token'];
     $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $token['oauth_token'], $token['oauth_token_secret']);
-    $flwdwn=$connection->get('users/lookup',["screen_name"=>$_REQUEST['flwdwn']]);
+    $flwdwn = $connection->get('users/lookup', ["screen_name"=>$_REQUEST['flwdwn']]);
 
-    if(isset($flwdwn->errors))
+    if (isset($flwdwn->errors))
     {
         echo "No User Found";
-    }
-    else
+    } else
     {
         echo "Success";
-        $_SESSION['flwdwn']=$flwdwn[0]->screen_name;
+        $_SESSION['flwdwn'] = $flwdwn[0]->screen_name;
     }
 }
 
-if(isset($_REQUEST['format']))
+if (isset($_REQUEST['format']))
 {
-    $file = fopen("cron.txt","a");
+    $file = fopen("cron.txt", "a");
     $email = $_REQUEST['email'];
     $format = $_REQUEST['format'];
     $str = "*/15 * * * * /usr/local/bin/php ".getcwd()."/flwdwn.php ".$format." -1 ".$_SESSION['flwdwn']." ".$email." \n";
 
     //$str = "*/15 * * * * /usr/local/bin/php7.6 ".getcwd()."/flwdwn.php ".$format." -1 ".$_SESSION['flwdwn']." ".$email." \n";
 
-    $result = fwrite($file,$str);
-    if($result == true)
+    $result = fwrite($file, $str);
+    if ($result == true)
     {
         //$cmd = "sudo bash".getcwd()."/cron.sh";
             //@exec($cmd);

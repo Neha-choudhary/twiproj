@@ -36,7 +36,7 @@ class List_Bullet_Positioner extends Positioner {
 
     // This is a bit of a hack...
     $n = $this->_frame->get_next_sibling();
-    if ( $n ) {
+    if ($n) {
         $style = $n->get_style();
         $line_height = $style->length_in_pt($style->line_height, $style->get_font_size());
         $offset = $style->length_in_pt($line_height, $n->get_containing_block("h")) - $this->_frame->get_height();             

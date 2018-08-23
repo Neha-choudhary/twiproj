@@ -101,15 +101,15 @@ class Table_Frame_Decorator extends Frame_Decorator {
      */
     function split($child = null, $force_pagebreak = false) {
 
-    if ( is_null($child) ) {
+    if (is_null($child)) {
         parent::split();
         return;
     }
 
     // If $child is a header or if it is the first non-header row, do
     // not duplicate headers, simply move the table to the next page.
-    if ( count($this->_headers) && !in_array($child, $this->_headers, true) &&
-         !in_array($child->get_prev_sibling(), $this->_headers, true) ) {
+    if (count($this->_headers) && !in_array($child, $this->_headers, true) &&
+         !in_array($child->get_prev_sibling(), $this->_headers, true)) {
 
         $first_header = null;
 
@@ -118,7 +118,7 @@ class Table_Frame_Decorator extends Frame_Decorator {
 
         $new_header = $header->deep_copy();
 
-        if ( is_null($first_header) )
+        if (is_null($first_header))
             $first_header = $new_header;
 
         $this->insert_child_before($new_header, $child);
@@ -168,8 +168,8 @@ class Table_Frame_Decorator extends Frame_Decorator {
      */
     static function find_parent_table(Frame $frame) {
 
-    while ( $frame = $frame->get_parent() )
-        if ( $frame->is_table() )
+    while ($frame = $frame->get_parent())
+        if ($frame->is_table())
         break;
 
     return $frame;
@@ -221,15 +221,15 @@ class Table_Frame_Decorator extends Frame_Decorator {
     $erroneous_frames = array();
     $anon_row = false;
     $iter = $this->get_first_child();
-    while ( $iter ) {
+    while ($iter) {
         $child = $iter;
         $iter = $iter->get_next_sibling();
 
         $display = $child->get_style()->display;
 
-        if ( $anon_row ) {
+        if ($anon_row) {
 
-        if ( $display === "table-row" ) {
+        if ($display === "table-row") {
             // Add the previous anonymous row
             $this->insert_child_before($table_row, $child);
 
@@ -245,12 +245,12 @@ class Table_Frame_Decorator extends Frame_Decorator {
 
         } else {
 
-        if ( $display === "table-row" ) {
+        if ($display === "table-row") {
             $child->normalise();
             continue;
         }
 
-        if ( $display === "table-cell" ) {
+        if ($display === "table-cell") {
             // Create an anonymous table row
             $tr = $this->get_node()->ownerDocument->createElement("tr");
 
@@ -263,7 +263,7 @@ class Table_Frame_Decorator extends Frame_Decorator {
             // Lookup styles for tr tags.  If the user wants styles to work
             // better, they should make the tr explicit... I'm not going to
             // try to guess what they intended.
-            if ( $tr_style = $css->lookup("tr") )
+            if ($tr_style = $css->lookup("tr"))
             $style->merge($tr_style);
 
             // Okay, I have absolutely no idea why I need this clone here, but
@@ -279,35 +279,36 @@ class Table_Frame_Decorator extends Frame_Decorator {
             continue;
         }
 
-        if ( !in_array($display, self::$VALID_CHILDREN) ) {
+        if (!in_array($display, self::$VALID_CHILDREN)) {
             $erroneous_frames[] = $child;
             continue;
         }
 
         // Normalise other table parts (i.e. row groups)
         foreach ($child->get_children() as $grandchild) {
-            if ( $grandchild->get_style()->display === "table-row" )
+            if ($grandchild->get_style()->display === "table-row")
             $grandchild->normalise();
         }
 
         // Add headers and footers
-        if ( $display === "table-header-group" )
+        if ($display === "table-header-group")
             $this->_headers[] = $child;
 
-        else if ( $display === "table-footer-group" )
+        else if ($display === "table-footer-group")
             $this->_footers[] = $child;
         }
     }
 
-    if ( $anon_row ) {
+    if ($anon_row) {
         // Add the row to the table
         $this->_frame->append_child($table_row);
         $table_row->normalise();
         $this->_cellmap->add_row();
     }
 
-    foreach ($erroneous_frames as $frame)
-        $this->move_after($frame);
+    foreach ($erroneous_frames as $frame) {
+            $this->move_after($frame);
+    }
 
     }
 

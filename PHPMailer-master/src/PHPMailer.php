@@ -4298,12 +4298,12 @@ class PHPMailer
                 $current = 'date_header';
             } elseif (!empty($this->DKIM_extraHeaders)) {
                 foreach ($this->DKIM_extraHeaders as $extraHeader) {
-                    if (strpos($header, $extraHeader . ':') === 0) {
+                    if (strpos($header, $extraHeader.':') === 0) {
                         $headerValue = $header;
                         foreach ($this->CustomHeader as $customHeader) {
                             if ($customHeader[0] === $extraHeader) {
-                                $headerValue = trim($customHeader[0]) .
-                                                ': ' .
+                                $headerValue = trim($customHeader[0]).
+                                                ': '.
                                                 $this->encodeHeader(trim($customHeader[1]));
                                 break;
                             }
@@ -4333,10 +4333,10 @@ class PHPMailer
             $to = str_replace('|', '=7C', $this->DKIM_QP($to_header));
             $date = str_replace('|', '=7C', $this->DKIM_QP($date_header));
             $subject = str_replace('|', '=7C', $this->DKIM_QP($subject_header));
-            $copiedHeaderFields = "\tz=$from\r\n" .
-                                    "\t|$to\r\n" .
-                                    "\t|$date\r\n" .
-                                    "\t|$subject;\r\n" .
+            $copiedHeaderFields = "\tz=$from\r\n".
+                                    "\t|$to\r\n".
+                                    "\t|$date\r\n".
+                                    "\t|$subject;\r\n".
                                     $extraCopyHeaderFields;
         }
         $body = $this->DKIM_BodyC($body);

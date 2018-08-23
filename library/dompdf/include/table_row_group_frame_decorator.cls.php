@@ -34,7 +34,7 @@ class Table_Row_Group_Frame_Decorator extends Frame_Decorator {
      */
     function split($child = null, $force_pagebreak = false) {
 
-    if ( is_null($child) ) {
+    if (is_null($child)) {
         parent::split();
         return;
     }
@@ -44,14 +44,14 @@ class Table_Row_Group_Frame_Decorator extends Frame_Decorator {
     $cellmap = $this->get_parent()->get_cellmap();
     $iter = $child;
 
-    while ( $iter ) {
+    while ($iter) {
         $cellmap->remove_row($iter);
         $iter = $iter->get_next_sibling();
     }
 
     // If we are splitting at the first child remove the
     // table-row-group from the cellmap as well
-    if ( $child === $this->get_first_child() ) {
+    if ($child === $this->get_first_child()) {
         $cellmap->remove_row_group($this);
         parent::split();
         return;

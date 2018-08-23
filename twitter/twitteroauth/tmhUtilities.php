@@ -20,7 +20,7 @@ class tmhUtilities {
      * @param array $replacements if specified, the entities and their replacements will be stored to this variable
      * @return the tweet text with entities replaced with hyperlinks
      */
-    public static function entify($tweet, &$replacements=array()) {
+    public static function entify($tweet, &$replacements = array()) {
     return tmhUtilities::entify_with_options($tweet, array(), $replacements);
     }
 
@@ -33,7 +33,7 @@ class tmhUtilities {
      * @param array $replacements if specified, the entities and their replacements will be stored to this variable
      * @return the tweet text with entities replaced with hyperlinks
      */
-    public static function entify_with_options($tweet, $options=array(), &$replacements=array()) {
+    public static function entify_with_options($tweet, $options = array(), &$replacements = array()) {
     $default_opts = array(
         'encoding' => 'UTF-8',
         'target'   => '',
@@ -109,7 +109,7 @@ class tmhUtilities {
      * @param bool $dropqs whether to drop the querystring or not. Default true
      * @return string the current URL
      */
-    public static function php_self($dropqs=true) {
+    public static function php_self($dropqs = true) {
     $protocol = 'http';
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https';
@@ -138,7 +138,7 @@ class tmhUtilities {
         $host = "$host:$port";
     }
     $url = "$scheme://$host$path";
-    if ( ! $dropqs)
+    if (!$dropqs)
         return "{$url}?{$qs}";
     else
         return $url;
@@ -157,9 +157,9 @@ class tmhUtilities {
 
     if (!self::is_cli())
         echo '<pre style="word-wrap: break-word">';
-    if ( is_object($obj) )
+    if (is_object($obj))
         print_r($obj);
-    elseif ( is_array($obj) )
+    elseif (is_array($obj))
         print_r($obj);
     else
         echo $obj;
@@ -185,11 +185,11 @@ class tmhUtilities {
      * @param string $useauth whether to use authentication when making the request. Default true.
      * @param string $multipart whether this request contains multipart data. Default false
      */
-    public static function auto_fix_time_request($tmhOAuth, $method, $url, $params=array(), $useauth=true, $multipart=false) {
+    public static function auto_fix_time_request($tmhOAuth, $method, $url, $params = array(), $useauth = true, $multipart = false) {
     $tmhOAuth->request($method, $url, $params, $useauth, $multipart);
 
     // if we're not doing auth the timestamp isn't important
-    if ( ! $useauth)
+    if (!$useauth)
         return;
 
     // some error that isn't a 401
@@ -230,7 +230,7 @@ class tmhUtilities {
      * @return string
      * @url http://www.dasprids.de/blog/2008/08/22/getting-a-password-hidden-from-stdin-with-php-cli
      */
-    public static function read_password($prompt, $stars=false) {
+    public static function read_password($prompt, $stars = false) {
     echo $prompt;
     $style = shell_exec('stty -g');
 
@@ -248,9 +248,9 @@ class tmhUtilities {
           if (strlen($password) > 0) {
             fwrite(STDOUT, "\x08 \x08");
             $password = substr($password, 0, -1);
-            }
-        else
-            fwrite(STDOUT, "*");
+            } else {
+                    fwrite(STDOUT, "*");
+        }
             $password .= $char;
         endif;
         endwhile;
@@ -270,10 +270,11 @@ class tmhUtilities {
      * @return true if $haystack ends with $needle, false otherwise
      */
     public static function endswith($haystack, $needle) {
-    $haylen  = strlen($haystack);
+    $haylen = strlen($haystack);
     $needlelen = strlen($needle);
-    if ($needlelen > $haylen)
-        return false;
+    if ($needlelen > $haylen) {
+            return false;
+    }
 
     return substr_compare($haystack, $needle, -$needlelen) === 0;
     }

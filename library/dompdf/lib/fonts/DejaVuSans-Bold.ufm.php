@@ -1,6 +1,6 @@
-<?php return array (
+<?php return array(
     'codeToName' => 
-    array (
+    array(
     ),
     'isUnicode' => true,
     'FontName' => 'DejaVuSans-Bold',
@@ -15,7 +15,7 @@
     'UnderlineThickness' => '43.9453125',
     'IsFixedPitch' => 'false',
     'FontBBox' => 
-    array (
+    array(
     0 => '-1069',
     1 => '-415',
     2 => '1975',
@@ -23,7 +23,7 @@
     ),
     'StartCharMetrics' => '5180',
     'C' => 
-    array (
+    array(
     0 => 5395,
     32 => 348,
     33 => 456,

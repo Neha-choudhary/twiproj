@@ -25,7 +25,7 @@ class Table_Row_Frame_Reflower extends Frame_Reflower {
     function reflow(Frame_Decorator $block = null) {
     $page = $this->_frame->get_root();
 
-    if ( $page->is_full() )
+    if ($page->is_full())
         return;
 
     $this->_frame->position();
@@ -34,7 +34,7 @@ class Table_Row_Frame_Reflower extends Frame_Reflower {
 
     foreach ($this->_frame->get_children() as $child) {
 
-        if ( $page->is_full() )
+        if ($page->is_full())
         return;
 
         $child->set_containing_block($cb);
@@ -42,7 +42,7 @@ class Table_Row_Frame_Reflower extends Frame_Reflower {
 
     }
 
-    if ( $page->is_full() )
+    if ($page->is_full())
         return;
 
     $table = Table_Frame_Decorator::find_parent_table($this->_frame);

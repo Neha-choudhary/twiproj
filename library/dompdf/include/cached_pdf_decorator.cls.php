@@ -24,7 +24,7 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
     protected $_pdf;
     protected $_cache_id;
     protected $_current_page_id;
-    protected $_fonts;  // fonts used in this document
+    protected $_fonts; // fonts used in this document
   
     function __construct($cache_id, CPDF_Adapter $pdf) {
     $this->_pdf = $pdf;
@@ -83,12 +83,12 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
     $this->_pdf->image($img_url, $x, $y, $w, $h);
     }
   
-    function text($x, $y, $text, $font, $size, $color = array(0,0,0), $adjust = 0, $angle = 0) {
+    function text($x, $y, $text, $font, $size, $color = array(0, 0, 0), $adjust = 0, $angle = 0) {
     $this->_fonts[$font] = true;
     $this->_pdf->text($x, $y, $text, $font, $size, $color, $adjust, $angle);
     }
 
-    function page_text($x, $y, $text, $font, $size, $color = array(0,0,0), $adjust = 0, $angle = 0) {
+    function page_text($x, $y, $text, $font, $size, $color = array(0, 0, 0), $adjust = 0, $angle = 0) {
     
     // We want to remove this from cached pages since it may not be correct
     $this->_pdf->close_object();
@@ -121,7 +121,7 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
   
     function stream($filename) {
     // Store the last page in the page cache
-    if ( !is_null($this->_current_page_id) ) {
+    if (!is_null($this->_current_page_id)) {
         $this->_pdf->close_object();
         $this->_pdf->add_object($this->_current_page_id, "add");
         Page_Cache::store_page($this->_cache_id,
@@ -137,7 +137,7 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
   
     function &output() {
     // Store the last page in the page cache
-    if ( !is_null($this->_current_page_id) ) {
+    if (!is_null($this->_current_page_id)) {
         $this->_pdf->close_object();
         $this->_pdf->add_object($this->_current_page_id, "add");
         Page_Cache::store_page($this->_cache_id,

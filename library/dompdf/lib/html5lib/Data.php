@@ -106,9 +106,15 @@ class HTML5_Data
         }
         // set up the actual character
         $ret = '';
-        if ($w) $ret .= chr($w);
-        if ($z) $ret .= chr($z);
-        if ($y) $ret .= chr($y);
+        if ($w) {
+            $ret .= chr($w);
+        }
+        if ($z) {
+            $ret .= chr($z);
+        }
+        if ($y) {
+            $ret .= chr($y);
+        }
         $ret .= chr($x);
 
         return $ret;

@@ -23,12 +23,12 @@ class Absolute_Positioner extends Positioner {
     
     list($x, $y, $w, $h) = $frame->get_containing_block();
 
-    $top    = $style->length_in_pt($style->top,    $h);
-    $right  = $style->length_in_pt($style->right,  $w);
+    $top    = $style->length_in_pt($style->top, $h);
+    $right  = $style->length_in_pt($style->right, $w);
     $bottom = $style->length_in_pt($style->bottom, $h);
-    $left   = $style->length_in_pt($style->left,   $w);
+    $left   = $style->length_in_pt($style->left, $w);
     
-    if ( $p && !($left === "auto" && $right === "auto") ) {
+    if ($p && !($left === "auto" && $right === "auto")) {
         // Get the parent's padding box (see http://www.w3.org/TR/CSS21/visuren.html#propdef-top)
         list($x, $y, $w, $h) = $p->get_padding_box();
     }
@@ -53,12 +53,12 @@ class Absolute_Positioner extends Positioner {
     
     *****************************/
     
-    if ( $left === "auto" ) {
-        if ( $right === "auto" ) {
+    if ($left === "auto") {
+        if ($right === "auto") {
         // A or E - Keep the frame at the same position
         }
         else {
-        if ( $orig_width === "auto" ) {
+        if ($orig_width === "auto") {
             // C
             $x += $w - $width - $right;
         }
@@ -69,12 +69,12 @@ class Absolute_Positioner extends Positioner {
         }
     }
     else {
-        if ( $right === "auto" ) {
+        if ($right === "auto") {
         // B or F
         $x += $left;
         }
         else {
-        if ( $orig_width === "auto" ) {
+        if ($orig_width === "auto") {
             // D - TODO change width
             $x += $left;
         }
@@ -86,13 +86,13 @@ class Absolute_Positioner extends Positioner {
     }
     
     // The same vertically
-    if ( $top === "auto" ) {
-        if ( $bottom === "auto" ) {
+    if ($top === "auto") {
+        if ($bottom === "auto") {
         // A or E - Keep the frame at the same position
         $y = $frame->get_parent()->get_current_line_box()->y;
         }
         else {
-        if ( $orig_height === "auto" ) {
+        if ($orig_height === "auto") {
             // C
             $y += $h - $height - $bottom;
         }
@@ -103,12 +103,12 @@ class Absolute_Positioner extends Positioner {
         }
     }
     else {
-        if ( $bottom === "auto" ) {
+        if ($bottom === "auto") {
         // B or F
         $y += $top;
         }
         else {
-        if ( $orig_height === "auto" ) {
+        if ($orig_height === "auto") {
             // D - TODO change height
             $y += $top;
         }
