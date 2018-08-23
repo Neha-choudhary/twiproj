@@ -1,6 +1,6 @@
 <?php return array (
-  'codeToName' => 
-  array (
+    'codeToName' => 
+    array (
     32 => 'space',
     160 => 'space',
     33 => 'exclam',
@@ -218,35 +218,35 @@
     158 => 'zcaron',
     185 => 'onesuperior',
     128 => 'Euro',
-  ),
-  'isUnicode' => false,
-  'FontName' => 'Times-Roman',
-  'FullName' => 'Times Roman',
-  'FamilyName' => 'Times',
-  'Weight' => 'Roman',
-  'ItalicAngle' => '0',
-  'IsFixedPitch' => 'false',
-  'CharacterSet' => 'ExtendedRoman',
-  'FontBBox' => 
-  array (
+    ),
+    'isUnicode' => false,
+    'FontName' => 'Times-Roman',
+    'FullName' => 'Times Roman',
+    'FamilyName' => 'Times',
+    'Weight' => 'Roman',
+    'ItalicAngle' => '0',
+    'IsFixedPitch' => 'false',
+    'CharacterSet' => 'ExtendedRoman',
+    'FontBBox' => 
+    array (
     0 => '-168',
     1 => '-218',
     2 => '1000',
     3 => '898',
-  ),
-  'UnderlinePosition' => '-100',
-  'UnderlineThickness' => '50',
-  'Version' => '002.00',
-  'EncodingScheme' => 'WinAnsiEncoding',
-  'CapHeight' => '662',
-  'XHeight' => '450',
-  'Ascender' => '683',
-  'Descender' => '-217',
-  'StdHW' => '28',
-  'StdVW' => '84',
-  'StartCharMetrics' => '317',
-  'C' => 
-  array (
+    ),
+    'UnderlinePosition' => '-100',
+    'UnderlineThickness' => '50',
+    'Version' => '002.00',
+    'EncodingScheme' => 'WinAnsiEncoding',
+    'CapHeight' => '662',
+    'XHeight' => '450',
+    'Ascender' => '683',
+    'Descender' => '-217',
+    'StdHW' => '28',
+    'StdVW' => '84',
+    'StartCharMetrics' => '317',
+    'C' => 
+    array (
     32 => 250,
     160 => 250,
     33 => 333,
@@ -563,8 +563,8 @@
     185 => 300,
     'imacron' => 278,
     128 => 500,
-  ),
-  'CIDtoGID_Compressed' => true,
-  'CIDtoGID' => 'eJwDAAAAAAE=',
-  '_version_' => 5,
+    ),
+    'CIDtoGID_Compressed' => true,
+    'CIDtoGID' => 'eJwDAAAAAAE=',
+    '_version_' => 5,
 );

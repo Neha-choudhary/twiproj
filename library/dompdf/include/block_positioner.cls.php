@@ -16,39 +16,39 @@
 class Block_Positioner extends Positioner {
 
 
-  function __construct(Frame_Decorator $frame) { parent::__construct($frame); }
+    function __construct(Frame_Decorator $frame) { parent::__construct($frame); }
   
-  //........................................................................
+    //........................................................................
 
-  function position() {
+    function position() {
     $frame = $this->_frame;
     $style = $frame->get_style();
     $cb = $frame->get_containing_block();
     $p = $frame->find_block_parent();
     
     if ( $p ) {
-      $float = $style->float;
-      if ( !DOMPDF_ENABLE_CSS_FLOAT || !$float || $float === "none" ) {
+        $float = $style->float;
+        if ( !DOMPDF_ENABLE_CSS_FLOAT || !$float || $float === "none" ) {
         $p->add_line(true);
-      }
-      $y = $p->get_current_line_box()->y;
+        }
+        $y = $p->get_current_line_box()->y;
       
     } else
-      $y = $cb["y"];
+        $y = $cb["y"];
 
     $x = $cb["x"];
 
     // Relative positionning
     if ( $style->position === "relative" ) {
-      $top =    $style->length_in_pt($style->top,    $cb["h"]);
-      //$right =  $style->length_in_pt($style->right,  $cb["w"]);
-      //$bottom = $style->length_in_pt($style->bottom, $cb["h"]);
-      $left =   $style->length_in_pt($style->left,   $cb["w"]);
+        $top =    $style->length_in_pt($style->top,    $cb["h"]);
+        //$right =  $style->length_in_pt($style->right,  $cb["w"]);
+        //$bottom = $style->length_in_pt($style->bottom, $cb["h"]);
+        $left =   $style->length_in_pt($style->left,   $cb["w"]);
       
-      $x += $left;
-      $y += $top;
+        $x += $left;
+        $y += $top;
     }
     
     $frame->set_position($x, $y);
-  }
+    }
 }

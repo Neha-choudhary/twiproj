@@ -15,35 +15,35 @@
  */
 class Table_Row_Frame_Decorator extends Frame_Decorator {
 
-  // protected members
+    // protected members
   
-  function __construct(Frame $frame, DOMPDF $dompdf) {
+    function __construct(Frame $frame, DOMPDF $dompdf) {
     parent::__construct($frame, $dompdf);
-  }
+    }
   
-  //........................................................................ 
+    //........................................................................ 
 
-  /**
-   * Remove all non table-cell frames from this row and move them after
-   * the table.
-   */
-  function normalise() {
+    /**
+     * Remove all non table-cell frames from this row and move them after
+     * the table.
+     */
+    function normalise() {
 
     // Find our table parent
     $p = Table_Frame_Decorator::find_parent_table($this);
     
     $erroneous_frames = array();
     foreach ($this->get_children() as $child) {      
-      $display = $child->get_style()->display;
+        $display = $child->get_style()->display;
 
-      if ( $display !== "table-cell" )
+        if ( $display !== "table-cell" )
         $erroneous_frames[] = $child;
     }
     
     //  dump the extra nodes after the table.
     foreach ($erroneous_frames as $frame) 
-      $p->move_after($frame);
-  }
+        $p->move_after($frame);
+    }
   
   
 }

@@ -1,6 +1,6 @@
 <?php return array (
-  'codeToName' => 
-  array (
+    'codeToName' => 
+    array (
     32 => 'space',
     160 => 'space',
     33 => 'exclam',
@@ -218,35 +218,35 @@
     158 => 'zcaron',
     185 => 'onesuperior',
     128 => 'Euro',
-  ),
-  'isUnicode' => false,
-  'FontName' => 'Courier',
-  'FullName' => 'Courier',
-  'FamilyName' => 'Courier',
-  'Weight' => 'Medium',
-  'ItalicAngle' => '0',
-  'IsFixedPitch' => 'true',
-  'CharacterSet' => 'ExtendedRoman',
-  'FontBBox' => 
-  array (
+    ),
+    'isUnicode' => false,
+    'FontName' => 'Courier',
+    'FullName' => 'Courier',
+    'FamilyName' => 'Courier',
+    'Weight' => 'Medium',
+    'ItalicAngle' => '0',
+    'IsFixedPitch' => 'true',
+    'CharacterSet' => 'ExtendedRoman',
+    'FontBBox' => 
+    array (
     0 => '-23',
     1 => '-250',
     2 => '715',
     3 => '805',
-  ),
-  'UnderlinePosition' => '-100',
-  'UnderlineThickness' => '50',
-  'Version' => '003.000',
-  'EncodingScheme' => 'WinAnsiEncoding',
-  'CapHeight' => '562',
-  'XHeight' => '426',
-  'Ascender' => '629',
-  'Descender' => '-157',
-  'StdHW' => '51',
-  'StdVW' => '51',
-  'StartCharMetrics' => '317',
-  'C' => 
-  array (
+    ),
+    'UnderlinePosition' => '-100',
+    'UnderlineThickness' => '50',
+    'Version' => '003.000',
+    'EncodingScheme' => 'WinAnsiEncoding',
+    'CapHeight' => '562',
+    'XHeight' => '426',
+    'Ascender' => '629',
+    'Descender' => '-157',
+    'StdHW' => '51',
+    'StdVW' => '51',
+    'StartCharMetrics' => '317',
+    'C' => 
+    array (
     32 => 600,
     160 => 600,
     33 => 600,
@@ -563,8 +563,8 @@
     185 => 600,
     'imacron' => 600,
     128 => 600,
-  ),
-  'CIDtoGID_Compressed' => true,
-  'CIDtoGID' => 'eJwDAAAAAAE=',
-  '_version_' => 5,
+    ),
+    'CIDtoGID_Compressed' => true,
+    'CIDtoGID' => 'eJwDAAAAAAE=',
+    '_version_' => 5,
 );

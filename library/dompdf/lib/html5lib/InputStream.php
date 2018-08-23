@@ -164,7 +164,7 @@ class HTML5_InputStream {
      */
     public function getCurrentLine() {
         // Check the string isn't empty
-        if($this->EOF) {
+        if ($this->EOF) {
             // Add one to $this->char because we want the number for the next
             // byte to be processed.
             return substr_count($this->data, "\n", 0, min($this->char, $this->EOF)) + 1;
@@ -187,18 +187,18 @@ class HTML5_InputStream {
 
         // However, for here we want the length up until the next byte to be
         // processed, so add one to the current byte ($this->char).
-        if($lastLine !== false) {
+        if ($lastLine !== false) {
             $findLengthOf = substr($this->data, $lastLine + 1, $this->char - 1 - $lastLine);
         } else {
             $findLengthOf = substr($this->data, 0, $this->char);
         }
 
         // Get the length for the string we need.
-        if(extension_loaded('iconv')) {
+        if (extension_loaded('iconv')) {
             return iconv_strlen($findLengthOf, 'utf-8');
-        } elseif(extension_loaded('mbstring')) {
+        } elseif (extension_loaded('mbstring')) {
             return mb_strlen($findLengthOf, 'utf-8');
-        } elseif(extension_loaded('xml')) {
+        } elseif (extension_loaded('xml')) {
             return strlen(utf8_decode($findLengthOf));
         } else {
             $count = count_chars($findLengthOf);
@@ -224,7 +224,7 @@ class HTML5_InputStream {
      * @note This performs bounds checking
      */
     public function remainingChars() {
-        if($this->char < $this->EOF) {
+        if ($this->char < $this->EOF) {
             $data = substr($this->data, $this->char);
             $this->char = $this->EOF;
             return $data;

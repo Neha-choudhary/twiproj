@@ -15,18 +15,18 @@
  */
 class PHP_Evaluator {
   
-  /**
-   * @var Canvas
-   */
-  protected $_canvas;
+    /**
+     * @var Canvas
+     */
+    protected $_canvas;
 
-  function __construct(Canvas $canvas) {
+    function __construct(Canvas $canvas) {
     $this->_canvas = $canvas;
-  }
+    }
 
-  function evaluate($code, $vars = array()) {
+    function evaluate($code, $vars = array()) {
     if ( !DOMPDF_ENABLE_PHP )
-      return;
+        return;
     
     // Set up some variables for the inline code
     $pdf = $this->_canvas;
@@ -35,14 +35,14 @@ class PHP_Evaluator {
     
     // Override those variables if passed in
     foreach ($vars as $k => $v) {
-      $$k = $v;
+        $$k = $v;
     }
 
     //$code = html_entity_decode($code); // @todo uncomment this when tested
     eval(utf8_decode($code)); 
-  }
+    }
 
-  function render($frame) {
+    function render($frame) {
     $this->evaluate($frame->get_node()->nodeValue);
-  }
+    }
 }
