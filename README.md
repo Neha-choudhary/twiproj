@@ -94,6 +94,8 @@ This is First Version so **Update to be done And Future Fixes Includes:**
 
 * In this version i didn't code for **followers searchbox** because if user's numbers of followers are high then looking for result was taking time , untill i find a optimal solution it's on hold.
 
+* This version is not responsive.
+
 ## Tools:
 * Sublime Text Editor
 * Putty client
