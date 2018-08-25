@@ -14,12 +14,12 @@
     $mail->SMTPSecure = false;
     $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
     $mail->IsHTML(true);
-    $mail->Username = "twiproj@visana.xyz";  
-    $mail->Password = "Nir@jNNN9";
+    $mail->Username = "Email";  
+    $mail->Password = "pass";
     $mail->SetFrom('twiproj@visana.xyz', 'Twitter-data');
     $mail->Subject = "Followers Data";
     $mail->AltBody = "";
-    $mail->AddAddress("niraj.visana@gmail.com");
+    $mail->AddAddress("Enter address here");
     $mail->MsgHTML("Your requested follower data is in file attached below");
     // $mail->AddAttachment(__DIR__."/".FILE_NAME.'.'.$format);
 
