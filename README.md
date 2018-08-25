@@ -104,7 +104,7 @@ This is First Version so **Update to be done And Future Fixes Includes:**
 
 * Shaitan ki duniya mein bhagvan ka insaan **StackOverFlow**
 
-* Many thanks to Our Prof for pointing out essential bugs, And 24*7 Learning policy
+* Many thanks to Our Prof for pointing out essential bugs
 
 * There are so many Youtube toutorials are there i refered this given playlist:
 (check it out and do support creator)
