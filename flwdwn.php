@@ -194,8 +194,8 @@ if ($cursor == 0)
     $mail->SMTPSecure = false;
     $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
     $mail->IsHTML(true);
-    $mail->Username = "twiproj@visana.xyz";  
-    $mail->Password = "Nir@jNNN9";
+    $mail->Username = "";  
+    $mail->Password = "";
     $mail->SetFrom('twiproj@visana.xyz', 'Twitter-data');
     $mail->Subject = "Followers Data";
     $mail->AltBody = "";
