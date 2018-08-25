@@ -92,6 +92,13 @@ This is First Version so **Update to be done And Future Fixes Includes:**
 
 * Do not put '@' in Textbox while Entering Handler And code will verify your inputed handler so if entered handler is invalid , it will not gonna start a job.
 
+* In this version i didn't code for **followers searchbox** because if user's numbers of followers are high then looking for result was taking time , untill i find a optimal solution it's on hold.
+
+## Tools:
+* Sublime Text Editor
+* Putty client
+* scrutinizer-ci
+* Browser::FireFox developer edition
 
 ## Dev:
 
