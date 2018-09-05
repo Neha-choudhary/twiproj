@@ -25,8 +25,9 @@ class PHP_Evaluator {
     }
 
     function evaluate($code, $vars = array()) {
-    if (!DOMPDF_ENABLE_PHP)
-        return;
+    if (!DOMPDF_ENABLE_PHP) {
+            return;
+    }
     
     // Set up some variables for the inline code
     $pdf = $this->_canvas;

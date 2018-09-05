@@ -74,8 +74,9 @@ class Block_Frame_Decorator extends Frame_Decorator {
     }
 
     function clear_line($i) {
-    if (isset($this->_line_boxes[$i]))
-        unset($this->_line_boxes[$i]);
+    if (isset($this->_line_boxes[$i])) {
+            unset($this->_line_boxes[$i]);
+    }
     }
 
     /**
@@ -90,26 +91,33 @@ class Block_Frame_Decorator extends Frame_Decorator {
      */
     function set_line($lineno, $y = null, $w = null, $h = null, $tallest_frame = null, $left = null, $right = null) {
 
-    if (is_array($y))
-        extract($y);
+    if (is_array($y)) {
+            extract($y);
+    }
 
-    if (is_numeric($y))
-        $this->_line_boxes[$lineno]->y = $y;
+    if (is_numeric($y)) {
+            $this->_line_boxes[$lineno]->y = $y;
+    }
 
-    if (is_numeric($w))
-        $this->_line_boxes[$lineno]->w = $w;
+    if (is_numeric($w)) {
+            $this->_line_boxes[$lineno]->w = $w;
+    }
 
-    if (is_numeric($h))
-        $this->_line_boxes[$lineno]->h = $h;
+    if (is_numeric($h)) {
+            $this->_line_boxes[$lineno]->h = $h;
+    }
 
-    if ($tallest_frame && $tallest_frame instanceof Frame)
-        $this->_line_boxes[$lineno]->tallest_frame = $tallest_frame;
+    if ($tallest_frame && $tallest_frame instanceof Frame) {
+            $this->_line_boxes[$lineno]->tallest_frame = $tallest_frame;
+    }
 
-    if (is_numeric($left))
-        $this->_line_boxes[$lineno]->left = $left;
+    if (is_numeric($left)) {
+            $this->_line_boxes[$lineno]->left = $left;
+    }
 
-    if (is_numeric($right))
-        $this->_line_boxes[$lineno]->right = $right;
+    if (is_numeric($right)) {
+            $this->_line_boxes[$lineno]->right = $right;
+    }
     }
 
 
@@ -162,8 +170,9 @@ class Block_Frame_Decorator extends Frame_Decorator {
 
     $w = $frame->get_margin_width();
 
-    if ($w == 0)
-        return;
+    if ($w == 0) {
+            return;
+    }
 
     // Debugging code:
     /*
@@ -183,16 +192,18 @@ class Block_Frame_Decorator extends Frame_Decorator {
     // End debugging
 
     $line = $this->_line_boxes[$this->_cl];
-    if ($line->left + $line->w + $line->right + $w > $this->get_containing_block("w"))
-        $this->add_line();
+    if ($line->left + $line->w + $line->right + $w > $this->get_containing_block("w")) {
+            $this->add_line();
+    }
 
     $frame->position();
 
     $current_line = $this->_line_boxes[$this->_cl];
     $current_line->add_frame($frame);
 
-    if ($frame->is_text_node())
-        $current_line->wc += count(preg_split("/\s+/", trim($frame->get_text())));
+    if ($frame->is_text_node()) {
+            $current_line->wc += count(preg_split("/\s+/", trim($frame->get_text())));
+    }
 
     $this->increase_line_width($w);
     
@@ -204,13 +215,15 @@ class Block_Frame_Decorator extends Frame_Decorator {
     $i = $this->_cl;
 
     while ($i >= 0) {
-        if (($j = in_array($frame, $this->_line_boxes[$i]->get_frames(), true)) !== false)
-        break;
+        if (($j = in_array($frame, $this->_line_boxes[$i]->get_frames(), true)) !== false) {
+                break;
+        }
         $i--;
     }
 
-    if ($j === false)
-        return;
+    if ($j === false) {
+            return;
+    }
 
     // Remove $frame and all frames that follow
     while ($j < count($this->_line_boxes[$i]->get_frames())) {
@@ -224,8 +237,9 @@ class Block_Frame_Decorator extends Frame_Decorator {
 
     // Recalculate the height of the line
     $h = 0;
-    foreach ($this->_line_boxes[$i]->get_frames() as $f)
-        $h = max($h, $f->get_margin_height());
+    foreach ($this->_line_boxes[$i]->get_frames() as $f) {
+            $h = max($h, $f->get_margin_height());
+    }
 
     $this->_line_boxes[$i]->h = $h;
 

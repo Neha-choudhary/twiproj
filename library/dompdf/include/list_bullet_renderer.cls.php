@@ -152,19 +152,19 @@ class List_Bullet_Renderer extends Abstract_Renderer {
         $fill = true;
 
             case "circle":
-            list($x,$y) = $frame->get_position();
-            $r = ($font_size*(List_Bullet_Frame_Decorator::BULLET_SIZE /*-List_Bullet_Frame_Decorator::BULLET_THICKNESS*/ ))/2;
-            $x -= $font_size*(List_Bullet_Frame_Decorator::BULLET_SIZE/2);
-            $y += ($font_size*(1-List_Bullet_Frame_Decorator::BULLET_DESCENT))/2;
-            $o = $font_size*List_Bullet_Frame_Decorator::BULLET_THICKNESS;
+            list($x, $y) = $frame->get_position();
+            $r = ($font_size * (List_Bullet_Frame_Decorator::BULLET_SIZE /*-List_Bullet_Frame_Decorator::BULLET_THICKNESS*/)) / 2;
+            $x -= $font_size * (List_Bullet_Frame_Decorator::BULLET_SIZE / 2);
+            $y += ($font_size * (1 - List_Bullet_Frame_Decorator::BULLET_DESCENT)) / 2;
+            $o = $font_size * List_Bullet_Frame_Decorator::BULLET_THICKNESS;
             $this->_canvas->circle($x, $y, $r, $style->color, $o, null, $fill);
             break;
 
             case "square":
             list($x, $y) = $frame->get_position();
-            $w = $font_size*List_Bullet_Frame_Decorator::BULLET_SIZE;
+            $w = $font_size * List_Bullet_Frame_Decorator::BULLET_SIZE;
             $x -= $w;
-            $y += ($font_size*(1-List_Bullet_Frame_Decorator::BULLET_DESCENT-List_Bullet_Frame_Decorator::BULLET_SIZE))/2;
+            $y += ($font_size * (1 - List_Bullet_Frame_Decorator::BULLET_DESCENT - List_Bullet_Frame_Decorator::BULLET_SIZE)) / 2;
             $this->_canvas->filled_rectangle($x, $y, $w, $w, $style->color);
             break;
     

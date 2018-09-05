@@ -87,8 +87,9 @@ abstract class Frame_Decorator extends Frame {
     function dispose($recursive = false) {
     
     if ($recursive) {
-        while ($child = $this->get_first_child())
-        $child->dispose(true);
+        while ($child = $this->get_first_child()) {
+                $child->dispose(true);
+        }
     }
     
     $this->_root = null;
@@ -201,42 +202,49 @@ abstract class Frame_Decorator extends Frame {
     function __toString() { return $this->_frame->__toString(); }
   
     function prepend_child(Frame $child, $update_node = true) {
-    while ($child instanceof Frame_Decorator)
-        $child = $child->_frame;
+    while ($child instanceof Frame_Decorator) {
+            $child = $child->_frame;
+    }
     
     $this->_frame->prepend_child($child, $update_node);
     }
 
     function append_child(Frame $child, $update_node = true) {
-    while ($child instanceof Frame_Decorator)
-        $child = $child->_frame;
+    while ($child instanceof Frame_Decorator) {
+            $child = $child->_frame;
+    }
 
     $this->_frame->append_child($child, $update_node);
     }
 
     function insert_child_before(Frame $new_child, Frame $ref, $update_node = true) {
-    while ($new_child instanceof Frame_Decorator)
-        $new_child = $new_child->_frame;
+    while ($new_child instanceof Frame_Decorator) {
+            $new_child = $new_child->_frame;
+    }
 
-    if ($ref instanceof Frame_Decorator)
-        $ref = $ref->_frame;
+    if ($ref instanceof Frame_Decorator) {
+            $ref = $ref->_frame;
+    }
 
     $this->_frame->insert_child_before($new_child, $ref, $update_node);
     }
 
     function insert_child_after(Frame $new_child, Frame $ref, $update_node = true) {
-    while ($new_child instanceof Frame_Decorator)
-        $new_child = $new_child->_frame;
+    while ($new_child instanceof Frame_Decorator) {
+            $new_child = $new_child->_frame;
+    }
 
-    while ($ref instanceof Frame_Decorator)
-        $ref = $ref->_frame;
+    while ($ref instanceof Frame_Decorator) {
+            $ref = $ref->_frame;
+    }
     
     $this->_frame->insert_child_after($new_child, $ref, $update_node);
     }
 
     function remove_child(Frame $child, $update_node = true) {
-    while ($child instanceof Frame_Decorator)
-        $child = $new_child->_frame;
+    while ($child instanceof Frame_Decorator) {
+            $child = $new_child->_frame;
+    }
 
     $this->_frame->remove_child($child, $update_node);
     }
@@ -249,13 +257,15 @@ abstract class Frame_Decorator extends Frame {
     function get_parent() {
     $p = $this->_frame->get_parent();
     if ($p && $deco = $p->get_decorator()) {
-        while ($tmp = $deco->get_decorator())
-        $deco = $tmp;      
+        while ($tmp = $deco->get_decorator()) {
+                $deco = $tmp;
+        }
         return $deco;
-    } else if ($p)
-        return $p;
-    else
-        return null;
+    } else if ($p) {
+            return $p;
+    } else {
+            return null;
+    }
     }
 
     /**
@@ -264,13 +274,15 @@ abstract class Frame_Decorator extends Frame {
     function get_first_child() {
     $c = $this->_frame->get_first_child();
     if ($c && $deco = $c->get_decorator()) {
-        while ($tmp = $deco->get_decorator())
-        $deco = $tmp;      
+        while ($tmp = $deco->get_decorator()) {
+                $deco = $tmp;
+        }
         return $deco;
-    } else if ($c)
-        return $c;
-    else
-        return null;
+    } else if ($c) {
+            return $c;
+    } else {
+            return null;
+    }
     }
 
     /**
@@ -279,13 +291,15 @@ abstract class Frame_Decorator extends Frame {
     function get_last_child() {
     $c = $this->_frame->get_last_child();
     if ($c && $deco = $c->get_decorator()) {
-        while ($tmp = $deco->get_decorator())
-        $deco = $tmp;      
+        while ($tmp = $deco->get_decorator()) {
+                $deco = $tmp;
+        }
         return $deco;
-    } else if ($c)
-        return $c;
-    else
-        return null;
+    } else if ($c) {
+            return $c;
+    } else {
+            return null;
+    }
     }
 
     /**
@@ -294,13 +308,15 @@ abstract class Frame_Decorator extends Frame {
     function get_prev_sibling() {
     $s = $this->_frame->get_prev_sibling();
     if ($s && $deco = $s->get_decorator()) {
-        while ($tmp = $deco->get_decorator())
-        $deco = $tmp;      
+        while ($tmp = $deco->get_decorator()) {
+                $deco = $tmp;
+        }
         return $deco;
-    } else if ($s)
-        return $s;
-    else
-        return null;
+    } else if ($s) {
+            return $s;
+    } else {
+            return null;
+    }
     }
   
     /**
@@ -309,13 +325,15 @@ abstract class Frame_Decorator extends Frame {
     function get_next_sibling() {
     $s = $this->_frame->get_next_sibling();
     if ($s && $deco = $s->get_decorator()) {
-        while ($tmp = $deco->get_decorator())
-        $deco = $tmp;      
+        while ($tmp = $deco->get_decorator()) {
+                $deco = $tmp;
+        }
         return $deco;
-    } else if ($s)
-        return $s;
-    else
-        return null;
+    } else if ($s) {
+            return $s;
+    } else {
+            return null;
+    }
     }
 
     /**
@@ -329,16 +347,18 @@ abstract class Frame_Decorator extends Frame {
 
     function set_positioner(Positioner $posn) {
     $this->_positioner = $posn;
-    if ($this->_frame instanceof Frame_Decorator)
-        $this->_frame->set_positioner($posn);
+    if ($this->_frame instanceof Frame_Decorator) {
+            $this->_frame->set_positioner($posn);
+    }
     }
   
     //........................................................................
 
     function set_reflower(Frame_Reflower $reflower) {
     $this->_reflower = $reflower;
-    if ($this->_frame instanceof Frame_Decorator)
-        $this->_frame->set_reflower($reflower);
+    if ($this->_frame instanceof Frame_Decorator) {
+            $this->_frame->set_reflower($reflower);
+    }
     }
   
     /**
@@ -350,8 +370,9 @@ abstract class Frame_Decorator extends Frame {
   
     function set_root(Frame $root) {
     $this->_root = $root;
-        if ($this->_frame instanceof Frame_Decorator)
-        $this->_frame->set_root($root);
+        if ($this->_frame instanceof Frame_Decorator) {
+                $this->_frame->set_root($root);
+        }
     }
   
     /**
@@ -373,7 +394,9 @@ abstract class Frame_Decorator extends Frame {
     $p = $this->get_parent();
     
     while ($p) {
-        if ($p->is_block()) break;
+        if ($p->is_block()) {
+            break;
+        }
         $p = $p->get_parent();
     }
 
@@ -391,7 +414,9 @@ abstract class Frame_Decorator extends Frame {
     // Find our nearest relative positionned parent
     $p = $this->get_parent();
     while ($p) {
-        if ($p->is_positionned()) break;
+        if ($p->is_positionned()) {
+            break;
+        }
         $p = $p->get_parent();
     }
     
@@ -420,8 +445,9 @@ abstract class Frame_Decorator extends Frame {
         return;
     }
 
-    if ($child->get_parent() !== $this)
-        throw new DOMPDF_Exception("Unable to split: frame is not a child of this one.");
+    if ($child->get_parent() !== $this) {
+            throw new DOMPDF_Exception("Unable to split: frame is not a child of this one.");
+    }
 
     $node = $this->_frame->get_node();
     

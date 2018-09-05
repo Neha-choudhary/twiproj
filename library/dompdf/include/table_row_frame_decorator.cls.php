@@ -36,13 +36,15 @@ class Table_Row_Frame_Decorator extends Frame_Decorator {
     foreach ($this->get_children() as $child) {      
         $display = $child->get_style()->display;
 
-        if ($display !== "table-cell")
-        $erroneous_frames[] = $child;
+        if ($display !== "table-cell") {
+                $erroneous_frames[] = $child;
+        }
     }
     
     //  dump the extra nodes after the table.
-    foreach ($erroneous_frames as $frame) 
-        $p->move_after($frame);
+    foreach ($erroneous_frames as $frame) {
+            $p->move_after($frame);
+    }
     }
   
   

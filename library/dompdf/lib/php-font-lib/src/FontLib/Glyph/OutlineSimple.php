@@ -292,25 +292,21 @@ class OutlineSimple extends Outline {
         if ($point_p1["onCurve"]) {
             $path .= "L{$point_p1['x']},{$point_p1['y']} ";
             $offset++;
-        }
-        else {
+        } else {
             $point_p2 = $points[$startIndex + ($offset + 2) % $count];
 
             if ($point_p2["onCurve"]) {
             $path .= "Q{$point_p1['x']},{$point_p1['y']},{$point_p2['x']},{$point_p2['y']} ";
-            }
-            else {
+            } else {
             $path .= "Q{$point_p1['x']},{$point_p1['y']},".$this->midValue($point_p1['x'], $point_p2['x']).",".$this->midValue($point_p1['y'], $point_p2['y'])." ";
             }
 
             $offset += 2;
         }
-        }
-        else {
+        } else {
         if ($point_p1["onCurve"]) {
             $path .= "Q{$point['x']},{$point['y']},{$point_p1['x']},{$point_p1['y']} ";
-        }
-        else {
+        } else {
             $path .= "Q{$point['x']},{$point['y']},".$this->midValue($point['x'], $point_p1['x']).",".$this->midValue($point['y'], $point_p1['y'])." ";
         }
 

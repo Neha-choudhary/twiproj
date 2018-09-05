@@ -31,8 +31,9 @@ class Table_Row_Group_Frame_Reflower extends Frame_Reflower {
     
     foreach ($this->_frame->get_children() as $child) {
         // Bail if the page is full
-        if ($page->is_full())
-        return;
+        if ($page->is_full()) {
+                return;
+        }
 
         $child->set_containing_block($cb["x"], $cb["y"], $cb["w"], $cb["h"]);
         $child->reflow();
@@ -42,8 +43,9 @@ class Table_Row_Group_Frame_Reflower extends Frame_Reflower {
 
     }
 
-    if ($page->is_full())
-        return;
+    if ($page->is_full()) {
+            return;
+    }
 
     $cellmap = $table->get_cellmap();
     $style->width = $cellmap->get_frame_width($this->_frame);
@@ -51,9 +53,10 @@ class Table_Row_Group_Frame_Reflower extends Frame_Reflower {
 
     $this->_frame->set_position($cellmap->get_frame_position($this->_frame));
     
-    if ($table->get_style()->border_collapse === "collapse") 
-        // Unset our borders because our cells are now using them
+    if ($table->get_style()->border_collapse === "collapse") {
+            // Unset our borders because our cells are now using them
         $style->border_style = "none";
+    }
  
     }
 

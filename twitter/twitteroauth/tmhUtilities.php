@@ -138,10 +138,11 @@ class tmhUtilities {
         $host = "$host:$port";
     }
     $url = "$scheme://$host$path";
-    if (!$dropqs)
-        return "{$url}?{$qs}";
-    else
-        return $url;
+    if (!$dropqs) {
+            return "{$url}?{$qs}";
+    } else {
+            return $url;
+    }
     }
 
     public static function is_cli() {
@@ -155,16 +156,19 @@ class tmhUtilities {
      */
     public static function pr($obj) {
 
-    if (!self::is_cli())
-        echo '<pre style="word-wrap: break-word">';
-    if (is_object($obj))
-        print_r($obj);
-    elseif (is_array($obj))
-        print_r($obj);
-    else
-        echo $obj;
-    if (!self::is_cli())
-        echo '</pre>';
+    if (!self::is_cli()) {
+            echo '<pre style="word-wrap: break-word">';
+    }
+    if (is_object($obj)) {
+            print_r($obj);
+    } elseif (is_array($obj)) {
+            print_r($obj);
+    } else {
+            echo $obj;
+    }
+    if (!self::is_cli()) {
+            echo '</pre>';
+    }
     }
 
     /**
@@ -189,17 +193,20 @@ class tmhUtilities {
     $tmhOAuth->request($method, $url, $params, $useauth, $multipart);
 
     // if we're not doing auth the timestamp isn't important
-    if (!$useauth)
-        return;
+    if (!$useauth) {
+            return;
+    }
 
     // some error that isn't a 401
-    if ($tmhOAuth->response['code'] != 401)
-        return;
+    if ($tmhOAuth->response['code'] != 401) {
+            return;
+    }
 
     // some error that is a 401 but isn't because the OAuth token and signature are incorrect
     // TODO: this check is horrid but helps avoid requesting twice when the username and password are wrong
-    if (stripos($tmhOAuth->response['response'], 'password') !== false)
-        return;
+    if (stripos($tmhOAuth->response['response'], 'password') !== false) {
+            return;
+    }
 
     // force the timestamp to be the same as the Twitter servers, and re-request
     $tmhOAuth->auto_fixed_time = true;
