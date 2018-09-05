@@ -32,8 +32,7 @@
         $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
         // above is the authentication url
         echo "<a href='$url'><img src='twitter-login-blue.png' style='margin-left:4%; margin-top: 4%'></a>";
-    } 
-    else {
+    } else {
 
         $access_token = $_SESSION['access_token'];
 
@@ -212,30 +211,30 @@
                         
                         <div class="header-content">
                             <div class="header-left-content">
-                            Hi! <?php if(isset($login_user_name)){ echo $login_user_name; } ?>
+                            Hi! <?php if (isset($login_user_name)) { echo $login_user_name; } ?>
                             </div>
                           <!--  <form method="post" action="<?php echo ROOT_PATH; ?>download.php" target="_blank" onSubmit="return tweetDownload();"> -->
-                            <input type="hidden" name="login_user_screen_name" value="<?php if(isset($login_user_screen_name)){ echo $login_user_screen_name; } ?>" />
+                            <input type="hidden" name="login_user_screen_name" value="<?php if (isset($login_user_screen_name)) { echo $login_user_screen_name; } ?>" />
                         <!--    <div class="header-right-content">
                             
                         </div> -->
                         <br clear="all" />
                         <?php
-                        if(count($login_user_homeline_tweets) > 0){                     
+                        if (count($login_user_homeline_tweets) > 0) {                     
                         ?>
                         <div class="slider4" id="slider_tweet_content">
                             <?php                       
-                            foreach($login_user_homeline_tweets as $homeline_tweet){
+                            foreach ($login_user_homeline_tweets as $homeline_tweet) {
                                 $timeDiff = $func->dateDiff($today, $homeline_tweet->created_at, 1);
                                 $tweet_text = $homeline_tweet->text;
                                 # Turn URLs into links
                                 $tweet_text = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\./-]*(\?\S+)?)?)?)@', '<a target="blank" title="$1" href="$1">$1</a>', $tweet_text);
                     
                                 #Turn hashtags into links
-                                    $tweet_text = preg_replace('/#([0-9a-zA-Z_-]+)/', "<a target='blank' title='$1' href=\"http://twitter.com/search?q=%23$1\">#$1</a>",  $tweet_text);
+                                    $tweet_text = preg_replace('/#([0-9a-zA-Z_-]+)/', "<a target='blank' title='$1' href=\"http://twitter.com/search?q=%23$1\">#$1</a>", $tweet_text);
                     
                                 #Turn @replies into links
-                                    $tweet_text = preg_replace("/@([0-9a-zA-Z_-]+)/", "<a target='blank' title='$1' href=\"http://twitter.com/$1\">@$1</a>",  $tweet_text);
+                                    $tweet_text = preg_replace("/@([0-9a-zA-Z_-]+)/", "<a target='blank' title='$1' href=\"http://twitter.com/$1\">@$1</a>", $tweet_text);
                             ?>
                             <div class="slide">
                                 <div style="background-color:#CCC; height:140px; padding:5px;">

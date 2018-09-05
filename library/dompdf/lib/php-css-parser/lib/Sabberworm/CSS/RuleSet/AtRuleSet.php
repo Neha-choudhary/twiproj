@@ -32,8 +32,8 @@ class AtRuleSet extends RuleSet implements AtRule {
 
     public function render(\Sabberworm\CSS\OutputFormat $oOutputFormat) {
         $sArgs = $this->sArgs;
-        if($sArgs) {
-            $sArgs = ' ' . $sArgs;
+        if ($sArgs) {
+            $sArgs = ' '.$sArgs;
         }
         $sResult = "@{$this->sType}$sArgs{$oOutputFormat->spaceBeforeOpeningBrace()}{";
         $sResult .= parent::render($oOutputFormat);

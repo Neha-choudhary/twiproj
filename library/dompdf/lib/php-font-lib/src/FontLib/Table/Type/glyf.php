@@ -97,7 +97,7 @@ class glyf extends Table {
 
         $glyph->parseData();
 
-        $shape      = array(
+        $shape = array(
         "SVGContours" => $glyph->getSVGContours(),
         "xMin"        => $glyph->xMin,
         "yMin"        => $glyph->yMin,

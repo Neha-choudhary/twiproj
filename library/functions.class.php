@@ -21,14 +21,14 @@ class functions {
             'minute',
             'second'
         );
-        $diffs     = array();
+        $diffs = array();
         foreach ($intervals as $interval) {
             $diffs[$interval] = 0;
-            $ttime            = strtotime("+1 " . $interval, $time1);
+            $ttime            = strtotime("+1 ".$interval, $time1);
             while ($time2 >= $ttime) {
                 $time1 = $ttime;
                 $diffs[$interval]++;
-                $ttime = strtotime("+1 " . $interval, $time1);
+                $ttime = strtotime("+1 ".$interval, $time1);
             }
         }
         $count = 0;
@@ -41,7 +41,7 @@ class functions {
                 if ($value != 1) {
                     $interval .= "s";
                 }
-                $times[] = $value . " " . $interval;
+                $times[] = $value." ".$interval;
                 $count++;
             }
         }
@@ -108,40 +108,41 @@ class functions {
         $diff['year'] = $old_date['year'] - $now['year'];
         //return $diff;
         if ($diff['year'] != 0) {
-            if ($diff['year'] > 1)
-                return $diff['year'].' years ago';
-            else
-                return $diff['year'].' year ago';
-        }
-        else if ($diff['month'] != 0) {
-            if ($diff['month'] > 1)
-                return $diff['month'].' months ago';
-            else
-                return $diff['month'].' month ago';
-        }
-        else if ($diff['day'] != 0) {
-            if ($diff['day'] > 1)
-                return $diff['day'].' days ago';
-            else
-                return $diff['day'].' day ago';
-        }
-        else if ($diff['hour'] != 0) {
-            if ($diff['hour'] > 1)
-                return $diff['hour'].' hours ago';
-            else
-                return $diff['hour'].' hour ago';
-        }
-        else if ($diff['minute'] != 0) {
-            if ($diff['minute'] > 1)
-                return $diff['minute'].' minutes ago';
-            else
-                return $diff['minute'].' minute ago';
-        }
-        else if ($diff['second'] != 0) {
-            if ($diff['second'] > 1)
-                return $diff['second'].' seconds ago';
-            else
-                return $diff['second'].' second ago';
+            if ($diff['year'] > 1) {
+                            return $diff['year'].' years ago';
+            } else {
+                            return $diff['year'].' year ago';
+            }
+        } else if ($diff['month'] != 0) {
+            if ($diff['month'] > 1) {
+                            return $diff['month'].' months ago';
+            } else {
+                            return $diff['month'].' month ago';
+            }
+        } else if ($diff['day'] != 0) {
+            if ($diff['day'] > 1) {
+                            return $diff['day'].' days ago';
+            } else {
+                            return $diff['day'].' day ago';
+            }
+        } else if ($diff['hour'] != 0) {
+            if ($diff['hour'] > 1) {
+                            return $diff['hour'].' hours ago';
+            } else {
+                            return $diff['hour'].' hour ago';
+            }
+        } else if ($diff['minute'] != 0) {
+            if ($diff['minute'] > 1) {
+                            return $diff['minute'].' minutes ago';
+            } else {
+                            return $diff['minute'].' minute ago';
+            }
+        } else if ($diff['second'] != 0) {
+            if ($diff['second'] > 1) {
+                            return $diff['second'].' seconds ago';
+            } else {
+                            return $diff['second'].' second ago';
+            }
         }
     }
 	

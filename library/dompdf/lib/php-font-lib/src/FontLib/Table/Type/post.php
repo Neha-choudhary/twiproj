@@ -55,8 +55,7 @@ class post extends Table {
         foreach ($glyphNameIndex as $g => $index) {
             if ($index < 258) {
             $names[$g] = File::$macCharNames[$index];
-            }
-            else {
+            } else {
             $names[$g] = $namesPascal[$index - 258];
             }
         }

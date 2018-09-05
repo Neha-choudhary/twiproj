@@ -92,7 +92,7 @@ class Document extends CSSBlockList {
 
     // Override render() to make format argument optional
     public function render(\Sabberworm\CSS\OutputFormat $oOutputFormat = null) {
-        if($oOutputFormat === null) {
+        if ($oOutputFormat === null) {
             $oOutputFormat = new \Sabberworm\CSS\OutputFormat();
         }
         return parent::render($oOutputFormat);

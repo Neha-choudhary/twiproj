@@ -58,7 +58,7 @@ class Parser {
 
         foreach (explode('/', Size::ABSOLUTE_SIZE_UNITS.'/'.Size::RELATIVE_SIZE_UNITS.'/'.Size::NON_SIZE_UNITS) as $val) {
             $iSize = strlen($val);
-            if(!isset($this->aSizeUnits[$iSize])) {
+            if (!isset($this->aSizeUnits[$iSize])) {
                 $this->aSizeUnits[$iSize] = array();
             }
             $this->aSizeUnits[$iSize][strtolower($val)] = $val;
@@ -91,7 +91,7 @@ class Parser {
         while (!$this->isEnd()) {
             $comments = $this->consumeWhiteSpace();
             $oListItem = null;
-            if($this->oParserSettings->bLenientParsing) {
+            if ($this->oParserSettings->bLenientParsing) {
                 try {
                     $oListItem = $this->parseListItem($oList, $bIsRoot);
                 } catch (UnexpectedTokenException $e) {
@@ -100,11 +100,11 @@ class Parser {
             } else {
                 $oListItem = $this->parseListItem($oList, $bIsRoot);
             }
-            if($oListItem === null) {
+            if ($oListItem === null) {
                 // List parsing finished
                 return;
             }
-            if($oListItem) {
+            if ($oListItem) {
                 $oListItem->setComments($comments);
                 $oList->append($oListItem);
             }
@@ -117,11 +117,11 @@ class Parser {
     private function parseListItem(CSSList $oList, $bIsRoot = false) {
         if ($this->comes('@')) {
             $oAtRule = $this->parseAtRule();
-            if($oAtRule instanceof Charset) {
-                if(!$bIsRoot) {
+            if ($oAtRule instanceof Charset) {
+                if (!$bIsRoot) {
                     throw new UnexpectedTokenException('@charset may only occur in root document', '', 'custom', $this->iLineNo);
                 }
-                if(count($oList->getContents()) > 0) {
+                if (count($oList->getContents()) > 0) {
                     throw new UnexpectedTokenException('@charset must be the first parseable token in a document', '', 'custom', $this->iLineNo);
                 }
                 $this->setCharset($oAtRule->getCharset()->getString());
@@ -183,13 +183,13 @@ class Parser {
             //Unknown other at rule (font-face or such)
             $sArgs = trim($this->consumeUntil('{', false, true));
             $bUseRuleSet = true;
-            foreach($this->blockRules as $sBlockRuleName) {
-                if($this->identifierIs($sIdentifier, $sBlockRuleName)) {
+            foreach ($this->blockRules as $sBlockRuleName) {
+                if ($this->identifierIs($sIdentifier, $sBlockRuleName)) {
                     $bUseRuleSet = false;
                     break;
                 }
             }
-            if($bUseRuleSet) {
+            if ($bUseRuleSet) {
                 $oAtRule = new AtRuleSet($sIdentifier, $sArgs, $iIdentifierLineNum);
                 $this->parseRuleSet($oAtRule);
             } else {
@@ -316,14 +316,14 @@ class Parser {
         }
         while (!$this->comes('}')) {
             $oRule = null;
-            if($this->oParserSettings->bLenientParsing) {
+            if ($this->oParserSettings->bLenientParsing) {
                 try {
                     $oRule = $this->parseRule();
                 } catch (UnexpectedTokenException $e) {
                     try {
                         $sConsume = $this->consumeUntil(array("\n", ";", '}'), true);
                         // We need to “unfind” the matches to the end of the ruleSet as this will be matched later
-                        if($this->streql(substr($sConsume, -1), '}')) {
+                        if ($this->streql(substr($sConsume, -1), '}')) {
                             --$this->iCurrentPosition;
                         } else {
                             while ($this->comes(';')) {
@@ -338,7 +338,7 @@ class Parser {
             } else {
                 $oRule = $this->parseRule();
             }
-            if($oRule) {
+            if ($oRule) {
                 $oRuleSet->addRule($oRule);
             }
         }
@@ -403,13 +403,13 @@ class Parser {
             $iStartPosition = null;
             while (($iStartPosition = array_search($sDelimiter, $aStack, true)) !== false) {
                 $iLength = 2; //Number of elements to be joined
-                for ($i = $iStartPosition + 2; $i < count($aStack); $i+=2, ++$iLength) {
+                for ($i = $iStartPosition + 2; $i < count($aStack); $i += 2, ++$iLength) {
                     if ($sDelimiter !== $aStack[$i]) {
                         break;
                     }
                 }
                 $oList = new RuleValueList($sDelimiter, $this->iLineNo);
-                for ($i = $iStartPosition - 1; $i - $iStartPosition + 1 < $iLength * 2; $i+=2) {
+                for ($i = $iStartPosition - 1; $i - $iStartPosition + 1 < $iLength * 2; $i += 2) {
                     $oList->addListComponent($aStack[$i]);
                 }
                 array_splice($aStack, $iStartPosition - 1, $iLength * 2 - 1, array($oList));
@@ -459,7 +459,7 @@ class Parser {
         $sUnit = null;
         foreach ($this->aSizeUnits as $iLength => &$aValues) {
             $sKey = strtolower($this->peek($iLength));
-            if(array_key_exists($sKey, $aValues)) {
+            if (array_key_exists($sKey, $aValues)) {
                 if (($sUnit = $aValues[$sKey]) !== null) {
                     $this->consume($iLength);
                     break;
@@ -475,9 +475,9 @@ class Parser {
             $this->consume('#');
             $sValue = $this->parseIdentifier(false);
             if ($this->strlen($sValue) === 3) {
-                $sValue = $sValue[0] . $sValue[0] . $sValue[1] . $sValue[1] . $sValue[2] . $sValue[2];
+                $sValue = $sValue[0].$sValue[0].$sValue[1].$sValue[1].$sValue[2].$sValue[2];
             }
-            $aColor = array('r' => new Size(intval($sValue[0] . $sValue[1], 16), null, true, $this->iLineNo), 'g' => new Size(intval($sValue[2] . $sValue[3], 16), null, true, $this->iLineNo), 'b' => new Size(intval($sValue[4] . $sValue[5], 16), null, true, $this->iLineNo));
+            $aColor = array('r' => new Size(intval($sValue[0].$sValue[1], 16), null, true, $this->iLineNo), 'g' => new Size(intval($sValue[2].$sValue[3], 16), null, true, $this->iLineNo), 'b' => new Size(intval($sValue[4].$sValue[5], 16), null, true, $this->iLineNo));
         } else {
             $sColorMode = $this->parseIdentifier(false);
             $this->consumeWhiteSpace();
@@ -571,10 +571,10 @@ class Parser {
             while (preg_match('/\\s/isSu', $this->peek()) === 1) {
                 $this->consume(1);
             }
-            if($this->oParserSettings->bLenientParsing) {
+            if ($this->oParserSettings->bLenientParsing) {
                 try {
                     $oComment = $this->consumeComment();
-                } catch(UnexpectedTokenException $e) {
+                } catch (UnexpectedTokenException $e) {
                     // When we can’t find the end of a comment, we assume the document is finished.
                     $this->iCurrentPosition = $this->iLength;
                     return;
@@ -585,7 +585,7 @@ class Parser {
             if ($oComment !== false) {
                 $comments[] = $oComment;
             }
-        } while($oComment !== false);
+        } while ($oComment !== false);
         return $comments;
     }
 
@@ -672,7 +672,7 @@ class Parser {
     }
 
     private function streql($sString1, $sString2, $bCaseInsensitive = true) {
-        if($bCaseInsensitive) {
+        if ($bCaseInsensitive) {
             return $this->strtolower($sString1) === $this->strtolower($sString2);
         } else {
             return $sString1 === $sString2;
@@ -700,7 +700,7 @@ class Parser {
                 return $aResult;
             }
         } else {
-            if($sString === '') {
+            if ($sString === '') {
                 return array();
             } else {
                 return str_split($sString);

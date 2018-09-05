@@ -7,7 +7,7 @@ class CSSFunction extends ValueList {
     private $sName;
 
     public function __construct($sName, $aArguments, $sSeparator = ',', $iLineNo = 0) {
-        if($aArguments instanceof RuleValueList) {
+        if ($aArguments instanceof RuleValueList) {
             $sSeparator = $aArguments->getListSeparator();
             $aArguments = $aArguments->getListComponents();
         }

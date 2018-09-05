@@ -24,7 +24,7 @@ class Font {
      * @return TrueType\File|null $file
      */
     public static function load($file) {
-        if(!file_exists($file)){
+        if (!file_exists($file)) {
             throw new FontNotFoundException($file);
         }
 

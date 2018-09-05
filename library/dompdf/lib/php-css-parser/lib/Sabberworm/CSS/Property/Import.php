@@ -49,7 +49,7 @@ class Import implements AtRule {
 
     public function atRuleArgs() {
         $aResult = array($this->oLocation);
-        if($this->sMediaQuery) {
+        if ($this->sMediaQuery) {
             array_push($aResult, $this->sMediaQuery);
         }
         return $aResult;

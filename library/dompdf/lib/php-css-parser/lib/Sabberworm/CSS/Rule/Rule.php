@@ -164,7 +164,7 @@ class Rule implements Renderable, Commentable {
             $sResult .= $this->mValue;
         }
         if (!empty($this->aIeHack)) {
-            $sResult .= ' \\' . implode('\\', $this->aIeHack);
+            $sResult .= ' \\'.implode('\\', $this->aIeHack);
         }
         if ($this->bIsImportant) {
             $sResult .= ' !important';

@@ -22,7 +22,7 @@ class tmhOAuth {
 * @param string $config, the configuration to use for this request
 * @return void
 */
-    public function __construct($config=array()) {
+    public function __construct($config = array()) {
     $this->params = array();
     $this->headers = array();
     $this->auto_fixed_time = false;
@@ -97,8 +97,9 @@ class tmhOAuth {
 * @return void value is stored to the config array class variable
 */
     private function set_user_agent() {
-    if (!empty($this->config['user_agent']))
-        return;
+    if (!empty($this->config['user_agent'])) {
+            return;
+    }
 
     if ($this->config['curl_ssl_verifyhost'] && $this->config['curl_ssl_verifypeer']) {
         $ssl = '+SSL';
@@ -118,14 +119,14 @@ class tmhOAuth {
 * @param string $include_time whether to include time at the beginning of the nonce. default true
 * @return void value is stored to the config array class variable
 */
-    private function create_nonce($length=12, $include_time=true) {
+    private function create_nonce($length = 12, $include_time = true) {
     if ($this->config['force_nonce'] == false) {
-        $sequence = array_merge(range(0,9), range('A','Z'), range('a','z'));
+        $sequence = array_merge(range(0, 9), range('A', 'Z'), range('a', 'z'));
         $length = $length > count($sequence) ? count($sequence) : $length;
         shuffle($sequence);
 
         $prefix = $include_time ? microtime() : '';
-        $this->config['nonce'] = md5(substr($prefix . implode('', $sequence), 0, $length));
+        $this->config['nonce'] = md5(substr($prefix.implode('', $sequence), 0, $length));
     }
     }
 
@@ -192,7 +193,7 @@ class tmhOAuth {
     );
 
     // include the user token if it exists
-    if ( $this->config['user_token'] )
+    if ($this->config['user_token'])
         $defaults['oauth_token'] = $this->config['user_token'];
 
     // safely encode
@@ -294,8 +295,9 @@ class tmhOAuth {
     foreach ($this->signing_params as $k => $v) {
         $k = $this->safe_encode($k);
 
-        if (is_array($v))
-        $v = implode(',', $v);
+        if (is_array($v)) {
+                $v = implode(',', $v);
+        }
 
         $v = $this->safe_encode($v);
         $_signing_params[$k] = $v;
@@ -315,7 +317,7 @@ class tmhOAuth {
     }
 
     // request_params is already set if we're doing multipart, if not we need to set them now
-    if ( ! $this->config['multipart'])
+    if (!$this->config['multipart'])
         $this->request_params = array_diff_key($_signing_params, $this->get_defaults());
 
     // create the parameter part of the base string
@@ -328,7 +330,7 @@ class tmhOAuth {
 * @return void prepared signing key is stored in the class variable 'signing_key'
 */
     private function prepare_signing_key() {
-    $this->signing_key = $this->safe_encode($this->config['consumer_secret']) . '&' . $this->safe_encode($this->config['user_secret']);
+    $this->signing_key = $this->safe_encode($this->config['consumer_secret']).'&'.$this->safe_encode($this->config['user_secret']);
     }
 
     /**
@@ -422,7 +424,7 @@ class tmhOAuth {
 * @param array $headers any custom headers to send with the request. Default empty array
 * @return int the http response code for the request. 0 is returned if a connection could not be made
 */
-    public function request($method, $url, $params=array(), $useauth=true, $multipart=false, $headers=array()) {
+    public function request($method, $url, $params = array(), $useauth = true, $multipart = false, $headers = array()) {
     // reset the request headers (we don't want to reuse them)
     $this->headers = array();
     $this->custom_headers = $headers;
@@ -435,7 +437,7 @@ class tmhOAuth {
     $this->sign($method, $url, $params, $useauth);
 
     if (!empty($this->custom_headers))
-        $this->headers = array_merge((array)$this->headers, (array)$this->custom_headers);
+        $this->headers = array_merge((array) $this->headers, (array) $this->custom_headers);
 
     return $this->curlit();
     }
@@ -453,9 +455,9 @@ class tmhOAuth {
 * @param string $callback the callback function to stream the buffer to.
 * @return void
 */
-    public function streaming_request($method, $url, $params=array(), $callback='') {
-    if ( ! empty($callback) ) {
-        if ( ! is_callable($callback) ) {
+    public function streaming_request($method, $url, $params = array(), $callback = '') {
+    if (!empty($callback)) {
+        if (!is_callable($callback)) {
         return false;
         }
         $this->config['streaming_callback'] = $callback;
@@ -477,8 +479,9 @@ class tmhOAuth {
 */
     private function update_metrics() {
     $now = time();
-    if (($this->metrics['interval_start'] + $this->config['streaming_metrics_interval']) > $now)
-        return false;
+    if (($this->metrics['interval_start'] + $this->config['streaming_metrics_interval']) > $now) {
+            return false;
+    }
 
     $this->metrics['tps'] = round(($this->metrics['tweets'] - $this->metrics['last_tweets']) / $this->config['streaming_metrics_interval'], 2);
     $this->metrics['bps'] = round(($this->metrics['bytes'] - $this->metrics['last_bytes']) / $this->config['streaming_metrics_interval'], 2);
@@ -496,13 +499,13 @@ class tmhOAuth {
 * @param string $format the format of the response. Default json. Set to an empty string to exclude the format
 * @return string the concatenation of the host, API version, API method and format
 */
-    public function url($request, $format='json') {
+    public function url($request, $format = 'json') {
     $format = strlen($format) > 0 ? ".$format" : '';
     $proto = $this->config['use_ssl'] ? 'https:/' : 'http:/';
 
     // backwards compatibility with v0.1
     if (isset($this->config['v']))
-        $this->config['host'] = $this->config['host'] . '/' . $this->config['v'];
+        $this->config['host'] = $this->config['host'].'/'.$this->config['v'];
 
     $request = ltrim($request, '/');
 
@@ -513,7 +516,7 @@ class tmhOAuth {
     return implode('/', array(
         $proto,
         $this->config['host'],
-        $request . $format
+        $request.$format
     ));
     }
 
@@ -524,7 +527,7 @@ class tmhOAuth {
 * @param string $mode the transformation mode. either encode or decode
 * @return string $text transformed by the given $mode
 */
-    public function transformText($text, $mode='encode') {
+    public function transformText($text, $mode = 'encode') {
     return $this->{"safe_$mode"}($text);
     }
 
@@ -544,7 +547,7 @@ class tmhOAuth {
     $key = trim($key);
     $value = trim($value);
 
-    if ( ! isset($this->response['headers'][$key])) {
+    if (!isset($this->response['headers'][$key])) {
         $this->response['headers'][$key] = $value;
     } else {
         if (!is_array($this->response['headers'][$key])) {
@@ -575,12 +578,12 @@ class tmhOAuth {
     }
 
     $buffered = explode($this->config['streaming_eol'], $data);
-    $content = $this->buffer . $buffered[0];
+    $content = $this->buffer.$buffered[0];
 
     $this->metrics['tweets']++;
     $this->metrics['bytes'] += strlen($content);
 
-    if ( ! is_callable($this->config['streaming_callback']))
+    if (!is_callable($this->config['streaming_callback']))
         return 0;
 
     $metrics = $this->update_metrics();
@@ -591,8 +594,9 @@ class tmhOAuth {
         $metrics
     );
     $this->buffer = $buffered[1];
-    if ($stop)
-        return 0;
+    if ($stop) {
+            return 0;
+    }
 
     return $l;
     }
@@ -614,18 +618,18 @@ class tmhOAuth {
         break;
         default:
         // GET, DELETE request so convert the parameters to a querystring
-        if ( ! empty($this->request_params)) {
+        if (!empty($this->request_params)) {
             foreach ($this->request_params as $k => $v) {
             // Multipart params haven't been encoded yet.
             // Not sure why you would do a multipart GET but anyway, here's the support for it
             if ($this->config['multipart']) {
-                $params[] = $this->safe_encode($k) . '=' . $this->safe_encode($v);
+                $params[] = $this->safe_encode($k).'='.$this->safe_encode($v);
             } else {
-                $params[] = $k . '=' . $v;
+                $params[] = $k.'='.$v;
             }
             }
             $qs = implode('&', $params);
-            $this->url = strlen($qs) > 0 ? $this->url . '?' . $qs : $this->url;
+            $this->url = strlen($qs) > 0 ? $this->url.'?'.$qs : $this->url;
             $this->request_params = array();
         }
         break;
@@ -651,14 +655,17 @@ class tmhOAuth {
         CURLINFO_HEADER_OUT => true,
     ));
 
-    if ($this->config['curl_cainfo'] !== false)
-        curl_setopt($c, CURLOPT_CAINFO, $this->config['curl_cainfo']);
+    if ($this->config['curl_cainfo'] !== false) {
+            curl_setopt($c, CURLOPT_CAINFO, $this->config['curl_cainfo']);
+    }
 
-    if ($this->config['curl_capath'] !== false)
-        curl_setopt($c, CURLOPT_CAPATH, $this->config['curl_capath']);
+    if ($this->config['curl_capath'] !== false) {
+            curl_setopt($c, CURLOPT_CAPATH, $this->config['curl_capath']);
+    }
 
-    if ($this->config['curl_proxyuserpwd'] !== false)
-        curl_setopt($c, CURLOPT_PROXYUSERPWD, $this->config['curl_proxyuserpwd']);
+    if ($this->config['curl_proxyuserpwd'] !== false) {
+            curl_setopt($c, CURLOPT_PROXYUSERPWD, $this->config['curl_proxyuserpwd']);
+    }
 
     if ($this->config['is_streaming']) {
         // process the body
@@ -678,9 +685,9 @@ class tmhOAuth {
         curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
     }
 
-    if ( ! empty($this->request_params) ) {
+    if (!empty($this->request_params)) {
         // if not doing multipart we need to implode the parameters
-        if ( ! $this->config['multipart'] ) {
+        if (!$this->config['multipart']) {
         foreach ($this->request_params as $k => $v) {
             $ps[] = "{$k}={$v}";
         }
@@ -689,15 +696,16 @@ class tmhOAuth {
         curl_setopt($c, CURLOPT_POSTFIELDS, $this->request_params);
     }
 
-    if ( ! empty($this->headers)) {
+    if (!empty($this->headers)) {
         foreach ($this->headers as $k => $v) {
-        $headers[] = trim($k . ': ' . $v);
+        $headers[] = trim($k.': '.$v);
         }
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
     }
 
-    if (isset($this->config['prevent_request']) && (true == $this->config['prevent_request']))
-        return 0;
+    if (isset($this->config['prevent_request']) && (true == $this->config['prevent_request'])) {
+            return 0;
+    }
 
     // do it!
     $response = curl_exec($c);

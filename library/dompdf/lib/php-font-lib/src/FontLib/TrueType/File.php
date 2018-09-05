@@ -133,15 +133,12 @@ class File extends BinaryStream {
 
         if ($h <= 0x7F) {
         $uni = $h;
-        }
-        elseif ($h >= 0xC2) {
+        } elseif ($h >= 0xC2) {
         if (($h <= 0xDF) && ($i < $len - 1)) {
             $uni = ($h & 0x1F) << 6 | (ord($str[++$i]) & 0x3F);
-        }
-        elseif (($h <= 0xEF) && ($i < $len - 2)) {
+        } elseif (($h <= 0xEF) && ($i < $len - 2)) {
             $uni = ($h & 0x0F) << 12 | (ord($str[++$i]) & 0x3F) << 6 | (ord($str[++$i]) & 0x3F);
-        }
-        elseif (($h <= 0xF4) && ($i < $len - 3)) {
+        } elseif (($h <= 0xF4) && ($i < $len - 3)) {
             $uni = ($h & 0x0F) << 18 | (ord($str[++$i]) & 0x3F) << 12 | (ord($str[++$i]) & 0x3F) << 6 | (ord($str[++$i]) & 0x3F);
         }
         }
@@ -218,8 +215,7 @@ class File extends BinaryStream {
     function encode($tags = array()) {
     if (!self::$raw) {
         $tags = array_merge(array("head", "hhea", "cmap", "hmtx", "maxp", "glyf", "loca", "name", "post"), $tags);
-    }
-    else {
+    } else {
         $tags = array_keys($this->directory);
     }
 
@@ -264,7 +260,7 @@ class File extends BinaryStream {
     $this->header->parse();
     }
 
-    function getFontType(){
+    function getFontType() {
     $class_parts = explode("\\", get_class($this));
     return $class_parts[1];
     }
@@ -308,8 +304,7 @@ class File extends BinaryStream {
         if (!isset($this->directory[$tag]) || !@class_exists($class)) {
         return;
         }
-    }
-    else {
+    } else {
         $class = "FontLib\\Table\\Table";
     }
 
@@ -346,8 +341,7 @@ class File extends BinaryStream {
 
     if (!$key) {
         return $this->data[$name]->data;
-    }
-    else {
+    } else {
         return $this->data[$name]->data[$key];
     }
     }

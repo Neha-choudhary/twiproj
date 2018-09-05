@@ -95,8 +95,7 @@ class cmap extends Table {
             "glyphIndexArray" => $glyphIndexArray,
         );
 
-        }
-        else if ($subtable["format"] == 4) {
+        } else if ($subtable["format"] == 4) {
 
         $subtable += $font->unpack(self::$subtable_v4_format);
 
@@ -127,8 +126,7 @@ class cmap extends Table {
             for ($c = $c1; $c <= $c2; $c++) {
             if ($ro == 0) {
                 $gid = ($c + $d) & 0xFFFF;
-            }
-            else {
+            } else {
                 $offset = ($c - $c1) * 2 + $ro;
                 $offset = $ro_start + 2 * $i + $offset;
 

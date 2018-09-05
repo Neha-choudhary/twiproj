@@ -16,13 +16,13 @@ class UnexpectedTokenException extends SourceException {
         $this->sFound = $sFound;
         $this->sMatchType = $sMatchType;
         $sMessage = "Token “{$sExpected}” ({$sMatchType}) not found. Got “{$sFound}”.";
-        if($this->sMatchType === 'search') {
+        if ($this->sMatchType === 'search') {
             $sMessage = "Search for “{$sExpected}” returned no results. Context: “{$sFound}”.";
-        } else if($this->sMatchType === 'count') {
+        } else if ($this->sMatchType === 'count') {
             $sMessage = "Next token was expected to have {$sExpected} chars. Context: “{$sFound}”.";
-        } else if($this->sMatchType === 'identifier') {
+        } else if ($this->sMatchType === 'identifier') {
             $sMessage = "Identifier expected. Got “{$sFound}”";
-        } else if($this->sMatchType === 'custom') {
+        } else if ($this->sMatchType === 'custom') {
             $sMessage = trim("$sExpected $sFound");
         }
 

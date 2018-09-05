@@ -105,8 +105,7 @@ class BinaryStream {
 
     if ($allow_memory) {
         $f = fopen("php://temp", "rb+");
-    }
-    else {
+    } else {
         $f = fopen(tempnam(sys_get_temp_dir(), "fnt"), "rb+");
     }
 
@@ -439,6 +438,6 @@ class BinaryStream {
      * @return string The string
      */
     public function convertUInt32ToStr($uint32) {
-    return chr(($uint32 >> 24) & 0xFF) . chr(($uint32 >> 16) & 0xFF) . chr(($uint32 >> 8) & 0xFF) . chr($uint32 & 0xFF);
+    return chr(($uint32 >> 24) & 0xFF).chr(($uint32 >> 16) & 0xFF).chr(($uint32 >> 8) & 0xFF).chr($uint32 & 0xFF);
     }
 }

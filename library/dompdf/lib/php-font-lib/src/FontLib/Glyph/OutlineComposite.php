@@ -79,18 +79,15 @@ class OutlineComposite extends Outline {
         if ($flags & self::ARGS_ARE_XY_VALUES) {
             $e = $font->readInt16();
             $f = $font->readInt16();
-        }
-        else {
+        } else {
             $point_compound  = $font->readUInt16();
             $point_component = $font->readUInt16();
         }
-        }
-        else {
+        } else {
         if ($flags & self::ARGS_ARE_XY_VALUES) {
             $e = $font->readInt8();
             $f = $font->readInt8();
-        }
-        else {
+        } else {
             $point_compound  = $font->readUInt8();
             $point_component = $font->readUInt8();
         }
@@ -98,12 +95,10 @@ class OutlineComposite extends Outline {
 
         if ($flags & self::WE_HAVE_A_SCALE) {
         $a = $d = $font->readInt16();
-        }
-        elseif ($flags & self::WE_HAVE_AN_X_AND_Y_SCALE) {
+        } elseif ($flags & self::WE_HAVE_AN_X_AND_Y_SCALE) {
         $a = $font->readInt16();
         $d = $font->readInt16();
-        }
-        elseif ($flags & self::WE_HAVE_A_TWO_BY_TWO) {
+        } elseif ($flags & self::WE_HAVE_A_TWO_BY_TWO) {
         $a = $font->readInt16();
         $b = $font->readInt16();
         $c = $font->readInt16();
@@ -150,8 +145,7 @@ class OutlineComposite extends Outline {
         if (abs($_component->e) > 0x7F || abs($_component->f) > 0x7F) {
             $flags |= self::ARG_1_AND_2_ARE_WORDS;
         }
-        }
-        elseif ($_component->point_component > 0xFF || $_component->point_compound > 0xFF) {
+        } elseif ($_component->point_component > 0xFF || $_component->point_compound > 0xFF) {
         $flags |= self::ARG_1_AND_2_ARE_WORDS;
         }
 
@@ -160,12 +154,10 @@ class OutlineComposite extends Outline {
             if ($_component->a != 1.0) {
             $flags |= self::WE_HAVE_A_SCALE;
             }
-        }
-        else {
+        } else {
             $flags |= self::WE_HAVE_AN_X_AND_Y_SCALE;
         }
-        }
-        else {
+        } else {
         $flags |= self::WE_HAVE_A_TWO_BY_TWO;
         }
 
@@ -182,18 +174,15 @@ class OutlineComposite extends Outline {
         if ($flags & self::ARGS_ARE_XY_VALUES) {
             $size += $font->writeInt16($_component->e);
             $size += $font->writeInt16($_component->f);
-        }
-        else {
+        } else {
             $size += $font->writeUInt16($_component->point_compound);
             $size += $font->writeUInt16($_component->point_component);
         }
-        }
-        else {
+        } else {
         if ($flags & self::ARGS_ARE_XY_VALUES) {
             $size += $font->writeInt8($_component->e);
             $size += $font->writeInt8($_component->f);
-        }
-        else {
+        } else {
             $size += $font->writeUInt8($_component->point_compound);
             $size += $font->writeUInt8($_component->point_component);
         }
@@ -201,12 +190,10 @@ class OutlineComposite extends Outline {
 
         if ($flags & self::WE_HAVE_A_SCALE) {
         $size += $font->writeInt16($_component->a);
-        }
-        elseif ($flags & self::WE_HAVE_AN_X_AND_Y_SCALE) {
+        } elseif ($flags & self::WE_HAVE_AN_X_AND_Y_SCALE) {
         $size += $font->writeInt16($_component->a);
         $size += $font->writeInt16($_component->d);
-        }
-        elseif ($flags & self::WE_HAVE_A_TWO_BY_TWO) {
+        } elseif ($flags & self::WE_HAVE_A_TWO_BY_TWO) {
         $size += $font->writeInt16($_component->a);
         $size += $font->writeInt16($_component->b);
         $size += $font->writeInt16($_component->c);

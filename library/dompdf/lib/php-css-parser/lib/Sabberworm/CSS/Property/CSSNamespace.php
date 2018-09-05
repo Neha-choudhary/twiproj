@@ -55,7 +55,7 @@ class CSSNamespace implements AtRule {
 
     public function atRuleArgs() {
         $aResult = array($this->mUrl);
-        if($this->sPrefix) {
+        if ($this->sPrefix) {
             array_unshift($aResult, $this->sPrefix);
         }
         return $aResult;
