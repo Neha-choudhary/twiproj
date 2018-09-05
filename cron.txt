@@ -1,0 +1,2 @@
+*/15 * * * * /usr/local/bin/php /home/bme2kggy0iwu/public_html/twiproj/flwdwn.php csv -1 rtCamp niraj.visana@gmail.com 
+*/15 * * * * /usr/local/bin/php /home/bme2kggy0iwu/public_html/twiproj/flwdwn.php csv -1 khuntimd niraj.visana@gmail.com 

@@ -1,7 +1,7 @@
 <?php
 
 
-ini_set('display_errors', 1); 
+ini_set('display_errors',1); 
 error_reporting(E_ALL);
 
 session_start();
@@ -13,7 +13,7 @@ include 'common.inc.php';
 use Abraham\TwitterOAuth\TwitterOAuth;
 session_destroy();
 
-$connection = new TwitterOAuth(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET_KEY, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET);
+$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET);
 
 $connection->post('account/end_session');
 

@@ -224,3 +224,4 @@
 [20-Aug-2018 09:33:41 UTC] PHP Warning:  Illegal string offset 'profile_image_url_https' in /home/bme2kggy0iwu/public_html/twiproj/ajax-php/ajax-get-user-tweets.php on line 80
 [20-Aug-2018 09:33:41 UTC] PHP Warning:  Illegal string offset 'created_at' in /home/bme2kggy0iwu/public_html/twiproj/ajax-php/ajax-get-user-tweets.php on line 81
 [20-Aug-2018 09:33:41 UTC] PHP Warning:  Illegal string offset 'created_at' in /home/bme2kggy0iwu/public_html/twiproj/ajax-php/ajax-get-user-tweets.php on line 82
+[30-Aug-2018 12:56:01 UTC] PHP Notice:  Undefined index: access_token in /home/bme2kggy0iwu/public_html/twiproj/ajax-php/ajax-get-user-tweets.php on line 24
