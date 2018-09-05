@@ -43,9 +43,7 @@ class CanvasFactory
                 class_exists("PDFLib", false)
             ) {
                 $class = "Dompdf\\Adapter\\PDFLib";
-            }
-
-            else {
+            } else {
                 if ($backend === "gd") {
                     $class = "Dompdf\\Adapter\\GD";
                 } else {

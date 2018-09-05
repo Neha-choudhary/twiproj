@@ -89,7 +89,7 @@ abstract class AbstractRenderer
 
         //debugpng
         if ($this->_dompdf->getOptions()->getDebugPng()) {
-            print '[_background_image ' . $url . ']';
+            print '[_background_image '.$url.']';
         }
 
         list($img, $type, /*$msg*/) = Cache::resolve_url(
@@ -121,8 +121,8 @@ abstract class AbstractRenderer
 
         //Increase background resolution and dependent box size according to image resolution to be placed in
         //Then image can be copied in without resize
-        $bg_width = round((float)($width * $dpi) / 72);
-        $bg_height = round((float)($height * $dpi) / 72);
+        $bg_width = round((float) ($width * $dpi) / 72);
+        $bg_height = round((float) ($height * $dpi) / 72);
 
         //Need %bg_x, $bg_y as background pos, where img starts, converted to pixel
 
@@ -131,30 +131,30 @@ abstract class AbstractRenderer
         if (Helpers::is_percent($bg_x)) {
             // The point $bg_x % from the left edge of the image is placed
             // $bg_x % from the left edge of the background rectangle
-            $p = ((float)$bg_x) / 100.0;
+            $p = ((float) $bg_x) / 100.0;
             $x1 = $p * $img_w;
             $x2 = $p * $bg_width;
 
             $bg_x = $x2 - $x1;
         } else {
-            $bg_x = (float)($style->length_in_pt($bg_x) * $dpi) / 72;
+            $bg_x = (float) ($style->length_in_pt($bg_x) * $dpi) / 72;
         }
 
-        $bg_x = round($bg_x + (float)$style->length_in_pt($style->border_left_width) * $dpi / 72);
+        $bg_x = round($bg_x + (float) $style->length_in_pt($style->border_left_width) * $dpi / 72);
 
         if (Helpers::is_percent($bg_y)) {
             // The point $bg_y % from the left edge of the image is placed
             // $bg_y % from the left edge of the background rectangle
-            $p = ((float)$bg_y) / 100.0;
+            $p = ((float) $bg_y) / 100.0;
             $y1 = $p * $img_h;
             $y2 = $p * $bg_height;
 
             $bg_y = $y2 - $y1;
         } else {
-            $bg_y = (float)($style->length_in_pt($bg_y) * $dpi) / 72;
+            $bg_y = (float) ($style->length_in_pt($bg_y) * $dpi) / 72;
         }
 
-        $bg_y = round($bg_y + (float)$style->length_in_pt($style->border_top_width) * $dpi / 72);
+        $bg_y = round($bg_y + (float) $style->length_in_pt($style->border_top_width) * $dpi / 72);
 
         //clip background to the image area on partial repeat. Nothing to do if img off area
         //On repeat, normalize start position to the tile at immediate left/top or 0/0 of area
@@ -178,7 +178,7 @@ abstract class AbstractRenderer
                 return;
             }
 
-            $width = (float)($bg_width * 72) / $dpi;
+            $width = (float) ($bg_width * 72) / $dpi;
         } else {
             //repeat x
             if ($bg_x < 0) {
@@ -206,7 +206,7 @@ abstract class AbstractRenderer
             if ($bg_height <= 0) {
                 return;
             }
-            $height = (float)($bg_height * 72) / $dpi;
+            $height = (float) ($bg_height * 72) / $dpi;
         } else {
             //repeat y
             if ($bg_y < 0) {
@@ -242,7 +242,7 @@ abstract class AbstractRenderer
         $filedummy = $img;
 
         $is_png = false;
-        $filedummy .= '_' . $bg_width . '_' . $bg_height . '_' . $bg_x . '_' . $bg_y . '_' . $repeat;
+        $filedummy .= '_'.$bg_width.'_'.$bg_height.'_'.$bg_x.'_'.$bg_y.'_'.$repeat;
 
         //Optimization to avoid multiple times rendering the same image.
         //If check functions are existing and identical image already cached,
@@ -407,7 +407,7 @@ abstract class AbstractRenderer
 
             //debugpng
             if ($this->_dompdf->getOptions()->getDebugPng()) {
-                print '[_background_image ' . $tmp_file . ']';
+                print '[_background_image '.$tmp_file.']';
             }
 
             imagepng($bg, $tmp_file);
@@ -416,7 +416,7 @@ abstract class AbstractRenderer
 
             //debugpng
             if ($this->_dompdf->getOptions()->getDebugPng()) {
-                print '[_background_image unlink ' . $tmp_file . ']';
+                print '[_background_image unlink '.$tmp_file.']';
             }
 
             if (!$this->_dompdf->getOptions()->getDebugKeepTemp()) {

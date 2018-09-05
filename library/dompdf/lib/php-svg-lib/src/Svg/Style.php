@@ -119,7 +119,7 @@ class Style
                             if ($_selector === ".$_class") {
                                 /** @var \Sabberworm\CSS\Rule\Rule $_rule */
                                 foreach ($_decl->getRules() as $_rule) {
-                                    $styles[$_rule->getRule()] = $_rule->getValue() . "";
+                                    $styles[$_rule->getRule()] = $_rule->getValue()."";
                                 }
 
                                 break 2;
@@ -131,7 +131,7 @@ class Style
                     if ($_selector === $tag->tagName) {
                         /** @var \Sabberworm\CSS\Rule\Rule $_rule */
                         foreach ($_decl->getRules() as $_rule) {
-                            $styles[$_rule->getRule()] = $_rule->getValue() . "";
+                            $styles[$_rule->getRule()] = $_rule->getValue()."";
                         }
 
                         break;
@@ -155,7 +155,7 @@ class Style
                         break;
 
                     case self::TYPE_NUMBER:
-                        $value = ($styles[$from] === null) ? null : (float)$styles[$from];
+                        $value = ($styles[$from] === null) ? null : (float) $styles[$from];
                         break;
 
                     default:
@@ -177,8 +177,7 @@ class Style
 
         if (count($parts) == 2) {
             $color = $parts[1];
-        }
-        else {
+        } else {
             $color = $parts[0];
         }
 
@@ -303,12 +302,10 @@ class Style
             if ($percent) {
                 if ($triplet[$c][strlen($triplet[$c]) - 1] === "%") {
                     $triplet[$c] = $triplet[$c] / 100;
-                }
-                else {
+                } else {
                     $triplet[$c] = $triplet[$c] / 255;
                 }
-            }
-            else {
+            } else {
                 if ($triplet[$c][strlen($triplet[$c]) - 1] === "%") {
                     $triplet[$c] = round($triplet[$c] * 2.55);
                 }
@@ -328,9 +325,9 @@ class Style
             $c[1] = hexdec(substr($hex, 3, 2));
             $c[2] = hexdec(substr($hex, 5, 2));
         } else {
-            $c[0] = hexdec($hex[1] . $hex[1]);
-            $c[1] = hexdec($hex[2] . $hex[2]);
-            $c[2] = hexdec($hex[3] . $hex[3]);
+            $c[0] = hexdec($hex[1].$hex[1]);
+            $c[1] = hexdec($hex[2].$hex[2]);
+            $c[2] = hexdec($hex[3].$hex[3]);
         }
 
         return $c;

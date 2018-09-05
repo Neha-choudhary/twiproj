@@ -317,7 +317,7 @@ class PDFLib implements Canvas
     {
         $this->_pdf->restore();
         $this->_pdf->end_template();
-        $this->_pdf->resume_page("pagenumber=" . $this->_page_number);
+        $this->_pdf->resume_page("pagenumber=".$this->_page_number);
     }
 
     /**
@@ -439,7 +439,7 @@ class PDFLib implements Canvas
      */
     public function set_page_number($num)
     {
-        $this->_page_number = (int)$num;
+        $this->_page_number = (int) $num;
     }
 
     /**
@@ -447,7 +447,7 @@ class PDFLib implements Canvas
      */
     public function set_page_count($count)
     {
-        $this->_page_count = (int)$count;
+        $this->_page_count = (int) $count;
     }
 
     /**
@@ -467,7 +467,7 @@ class PDFLib implements Canvas
         }
 
         if (count($dash) > 1) {
-            $this->_pdf->setdashpattern("dasharray={" . implode(" ", $dash) . "}");
+            $this->_pdf->setdashpattern("dasharray={".implode(" ", $dash)."}");
         } else {
             $this->_pdf->setdash(0, 0);
         }
@@ -1021,8 +1021,8 @@ class PDFLib implements Canvas
      */
     public function image($img_url, $x, $y, $w, $h, $resolution = "normal")
     {
-        $w = (int)$w;
-        $h = (int)$h;
+        $w = (int) $w;
+        $h = (int) $h;
 
         $img_type = Cache::detect_type($img_url, $this->get_dompdf()->getHttpContext());
 
@@ -1033,7 +1033,7 @@ class PDFLib implements Canvas
         $img = $this->_imgs[$img_url];
 
         $y = $this->y($y) - $h;
-        $this->_pdf->fit_image($img, $x, $y, 'boxsize={' . "$w $h" . '} fitmethod=entire');
+        $this->_pdf->fit_image($img, $x, $y, 'boxsize={'."$w $h".'} fitmethod=entire');
     }
 
     /**
@@ -1056,9 +1056,9 @@ class PDFLib implements Canvas
 
         $y = $this->y($y) - $this->get_font_height($font, $size);
 
-        $word_spacing = (float)$word_spacing;
-        $char_spacing = (float)$char_spacing;
-        $angle = -(float)$angle;
+        $word_spacing = (float) $word_spacing;
+        $char_spacing = (float) $char_spacing;
+        $angle = -(float) $angle;
 
         $this->_pdf->fit_textline($text, $x, $y, "rotate=$angle wordspacing=$word_spacing charspacing=$char_spacing ");
 
@@ -1102,7 +1102,7 @@ class PDFLib implements Canvas
             $name = substr($url, 1);
             if ($name) {
                 $this->_pdf->create_annotation($x, $y, $x + $width, $y + $height, 'Link',
-                    "contents={$url} destname=" . substr($url, 1) . " linewidth=0");
+                    "contents={$url} destname=".substr($url, 1)." linewidth=0");
             }
         } else {
             list($proto, $host, $path, $file) = Helpers::explode_url($url);
@@ -1111,9 +1111,9 @@ class PDFLib implements Canvas
                 return; // Local links are not allowed
             }
             $url = Helpers::build_url($proto, $host, $path, $file);
-            $url = '{' . rawurldecode($url) . '}';
+            $url = '{'.rawurldecode($url).'}';
 
-            $action = $this->_pdf->create_action("URI", "url=" . $url);
+            $action = $this->_pdf->create_action("URI", "url=".$url);
             $this->_pdf->create_annotation($x, $y, $x + $width, $y + $height, 'Link', "contents={$url} action={activate=$action} linewidth=0");
         }
     }
@@ -1265,7 +1265,7 @@ class PDFLib implements Canvas
             $this->_pdf->suspend_page("");
         }
 
-        $this->_pdf->resume_page("pagenumber=" . $this->_page_number);
+        $this->_pdf->resume_page("pagenumber=".$this->_page_number);
     }
 
     /**
@@ -1281,8 +1281,12 @@ class PDFLib implements Canvas
             die("Unable to stream pdf: headers already sent");
         }
 
-        if (!isset($options["compress"])) $options["compress"] = true;
-        if (!isset($options["Attachment"])) $options["Attachment"] = true;
+        if (!isset($options["compress"])) {
+            $options["compress"] = true;
+        }
+        if (!isset($options["Attachment"])) {
+            $options["Attachment"] = true;
+        }
 
         $this->_add_page_text();
 
@@ -1305,9 +1309,9 @@ class PDFLib implements Canvas
 
         header("Cache-Control: private");
         header("Content-Type: application/pdf");
-        header("Content-Length: " . $size);
+        header("Content-Length: ".$size);
 
-        $filename = str_replace(array("\n", "'"), "", basename($filename, ".pdf")) . ".pdf";
+        $filename = str_replace(array("\n", "'"), "", basename($filename, ".pdf")).".pdf";
         $attachment = $options["Attachment"] ? "attachment" : "inline";
         header(Helpers::buildContentDispositionHeader($attachment, $filename));
 
@@ -1318,7 +1322,7 @@ class PDFLib implements Canvas
             $chunk = (1 << 21); // 2 MB
             $fh = fopen($this->_file, "rb");
             if (!$fh) {
-                throw new Exception("Unable to load temporary PDF file: " . $this->_file);
+                throw new Exception("Unable to load temporary PDF file: ".$this->_file);
             }
 
             while (!feof($fh)) {
@@ -1328,7 +1332,7 @@ class PDFLib implements Canvas
 
             //debugpng
             if ($this->_dompdf->getOptions()->getDebugPng()) {
-                print '[pdflib stream unlink ' . $this->_file . ']';
+                print '[pdflib stream unlink '.$this->_file.']';
             }
             if (!$this->_dompdf->getOptions()->getDebugKeepTemp()) {
                 unlink($this->_file);
@@ -1348,7 +1352,9 @@ class PDFLib implements Canvas
      */
     public function output($options = array())
     {
-        if (!isset($options["compress"])) $options["compress"] = true;
+        if (!isset($options["compress"])) {
+            $options["compress"] = true;
+        }
 
         $this->_add_page_text();
 
@@ -1367,7 +1373,7 @@ class PDFLib implements Canvas
 
             //debugpng
             if ($this->_dompdf->getOptions()->getDebugPng()) {
-                print '[pdflib output unlink ' . $this->_file . ']';
+                print '[pdflib output unlink '.$this->_file.']';
             }
             if (!$this->_dompdf->getOptions()->getDebugKeepTemp()) {
                 unlink($this->_file);

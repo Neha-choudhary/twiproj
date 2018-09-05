@@ -143,7 +143,7 @@ class TwitterAPIExchange
                 $params[$key] = $value;
             }
         }
-        $this->getfield = '?' . http_build_query($params, '', '&');
+        $this->getfield = '?'.http_build_query($params, '', '&');
         return $this;
     }
     /**
@@ -214,7 +214,7 @@ class TwitterAPIExchange
             }
         }
         $base_info = $this->buildBaseString($url, $requestMethod, $oauth);
-        $composite_key = rawurlencode($consumer_secret) . '&' . rawurlencode($oauth_access_token_secret);
+        $composite_key = rawurlencode($consumer_secret).'&'.rawurlencode($oauth_access_token_secret);
         $oauth_signature = base64_encode(hash_hmac('sha1', $base_info, $composite_key, true));
         $oauth['oauth_signature'] = $oauth_signature;
         $this->url           = $url;
@@ -238,7 +238,7 @@ class TwitterAPIExchange
         {
             throw new Exception('performRequest parameter must be true or false');
         }
-        $header =  array($this->buildAuthorizationHeader($this->oauth), 'Expect:');
+        $header = array($this->buildAuthorizationHeader($this->oauth), 'Expect:');
         $getfield = $this->getGetfield();
         $postfields = $this->getPostfields();
         if (in_array(strtolower($this->requestMethod), array('put', 'delete')))
@@ -255,8 +255,7 @@ class TwitterAPIExchange
         if (!is_null($postfields))
         {
             $options[CURLOPT_POSTFIELDS] = http_build_query($postfields, '', '&');
-        }
-        else
+        } else
         {
             if ($getfield !== '')
             {
@@ -288,11 +287,11 @@ class TwitterAPIExchange
     {
         $return = array();
         ksort($params);
-        foreach($params as $key => $value)
+        foreach ($params as $key => $value)
         {
-            $return[] = rawurlencode($key) . '=' . rawurlencode($value);
+            $return[] = rawurlencode($key).'='.rawurlencode($value);
         }
-        return $method . "&" . rawurlencode($baseURI) . '&' . rawurlencode(implode('&', $return));
+        return $method."&".rawurlencode($baseURI).'&'.rawurlencode(implode('&', $return));
     }
     /**
      * Private method to generate authorization header used by cURL
@@ -305,11 +304,11 @@ class TwitterAPIExchange
     {
         $return = 'Authorization: OAuth ';
         $values = array();
-        foreach($oauth as $key => $value)
+        foreach ($oauth as $key => $value)
         {
             if (in_array($key, array('oauth_consumer_key', 'oauth_nonce', 'oauth_signature',
                 'oauth_signature_method', 'oauth_timestamp', 'oauth_token', 'oauth_version'))) {
-                $values[] = "$key=\"" . rawurlencode($value) . "\"";
+                $values[] = "$key=\"".rawurlencode($value)."\"";
             }
         }
         $return .= implode(', ', $values);
@@ -332,8 +331,7 @@ class TwitterAPIExchange
         if (strtolower($method) === 'get')
         {
             $this->setGetfield($data);
-        }
-        else
+        } else
         {
             $this->setPostfields($data);
         }

@@ -237,11 +237,11 @@ class AttributeTranslator
             // Look up $value in $target, if $target is an array:
             if (is_array($target)) {
                 if (isset($target[$value])) {
-                    $style .= " " . self::_resolve_target($node, $target[$value], $value);
+                    $style .= " ".self::_resolve_target($node, $target[$value], $value);
                 }
             } else {
                 // otherwise use target directly
-                $style .= " " . self::_resolve_target($node, $target, $value);
+                $style .= " ".self::_resolve_target($node, $target, $value);
             }
         }
 
@@ -263,7 +263,7 @@ class AttributeTranslator
     {
         if ($target[0] === "!") {
             // Function call
-            $func = "_" . mb_substr($target, 1);
+            $func = "_".mb_substr($target, 1);
 
             return self::$func($node, $value);
         }
@@ -381,13 +381,13 @@ class AttributeTranslator
 
         foreach ($cell_list as $cell) {
             $style = rtrim($cell->getAttribute(self::$_style_attr));
-            $style .= "; border-width: " . ($value > 0 ? 1 : 0) . "pt; border-style: inset;";
+            $style .= "; border-width: ".($value > 0 ? 1 : 0)."pt; border-style: inset;";
             $style = ltrim($style, ";");
             $cell->setAttribute(self::$_style_attr, $style);
         }
 
         $style = rtrim($node->getAttribute(self::$_style_attr), ";");
-        $style .= "; border-width: $value" . "px; ";
+        $style .= "; border-width: $value"."px; ";
 
         return ltrim($style, "; ");
     }
@@ -470,7 +470,7 @@ class AttributeTranslator
     static protected function _set_hr_size(\DOMElement $node, $value)
     {
         $style = rtrim($node->getAttribute(self::$_style_attr), ";");
-        $style .= "; border-width: " . max(0, $value - 2) . "; ";
+        $style .= "; border-width: ".max(0, $value - 2)."; ";
 
         return ltrim($style, "; ");
     }
@@ -490,7 +490,7 @@ class AttributeTranslator
             $width = "100%";
         }
 
-        $remainder = 100 - (double)rtrim($width, "% ");
+        $remainder = 100 - (double) rtrim($width, "% ");
 
         switch ($value) {
             case "left":
@@ -522,10 +522,10 @@ class AttributeTranslator
     {
         if (empty($value)) { return null; }
 
-        if ($node->hasAttribute("type") && in_array(strtolower($node->getAttribute("type")), array("text","password"))) {
-            return sprintf("width: %Fem", (((int)$value * .65)+2));
+        if ($node->hasAttribute("type") && in_array(strtolower($node->getAttribute("type")), array("text", "password"))) {
+            return sprintf("width: %Fem", (((int) $value * .65) + 2));
         } else {
-            return sprintf("width: %upx;", (int)$value);
+            return sprintf("width: %upx;", (int) $value);
         }
     }
 
@@ -625,11 +625,11 @@ class AttributeTranslator
         $style = $node->getAttribute(self::$_style_attr);
 
         if ($value[0] === "-" || $value[0] === "+") {
-            $value = self::$_last_basefont_size + (int)$value;
+            $value = self::$_last_basefont_size + (int) $value;
         }
 
         if (isset(self::$_font_size_lookup[$value])) {
-            $style .= "; font-size: " . self::$_font_size_lookup[$value] . ";";
+            $style .= "; font-size: ".self::$_font_size_lookup[$value].";";
         } else {
             $style .= "; font-size: $value;";
         }

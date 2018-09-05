@@ -105,10 +105,10 @@ class Page extends AbstractFrameReflower
 
             // Pages are only concerned with margins
             $cb = $this->_frame->get_containing_block();
-            $left = (float)$style->length_in_pt($style->margin_left, $cb["w"]);
-            $right = (float)$style->length_in_pt($style->margin_right, $cb["w"]);
-            $top = (float)$style->length_in_pt($style->margin_top, $cb["h"]);
-            $bottom = (float)$style->length_in_pt($style->margin_bottom, $cb["h"]);
+            $left = (float) $style->length_in_pt($style->margin_left, $cb["w"]);
+            $right = (float) $style->length_in_pt($style->margin_right, $cb["w"]);
+            $top = (float) $style->length_in_pt($style->margin_top, $cb["h"]);
+            $bottom = (float) $style->length_in_pt($style->margin_bottom, $cb["h"]);
 
             $content_x = $cb["x"] + $left;
             $content_y = $cb["y"] + $top;
@@ -188,7 +188,7 @@ class Page extends AbstractFrameReflower
         if (is_array($this->_callbacks) && isset($this->_callbacks[$event])) {
             $info = array(
                 0 => $this->_canvas, "canvas" => $this->_canvas,
-                1 => $frame,         "frame"  => $frame,
+                1 => $frame, "frame"  => $frame,
             );
             $fs = $this->_callbacks[$event];
             foreach ($fs as $f) {

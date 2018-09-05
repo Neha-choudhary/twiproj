@@ -63,13 +63,13 @@ class Table extends AbstractFrameReflower
         $absolute_used = $this->_state["absolute_used"];
         $auto_min = $this->_state["auto_min"];
 
-        $absolute =& $this->_state["absolute"];
-        $percent =& $this->_state["percent"];
-        $auto =& $this->_state["auto"];
+        $absolute = & $this->_state["absolute"];
+        $percent = & $this->_state["percent"];
+        $auto = & $this->_state["auto"];
 
         // Determine the actual width of the table
         $cb = $this->_frame->get_containing_block();
-        $columns =& $this->_frame->get_cellmap()->get_columns();
+        $columns = & $this->_frame->get_cellmap()->get_columns();
 
         $width = $style->width;
 
@@ -79,13 +79,13 @@ class Table extends AbstractFrameReflower
 
         $centered = ($left === "auto" && $right === "auto");
 
-        $left = (float)($left === "auto" ? 0 : $style->length_in_pt($left, $cb["w"]));
-        $right = (float)($right === "auto" ? 0 : $style->length_in_pt($right, $cb["w"]));
+        $left = (float) ($left === "auto" ? 0 : $style->length_in_pt($left, $cb["w"]));
+        $right = (float) ($right === "auto" ? 0 : $style->length_in_pt($right, $cb["w"]));
 
         $delta = $left + $right;
 
         if (!$centered) {
-            $delta += (float)$style->length_in_pt(array(
+            $delta += (float) $style->length_in_pt(array(
                     $style->padding_left,
                     $style->border_left_width,
                     $style->border_right_width,
@@ -93,14 +93,14 @@ class Table extends AbstractFrameReflower
                 $cb["w"]);
         }
 
-        $min_table_width = (float)$style->length_in_pt($style->min_width, $cb["w"] - $delta);
+        $min_table_width = (float) $style->length_in_pt($style->min_width, $cb["w"] - $delta);
 
         // min & max widths already include borders & padding
         $min_width -= $delta;
         $max_width -= $delta;
 
         if ($width !== "auto") {
-            $preferred_width = (float)$style->length_in_pt($width, $cb["w"]) - $delta;
+            $preferred_width = (float) $style->length_in_pt($width, $cb["w"]) - $delta;
 
             if ($preferred_width < $min_table_width) {
                 $preferred_width = $min_table_width;
@@ -417,13 +417,13 @@ class Table extends AbstractFrameReflower
         if ($style->border_collapse === "separate") {
             list($h, $v) = $style->border_spacing;
 
-            $v = (float)$style->length_in_pt($v) / 2;
-            $h = (float)$style->length_in_pt($h) / 2;
+            $v = (float) $style->length_in_pt($v) / 2;
+            $h = (float) $style->length_in_pt($h) / 2;
 
-            $style->padding_left = (float)$style->length_in_pt($style->padding_left, $cb["w"]) + $h;
-            $style->padding_right = (float)$style->length_in_pt($style->padding_right, $cb["w"]) + $h;
-            $style->padding_top = (float)$style->length_in_pt($style->padding_top, $cb["h"]) + $v;
-            $style->padding_bottom = (float)$style->length_in_pt($style->padding_bottom, $cb["h"]) + $v;
+            $style->padding_left = (float) $style->length_in_pt($style->padding_left, $cb["w"]) + $h;
+            $style->padding_right = (float) $style->length_in_pt($style->padding_right, $cb["w"]) + $h;
+            $style->padding_top = (float) $style->length_in_pt($style->padding_top, $cb["h"]) + $v;
+            $style->padding_bottom = (float) $style->length_in_pt($style->padding_bottom, $cb["h"]) + $v;
         }
 
         $this->_assign_widths();
@@ -444,22 +444,22 @@ class Table extends AbstractFrameReflower
             }
 
             $style->margin_left = sprintf("%Fpt", $left);
-            $style->margin_right = sprintf("%Fpt", $right);;
+            $style->margin_right = sprintf("%Fpt", $right); ;
         } else {
             if ($left === "auto") {
-                $left = (float)$style->length_in_pt($cb["w"] - $right - $width, $cb["w"]);
+                $left = (float) $style->length_in_pt($cb["w"] - $right - $width, $cb["w"]);
             }
             if ($right === "auto") {
-                $left = (float)$style->length_in_pt($left, $cb["w"]);
+                $left = (float) $style->length_in_pt($left, $cb["w"]);
             }
         }
 
         list($x, $y) = $frame->get_position();
 
         // Determine the content edge
-        $content_x = $x + (float)$left + (float)$style->length_in_pt(array($style->padding_left,
+        $content_x = $x + (float) $left + (float) $style->length_in_pt(array($style->padding_left,
                 $style->border_left_width), $cb["w"]);
-        $content_y = $y + (float)$style->length_in_pt(array($style->margin_top,
+        $content_y = $y + (float) $style->length_in_pt(array($style->margin_top,
                 $style->border_top_width,
                 $style->padding_top), $cb["h"]);
 
@@ -470,10 +470,10 @@ class Table extends AbstractFrameReflower
         }
 
         $cellmap = $frame->get_cellmap();
-        $col =& $cellmap->get_column(0);
+        $col = & $cellmap->get_column(0);
         $col["x"] = $content_x;
 
-        $row =& $cellmap->get_row(0);
+        $row = & $cellmap->get_row(0);
         $row["y"] = $content_y;
 
         $cellmap->assign_x_positions();
@@ -545,7 +545,7 @@ class Table extends AbstractFrameReflower
         $this->_state["percent"] = array();
         $this->_state["auto"] = array();
 
-        $columns =& $this->_frame->get_cellmap()->get_columns();
+        $columns = & $this->_frame->get_cellmap()->get_columns();
         foreach (array_keys($columns) as $i) {
             $this->_state["min_width"] += $columns[$i]["min-width"];
             $this->_state["max_width"] += $columns[$i]["max-width"];
@@ -574,7 +574,7 @@ class Table extends AbstractFrameReflower
             list($dims[]) = $style->border_spacing;
         }
 
-        $delta = (float)$style->length_in_pt($dims, $this->_frame->get_containing_block("w"));
+        $delta = (float) $style->length_in_pt($dims, $this->_frame->get_containing_block("w"));
 
         $this->_state["min_width"] += $delta;
         $this->_state["max_width"] += $delta;

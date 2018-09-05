@@ -277,7 +277,7 @@ class Page extends AbstractFrameDecorator
     protected function _page_break_allowed(Frame $frame)
     {
         $block_types = array("block", "list-item", "table", "-dompdf-image");
-        Helpers::dompdf_debug("page-break", "_page_break_allowed(" . $frame->get_node()->nodeName . ")");
+        Helpers::dompdf_debug("page-break", "_page_break_allowed(".$frame->get_node()->nodeName.")");
         $display = $frame->get_style()->display;
 
         // Block Frames (1):
@@ -285,7 +285,7 @@ class Page extends AbstractFrameDecorator
 
             // Avoid breaks within table-cells
             if ($this->_in_table) {
-                Helpers::dompdf_debug("page-break", "In table: " . $this->_in_table);
+                Helpers::dompdf_debug("page-break", "In table: ".$this->_in_table);
 
                 return false;
             }
@@ -346,7 +346,7 @@ class Page extends AbstractFrameDecorator
 
                 // Avoid breaks within table-cells
                 if ($this->_in_table) {
-                    Helpers::dompdf_debug("page-break", "In table: " . $this->_in_table);
+                    Helpers::dompdf_debug("page-break", "In table: ".$this->_in_table);
 
                     return false;
                 }
@@ -438,7 +438,7 @@ class Page extends AbstractFrameDecorator
                         return false;
 
                     } else {
-                        Helpers::dompdf_debug("page-break", "? " . $frame->get_style()->display . "");
+                        Helpers::dompdf_debug("page-break", "? ".$frame->get_style()->display."");
 
                         return false;
                     }
@@ -509,7 +509,7 @@ class Page extends AbstractFrameDecorator
         $margin_height = $frame->get_margin_height();
 
         // Determine the frame's maximum y value
-        $max_y = (float)$frame->get_position("y") + $margin_height;
+        $max_y = (float) $frame->get_position("y") + $margin_height;
 
         // If a split is to occur here, then the bottom margins & paddings of all
         // parents of $frame must fit on the page as well:
@@ -527,7 +527,7 @@ class Page extends AbstractFrameDecorator
         }
 
         Helpers::dompdf_debug("page-break", "check_page_break");
-        Helpers::dompdf_debug("page-break", "in_table: " . $this->_in_table);
+        Helpers::dompdf_debug("page-break", "in_table: ".$this->_in_table);
 
         // yes: determine page break location
         $iter = $frame;

@@ -72,14 +72,14 @@ class Absolute extends AbstractPositioner
         } else {
             if ($right === "auto") {
                 // B or F
-                $x += (float)$left;
+                $x += (float) $left;
             } else {
                 if ($orig_width === "auto") {
                     // D - TODO change width
-                    $x += (float)$left;
+                    $x += (float) $left;
                 } else {
                     // H - Everything is fixed: left + width win
-                    $x += (float)$left;
+                    $x += (float) $left;
                 }
             }
         }
@@ -92,23 +92,23 @@ class Absolute extends AbstractPositioner
             } else {
                 if ($orig_height === "auto") {
                     // C
-                    $y += (float)$h - $height - (float)$bottom;
+                    $y += (float) $h - $height - (float) $bottom;
                 } else {
                     // G
-                    $y += (float)$h - $height - (float)$bottom;
+                    $y += (float) $h - $height - (float) $bottom;
                 }
             }
         } else {
             if ($bottom === "auto") {
                 // B or F
-                $y += (float)$top;
+                $y += (float) $top;
             } else {
                 if ($orig_height === "auto") {
                     // D - TODO change height
-                    $y += (float)$top;
+                    $y += (float) $top;
                 } else {
                     // H - Everything is fixed: top + height win
-                    $y += (float)$top;
+                    $y += (float) $top;
                 }
             }
         }

@@ -42,7 +42,7 @@ class ListBullet extends AbstractPositioner
         if ($n) {
             $style = $n->get_style();
             $line_height = $style->length_in_pt($style->line_height, $style->get_font_size());
-            $offset = (float)$style->length_in_pt($line_height, $n->get_containing_block("h")) - $frame->get_height();
+            $offset = (float) $style->length_in_pt($line_height, $n->get_containing_block("h")) - $frame->get_height();
             $y += $offset / 2;
         }
 

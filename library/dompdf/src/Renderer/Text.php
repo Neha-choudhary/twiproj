@@ -66,12 +66,12 @@ class Text extends AbstractRenderer
             $bl = 0;
         }
 
-        $x += (float)$style->length_in_pt(array($ml, $pl, $bl), $cb["w"]);
+        $x += (float) $style->length_in_pt(array($ml, $pl, $bl), $cb["w"]);
 
         $font = $style->font_family;
         $size = $frame_font_size = $style->font_size;
-        $word_spacing = $frame->get_text_spacing() + (float)$style->length_in_pt($style->word_spacing);
-        $char_spacing = (float)$style->length_in_pt($style->letter_spacing);
+        $word_spacing = $frame->get_text_spacing() + (float) $style->length_in_pt($style->word_spacing);
+        $char_spacing = (float) $style->length_in_pt($style->letter_spacing);
         $width = $style->width;
 
         /*$text = str_replace(

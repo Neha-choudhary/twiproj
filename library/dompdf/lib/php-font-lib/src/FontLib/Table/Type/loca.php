@@ -15,7 +15,7 @@ use FontLib\Table\Table;
  * @package php-font-lib
  */
 class loca extends Table {
-  protected function _parse() {
+    protected function _parse() {
     $font   = $this->getFont();
     $offset = $font->pos();
 
@@ -28,30 +28,30 @@ class loca extends Table {
 
     // 2 bytes
     if ($indexToLocFormat == 0) {
-      $d   = $font->read(($numGlyphs + 1) * 2);
-      $loc = unpack("n*", $d);
+        $d   = $font->read(($numGlyphs + 1) * 2);
+        $loc = unpack("n*", $d);
 
-      for ($i = 0; $i <= $numGlyphs; $i++) {
+        for ($i = 0; $i <= $numGlyphs; $i++) {
         $data[] = isset($loc[$i + 1]) ?  $loc[$i + 1] * 2 : 0;
-      }
+        }
     }
 
     // 4 bytes
     else {
-      if ($indexToLocFormat == 1) {
+        if ($indexToLocFormat == 1) {
         $d   = $font->read(($numGlyphs + 1) * 4);
         $loc = unpack("N*", $d);
 
         for ($i = 0; $i <= $numGlyphs; $i++) {
-          $data[] = isset($loc[$i + 1]) ? $loc[$i + 1] : 0;
+            $data[] = isset($loc[$i + 1]) ? $loc[$i + 1] : 0;
         }
-      }
+        }
     }
 
     $this->data = $data;
-  }
+    }
 
-  function _encode() {
+    function _encode() {
     $font = $this->getFont();
     $data = $this->data;
 
@@ -61,20 +61,20 @@ class loca extends Table {
 
     // 2 bytes
     if ($indexToLocFormat == 0) {
-      for ($i = 0; $i <= $numGlyphs; $i++) {
+        for ($i = 0; $i <= $numGlyphs; $i++) {
         $length += $font->writeUInt16($data[$i] / 2);
-      }
+        }
     }
 
     // 4 bytes
     else {
-      if ($indexToLocFormat == 1) {
+        if ($indexToLocFormat == 1) {
         for ($i = 0; $i <= $numGlyphs; $i++) {
-          $length += $font->writeUInt32($data[$i]);
+            $length += $font->writeUInt32($data[$i]);
         }
-      }
+        }
     }
 
     return $length;
-  }
+    }
 }

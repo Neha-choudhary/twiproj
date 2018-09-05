@@ -18,16 +18,16 @@ use FontLib\Table\DirectoryEntry;
  * @property TableDirectoryEntry[] $directory
  */
 class File extends \FontLib\TrueType\File {
-  function parseHeader() {
+    function parseHeader() {
     if (!empty($this->header)) {
-      return;
+        return;
     }
 
     $this->header = new Header($this);
     $this->header->parse();
-  }
+    }
 
-  public function load($file) {
+    public function load($file) {
     parent::load($file);
 
     $this->parseTableEntries();
@@ -40,34 +40,34 @@ class File extends \FontLib\TrueType\File {
     $offset  = $this->header->encode();
 
     foreach ($this->directory as $entry) {
-      // Read ...
-      $this->f = $fr;
-      $this->seek($entry->offset);
-      $data = $this->read($entry->length);
+        // Read ...
+        $this->f = $fr;
+        $this->seek($entry->offset);
+        $data = $this->read($entry->length);
 
-      if ($entry->length < $entry->origLength) {
+        if ($entry->length < $entry->origLength) {
         $data = gzuncompress($data);
-      }
+        }
 
-      // Prepare data ...
-      $length        = strlen($data);
-      $entry->length = $entry->origLength = $length;
-      $entry->offset = $dataOffset;
+        // Prepare data ...
+        $length        = strlen($data);
+        $entry->length = $entry->origLength = $length;
+        $entry->offset = $dataOffset;
 
-      // Write ...
-      $this->f = $fw;
+        // Write ...
+        $this->f = $fw;
 
-      // Woff Entry
-      $this->seek($offset);
-      $offset += $this->write($entry->tag, 4); // tag
-      $offset += $this->writeUInt32($dataOffset); // offset
-      $offset += $this->writeUInt32($length); // length
-      $offset += $this->writeUInt32($length); // origLength
-      $offset += $this->writeUInt32(DirectoryEntry::computeChecksum($data)); // checksum
+        // Woff Entry
+        $this->seek($offset);
+        $offset += $this->write($entry->tag, 4); // tag
+        $offset += $this->writeUInt32($dataOffset); // offset
+        $offset += $this->writeUInt32($length); // length
+        $offset += $this->writeUInt32($length); // origLength
+        $offset += $this->writeUInt32(DirectoryEntry::computeChecksum($data)); // checksum
 
-      // Data
-      $this->seek($dataOffset);
-      $dataOffset += $this->write($data, $length);
+        // Data
+        $this->seek($dataOffset);
+        $dataOffset += $this->write($data, $length);
     }
 
     $this->f = $fw;
@@ -77,5 +77,5 @@ class File extends \FontLib\TrueType\File {
     $this->header    = null;
     $this->directory = array();
     $this->parseTableEntries();
-  }
+    }
 }

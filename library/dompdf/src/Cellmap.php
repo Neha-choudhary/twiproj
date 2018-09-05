@@ -431,9 +431,9 @@ class Cellmap
             return;
         }
 
-        $col =& $this->get_column($j);
+        $col = & $this->get_column($j);
         $col["used-width"] = $width;
-        $next_col =& $this->get_column($j + 1);
+        $next_col = & $this->get_column($j + 1);
         $next_col["x"] = $next_col["x"] + $width;
     }
 
@@ -443,14 +443,14 @@ class Cellmap
      */
     public function set_row_height($i, $height)
     {
-        $row =& $this->get_row($i);
+        $row = & $this->get_row($i);
 
         if ($row["height"] !== null && $height <= $row["height"]) {
             return;
         }
 
         $row["height"] = $height;
-        $next_row =& $this->get_row($i + 1);
+        $next_row = & $this->get_row($i + 1);
         $next_row["y"] = $row["y"] + $height;
 
     }
@@ -650,7 +650,7 @@ class Cellmap
             $val = null;
             if (Helpers::is_percent($width)) {
                 $var = "percent";
-                $val = (float)rtrim($width, "% ") / $colspan;
+                $val = (float) rtrim($width, "% ") / $colspan;
             } else if ($width !== "auto") {
                 $var = "absolute";
                 $val = $style->length_in_pt($frame_min) / $colspan;
@@ -661,7 +661,7 @@ class Cellmap
             for ($cs = 0; $cs < $colspan; $cs++) {
 
                 // Resolve the frame's width(s) with other cells
-                $col =& $this->get_column($this->__col + $cs);
+                $col = & $this->get_column($this->__col + $cs);
 
                 // Note: $var is either 'percent' or 'absolute'.  We compare the
                 // requested percentage or absolute values with the existing widths
@@ -680,7 +680,7 @@ class Cellmap
                 // FIXME try to avoid putting this dummy value when table-layout:fixed
                 $inc = ($this->is_layout_fixed() ? 10e-10 : ($frame_min - $min) / $colspan);
                 for ($c = 0; $c < $colspan; $c++) {
-                    $col =& $this->get_column($this->__col + $c);
+                    $col = & $this->get_column($this->__col + $c);
                     $col["min-width"] += $inc;
                 }
             }
@@ -689,7 +689,7 @@ class Cellmap
                 // FIXME try to avoid putting this dummy value when table-layout:fixed
                 $inc = ($this->is_layout_fixed() ? 10e-10 : ($frame_max - $max) / $colspan);
                 for ($c = 0; $c < $colspan; $c++) {
-                    $col =& $this->get_column($this->__col + $c);
+                    $col = & $this->get_column($this->__col + $c);
                     $col["max-width"] += $inc;
                 }
             }
@@ -905,7 +905,7 @@ class Cellmap
 
         if (php_sapi_name() == "cli") {
             $str = strip_tags(str_replace(array("<br/>", "<b>", "</b>"),
-                array("\n", chr(27) . "[01;33m", chr(27) . "[0m"),
+                array("\n", chr(27)."[01;33m", chr(27)."[0m"),
                 $str));
         }
 
