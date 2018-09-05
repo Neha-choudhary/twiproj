@@ -1,7 +1,7 @@
 <?php
 
 // for error reporting
-ini_set('display_errors', 1); 
+ini_set('display_errors',1); 
 error_reporting(E_ALL);
 
 //memory limit set to necessary
@@ -21,9 +21,9 @@ use Dompdf\Dompdf;
 //uncomment this values while running through cron job
 
 $path = $argv[0];
-$format = $argv[1];
+$format=$argv[1];
 $int_cursor = $argv[2];
-$screen_name = $argv[3];
+$screen_name=$argv[3];
 $email = $argv[4];
 
 //static values
@@ -32,12 +32,12 @@ $email = $argv[4];
 // $format='csv';
 // $int_cursor =-1;
 // $screen_name='khuntimd';
-// $email = 'niraj.visana9@gmail.com';
+// $email = 'niraj.visana@gmail.com';
 
 
 
 shell_exec("echo '$argv[0] $argv[1] $argv[2] $argv[3] $argv[4]' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
-    //shell_exec("sudo touch /var/www/html/rtcamp/tmp");
+ //shell_exec("sudo touch /var/www/html/rtcamp/tmp");
 
 
 define("ID", "FollowerName");
@@ -47,38 +47,39 @@ define("ROOT", "Follower");
 $cursor = $int_cursor;
 
 
-if (!isset($_SESSION['access_token']))
+if(!isset($_SESSION['access_token']))
 {
-    $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-    $request_token = $connection->oauth('oauth/request_token', array('oauth_callback'=>OAUTH_CALLBACK));
+    $connection = new TwitterOAuth(CONSUMER_KEY,CONSUMER_SECRET);
+    $request_token = $connection->oauth('oauth/request_token',array('oauth_callback'=>OAUTH_CALLBACK));
     $_SESSION['oauth_token'] = $request_token['oauth_token'];
     $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-    $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
-} else
+    $url=$connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token'] ));
+}
+else
 {
     $accesstoken = $_SESSION['access_token'];
     $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $accesstoken['oauth_token'], $accesstoken['oauth_token_secret']);
 }
 
-if ($cursor != 0)
+if($cursor!=0)
 {
 
     // $flwdwn=$connection->get('followers/list',["screen_name"=>$_SESSION['flwdwn'],"count"=>200,"cursor"=>$cursor]);
     $td_t = array();
-    for ($i = 1; $cursor != 0; $i++) { 
-        $flwdwn = $connection->get('followers/list', ["screen_name"=>$screen_name, "count"=>200, "cursor"=>$cursor]);
+    for ($i=1; $cursor!=0; $i++) { 
+        $flwdwn=$connection->get('followers/list',["screen_name"=>$screen_name,"count"=>200,"cursor"=>$cursor]);
         
-        if (!isset($flwdwn->users))
+        if(!isset($flwdwn->users))
         {
             shell_exec("echo 'inside first if' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
-            $reading = fopen('/home/bme2kggy0iwu/public_html/twiproj/cron.txt', 'r');
-            $writing = fopen('/home/bme2kggy0iwu/public_html/twiproj/cron.tmp', 'w');
+           $reading = fopen('/home/bme2kggy0iwu/public_html/twiproj/cron.txt', 'r');
+           $writing = fopen('/home/bme2kggy0iwu/public_html/twiproj/cron.tmp', 'w');
          
             $replaced = false;
             
             while (!feof($reading)) {
             $line = fgets($reading);
-            if (stristr($line, "*/15 * * * * /usr/local/bin/php /home/bme2kggy0iwu/public_html/twiproj/flwdwn.php $format $int_cursor $screen_name $email")) {
+            if (stristr($line,"*/15 * * * * /usr/local/bin/php /home/bme2kggy0iwu/public_html/twiproj/flwdwn.php $format $int_cursor $screen_name $email")) {
                 $line = "*/15 * * * * /usr/local/bin/php /home/bme2kggy0iwu/public_html/twiproj/flwdwn.php $format $cursor $screen_name $email \n";
                 $replaced = true;
             }
@@ -106,19 +107,19 @@ if ($cursor != 0)
             break;
         }
         foreach ($flwdwn->users as $f) {
-            $tmp = new stdClass;
-            $tmp->id_str = $f->name;
-            $tmp->text = $f->screen_name;
+            $tmp=new stdClass;
+            $tmp->id_str=$f->name;
+            $tmp->text=$f->screen_name;
             array_push($td_t, [$tmp]);
         }
         $cursor = $flwdwn->next_cursor;
     }
 
     
-    if ($format == "pdf")
+    if($format == "pdf")
     {
 
-        // $file_name = "followers details -".$screen_name.".pdf";                         
+      // $file_name = "followers details -".$screen_name.".pdf";                         
                                 
                 
                     $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -136,10 +137,10 @@ if ($cursor != 0)
                     $html .= '<tr>';
                     $html .= '<td style="padding:5px; text-align:left; font-weight:bold;">No</td><td style="padding:5px; text-align:left; font-weight:bold;">User Name</td><td style="padding:5px; text-align:left; font-weight:bold;">Screen Name</td>';
                     $html .= '</tr>';
-                    $i = 0;
-                    foreach ($td_t as $rows) {
+                    $i=0;
+                    foreach ($td_t as $rows){
                         foreach ($rows as $row) {
-                        $i = $i + 1;
+                        $i=$i+1;
                         $html .= '<tr>';
                         $html .= '<td style="padding:5px; text-align:left; width:18%;">'.trim($i).'</td>';
                         $html .= '<td style="padding:5px; text-align:left; width:18%;">'.trim($row->id_str).'</td>';
@@ -176,11 +177,12 @@ if ($cursor != 0)
 
 
         
-    } else
+    }
+    else
     {
         $file = fopen(__DIR__."/".FILE_NAME.'.'.$format, 'a');
         
-        if ($int_cursor == -1)
+        if($int_cursor == -1)
         {
             fputcsv($file, array(ID, VALUE));
         }
@@ -188,7 +190,7 @@ if ($cursor != 0)
         foreach ($td_t as $rows)
         {
             foreach ($rows as $row) {
-                fputcsv($file, array($row->id_str, $row->text));
+                fputcsv($file, array($row->id_str,$row->text));
             }
         }
 
@@ -197,7 +199,7 @@ if ($cursor != 0)
     }
 }
 
-if ($cursor == 0)
+if($cursor == 0)
 {
 
     require '/home/bme2kggy0iwu/public_html/twiproj/PHPMailer-master/src/Exception.php';
@@ -213,13 +215,8 @@ if ($cursor == 0)
     $mail->SMTPSecure = false;
     $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
     $mail->IsHTML(true);
-<< << <<< HEAD
-    $mail->Username = "Your Email";  
-    $mail->Password = "Your password";
-=======
-    $mail->Username = "";  
-    $mail->Password = "";
->>>>>>> 065093bcbf84778ed1d361a2a686a08ee4531d92
+    $mail->Username = "twiproj@visana.xyz";  
+    $mail->Password = "Nir@jNNN9";
     $mail->SetFrom('twiproj@visana.xyz', 'Twitter-data');
     $mail->Subject = "Followers Data";
     $mail->AltBody = "";
@@ -237,15 +234,15 @@ if ($cursor == 0)
     
     
 
-     if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
-        shell_exec("echo 'failed to send mail' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
-      //  $output = exec('crontab -r');
-     } else {
-        shell_exec("echo 'sent mail' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
-        echo "Message has been sent";
-      //  $output = exec('crontab -r');
-     } 
+     // if(!$mail->Send()) {
+     //    echo "Mailer Error: " . $mail->ErrorInfo;
+     //    shell_exec("echo 'failed to send mail' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
+     //  //  $output = exec('crontab -r');
+     // } else {
+     //    shell_exec("echo 'sent mail' >> /home/bme2kggy0iwu/public_html/twiproj/argv.txt");
+     //    echo "Message has been sent";
+     //  //  $output = exec('crontab -r');
+     // } 
 
 
 
@@ -309,8 +306,15 @@ if ($cursor == 0)
         
         //shell_exec("chmod 777 ".__DIR__.'/cron.txt');
         echo shell_exec('sh '.__DIR__.'/cron.sh');
-      //  unlink(__DIR__."/".FILE_NAME.'.'.$format);
-
+        unlink(__DIR__."/".FILE_NAME.'.'.$format);
+    }
         
     else{
-        echo "Error while sending mail : ".$mail->ErrorInfo
+        echo "Error while sending mail : ".$mail->ErrorInfo;
+    }
+
+
+}
+
+
+?>
