@@ -200,7 +200,9 @@ class Frame {
   
     // WIP : preprocessing to remove all the unused whitespace
     protected function ws_trim() {
-    if ($this->ws_keep()) return;
+    if ($this->ws_keep()) {
+        return;
+    }
     
     switch (self::$_ws_state) {
         case self::WS_SPACE: 
@@ -262,8 +264,9 @@ class Frame {
     function dispose($recursive = false) {
 
     if ($recursive) {
-        while ($child = $this->_first_child)
-        $child->dispose(true);
+        while ($child = $this->_first_child) {
+                $child->dispose(true);
+        }
     }
 
     // Remove this frame from the tree
@@ -552,13 +555,15 @@ class Frame {
     // We can only set attributes of DOMElement objects (nodeType == 1).
     // Since these are the only objects that we can assign CSS rules to,
     // this shortcoming is okay.
-    if ($this->_node->nodeType == XML_ELEMENT_NODE)
-        $this->_node->setAttribute("frame_id", $id);
+    if ($this->_node->nodeType == XML_ELEMENT_NODE) {
+            $this->_node->setAttribute("frame_id", $id);
+    }
     }
 
     function set_style(Style $style) {
-    if (is_null($this->_style))
-        $this->_original_style = clone $style;
+    if (is_null($this->_style)) {
+            $this->_original_style = clone $style;
+    }
     
     //$style->set_frame($this);
     $this->_style = $style;
@@ -593,8 +598,9 @@ class Frame {
     }
 
     function set_position($x = null, $y = null) {
-    if (is_array($x))
-        extract($x);
+    if (is_array($x)) {
+            extract($x);
+    }
     
     if (is_numeric($x)) {
         $this->_position["x"] = $x;
@@ -693,12 +699,14 @@ class Frame {
      * @param $update_node boolean Whether or not to update the DOM
      */ 
     function prepend_child(Frame $child, $update_node = true) {
-    if ($update_node) 
-        $this->_node->insertBefore($child->_node, $this->_first_child ? $this->_first_child->_node : null);
+    if ($update_node) {
+            $this->_node->insertBefore($child->_node, $this->_first_child ? $this->_first_child->_node : null);
+    }
 
     // Remove the child from its parent
-    if ($child->_parent)
-        $child->_parent->remove_child($child, false);
+    if ($child->_parent) {
+            $child->_parent->remove_child($child, false);
+    }
     
     $child->_parent = $this;
     $child->_prev_sibling = null;
@@ -722,12 +730,14 @@ class Frame {
      * @param $update_node boolean Whether or not to update the DOM
      */ 
     function append_child(Frame $child, $update_node = true) {
-    if ($update_node) 
-        $this->_node->appendChild($child->_node);
+    if ($update_node) {
+            $this->_node->appendChild($child->_node);
+    }
 
     // Remove the child from its parent
-    if ($child->_parent)
-        $child->_parent->remove_child($child, false);
+    if ($child->_parent) {
+            $child->_parent->remove_child($child, false);
+    }
 
     $child->_parent = $this;
     $child->_next_sibling = null;
@@ -762,23 +772,27 @@ class Frame {
         return;
     }
     
-    if ($ref->_parent !== $this)
-        throw new DOMPDF_Exception("Reference child is not a child of this node.");
+    if ($ref->_parent !== $this) {
+            throw new DOMPDF_Exception("Reference child is not a child of this node.");
+    }
 
     // Update the node    
-    if ($update_node)
-        $this->_node->insertBefore($new_child->_node, $ref->_node);
+    if ($update_node) {
+            $this->_node->insertBefore($new_child->_node, $ref->_node);
+    }
 
     // Remove the child from its parent
-    if ($new_child->_parent)
-        $new_child->_parent->remove_child($new_child, false);
+    if ($new_child->_parent) {
+            $new_child->_parent->remove_child($new_child, false);
+    }
     
     $new_child->_parent = $this;
     $new_child->_next_sibling = $ref;
     $new_child->_prev_sibling = $ref->_prev_sibling;
 
-    if ($ref->_prev_sibling)
-        $ref->_prev_sibling->_next_sibling = $new_child;
+    if ($ref->_prev_sibling) {
+            $ref->_prev_sibling->_next_sibling = $new_child;
+    }
     
     $ref->_prev_sibling = $new_child;
     }
@@ -801,8 +815,9 @@ class Frame {
         return;
     }
     
-    if ($ref->_parent !== $this)
-        throw new DOMPDF_Exception("Reference child is not a child of this node.");
+    if ($ref->_parent !== $this) {
+            throw new DOMPDF_Exception("Reference child is not a child of this node.");
+    }
 
     // Update the node
     if ($update_node) {
@@ -815,15 +830,17 @@ class Frame {
     }
     
     // Remove the child from its parent
-    if ($new_child->_parent)
-        $new_child->_parent->remove_child($new_child, false);
+    if ($new_child->_parent) {
+            $new_child->_parent->remove_child($new_child, false);
+    }
     
     $new_child->_parent = $this;
     $new_child->_prev_sibling = $ref;
     $new_child->_next_sibling = $ref->_next_sibling;
 
-    if ($ref->_next_sibling) 
-        $ref->_next_sibling->_prev_sibling = $new_child;
+    if ($ref->_next_sibling) {
+            $ref->_next_sibling->_prev_sibling = $new_child;
+    }
 
     $ref->_next_sibling = $new_child;
     }
@@ -837,23 +854,29 @@ class Frame {
      * @return Frame The removed child frame
      */
     function remove_child(Frame $child, $update_node = true) {
-    if ($child->_parent !== $this)
-        throw new DOMPDF_Exception("Child not found in this frame");
+    if ($child->_parent !== $this) {
+            throw new DOMPDF_Exception("Child not found in this frame");
+    }
 
-    if ($update_node)
-        $this->_node->removeChild($child->_node);
+    if ($update_node) {
+            $this->_node->removeChild($child->_node);
+    }
     
-    if ($child === $this->_first_child)
-        $this->_first_child = $child->_next_sibling;
+    if ($child === $this->_first_child) {
+            $this->_first_child = $child->_next_sibling;
+    }
 
-    if ($child === $this->_last_child)
-        $this->_last_child = $child->_prev_sibling;
+    if ($child === $this->_last_child) {
+            $this->_last_child = $child->_prev_sibling;
+    }
 
-    if ($child->_prev_sibling)
-        $child->_prev_sibling->_next_sibling = $child->_next_sibling;
+    if ($child->_prev_sibling) {
+            $child->_prev_sibling->_next_sibling = $child->_next_sibling;
+    }
 
-    if ($child->_next_sibling)
-        $child->_next_sibling->_prev_sibling = $child->_prev_sibling;    
+    if ($child->_next_sibling) {
+            $child->_next_sibling->_prev_sibling = $child->_prev_sibling;
+    }
 
     $child->_next_sibling = null;
     $child->_prev_sibling = null;
@@ -885,20 +908,23 @@ class Frame {
         $str .= "CSS class: '$css_class'<br/>";
     }
     
-    if ($this->_parent)
-        $str .= "\nParent:".$this->_parent->_node->nodeName.
+    if ($this->_parent) {
+            $str .= "\nParent:".$this->_parent->_node->nodeName.
         " (".spl_object_hash($this->_parent->_node).") ".
         "<br/>";
+    }
 
-    if ($this->_prev_sibling)
-        $str .= "Prev: ".$this->_prev_sibling->_node->nodeName.
+    if ($this->_prev_sibling) {
+            $str .= "Prev: ".$this->_prev_sibling->_node->nodeName.
         " (".spl_object_hash($this->_prev_sibling->_node).") ".
         "<br/>";
+    }
 
-    if ($this->_next_sibling)
-        $str .= "Next: ".$this->_next_sibling->_node->nodeName.
+    if ($this->_next_sibling) {
+            $str .= "Next: ".$this->_next_sibling->_node->nodeName.
         " (".spl_object_hash($this->_next_sibling->_node).") ".
         "<br/>";
+    }
 
     $d = $this->get_decorator();
     while ($d && $d != $d->get_decorator()) {
@@ -935,10 +961,11 @@ class Frame {
         $str .= "</pre>";
     }
     $str .= "\n";
-    if (php_sapi_name() === "cli")
-        $str = strip_tags(str_replace(array("<br/>", "<b>", "</b>"),
+    if (php_sapi_name() === "cli") {
+            $str = strip_tags(str_replace(array("<br/>", "<b>", "</b>"),
                                     array("\n", "", ""),
                                     $str));
+    }
     
     return $str;
     }
@@ -1016,8 +1043,9 @@ class FrameListIterator implements Iterator {
     function next() {
 
     $ret = $this->_cur;
-    if (!$ret)
-        return null;
+    if (!$ret) {
+            return null;
+    }
     
     $this->_cur = $this->_cur->get_next_sibling();
     $this->_num++;
@@ -1105,8 +1133,9 @@ class FrameTreeIterator implements Iterator {
     // Push all children onto the stack in reverse order
     if ($c = $b->get_last_child()) {
         $this->_stack[] = $c;
-        while ($c = $c->get_prev_sibling())
-        $this->_stack[] = $c;
+        while ($c = $c->get_prev_sibling()) {
+                $this->_stack[] = $c;
+        }
     }
     return $b;
     }

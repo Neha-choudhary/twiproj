@@ -34,8 +34,9 @@ class Inline_Positioner extends Positioner {
 
     // End debugging
 
-    if (!$p)
-        throw new DOMPDF_Exception("No block-level parent found.  Not good.");
+    if (!$p) {
+            throw new DOMPDF_Exception("No block-level parent found.  Not good.");
+    }
 
     $f = $this->_frame;
     

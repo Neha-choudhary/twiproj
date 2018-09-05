@@ -43,8 +43,9 @@ class Frame_Factory {
      * FIXME: this is admittedly a little smelly...
      */ 
     static function decorate_frame(Frame $frame, DOMPDF $dompdf) {
-    if (is_null($dompdf))
-        throw new Exception("foo");
+    if (is_null($dompdf)) {
+            throw new Exception("foo");
+    }
       
     $style = $frame->get_style();
     
@@ -64,12 +65,12 @@ class Frame_Factory {
 
         case "inline":
           $positioner = "Inline";
-            if ( $frame->is_text_node() ) {
+            if ($frame->is_text_node()) {
             $decorator = "Text";
             $reflower = "Text";
             } 
             else {
-            if ( DOMPDF_ENABLE_CSS_FLOAT && $style->float !== "none" ) {
+            if (DOMPDF_ENABLE_CSS_FLOAT && $style->float !== "none") {
                 $decorator = "Block";
                 $reflower = "Block";
             }
@@ -119,12 +120,12 @@ class Frame_Factory {
             break;
 
         case "-dompdf-list-bullet":
-          if ( $style->list_style_position === "inside" )
+          if ($style->list_style_position === "inside")
             $positioner = "Inline";
             else        
             $positioner = "List_Bullet";
 
-            if ( $style->list_style_image !== "none" )
+            if ($style->list_style_image !== "none")
             $decorator = "List_Bullet_Image";
             else
             $decorator = "List_Bullet";
@@ -156,11 +157,11 @@ class Frame_Factory {
     // Handle CSS position
     $position = $style->position;
     
-    if ($position === "absolute")
-        $positioner = "Absolute";
-
-    else if ($position === "fixed")
-        $positioner = "Fixed";
+    if ($position === "absolute") {
+            $positioner = "Absolute";
+    } else if ($position === "fixed") {
+            $positioner = "Fixed";
+    }
       
     // Handle nodeName
     $node_name = $frame->get_node()->nodeName;

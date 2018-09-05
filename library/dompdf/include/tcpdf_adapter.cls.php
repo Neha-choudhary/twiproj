@@ -106,12 +106,13 @@ class TCPDF_Adapter implements Canvas {
      */
     function __construct($paper = "letter", $orientation = "portrait") {
    
-    if (is_array($paper))
-        $size = $paper;
-    else if (isset(self::$PAPER_SIZES[mb_strtolower($paper)]))
-        $size = self::$PAPER_SIZE[$paper];
-    else
-        $size = self::$PAPER_SIZE["letter"];
+    if (is_array($paper)) {
+            $size = $paper;
+    } else if (isset(self::$PAPER_SIZES[mb_strtolower($paper)])) {
+            $size = self::$PAPER_SIZE[$paper];
+    } else {
+            $size = self::$PAPER_SIZE["letter"];
+    }
 
     if (mb_strtolower($orientation) === "landscape") {
         list($size[2], $size[3]) = array($size[3], $size[2]);

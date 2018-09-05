@@ -56,29 +56,24 @@ class Absolute_Positioner extends Positioner {
     if ($left === "auto") {
         if ($right === "auto") {
         // A or E - Keep the frame at the same position
-        }
-        else {
+        } else {
         if ($orig_width === "auto") {
             // C
             $x += $w - $width - $right;
-        }
-        else {
+        } else {
             // G
             $x += $w - $width - $right;
         }
         }
-    }
-    else {
+    } else {
         if ($right === "auto") {
         // B or F
         $x += $left;
-        }
-        else {
+        } else {
         if ($orig_width === "auto") {
             // D - TODO change width
             $x += $left;
-        }
-        else {
+        } else {
             // H - Everything is fixed: left + width win
             $x += $left;
         }
@@ -90,29 +85,24 @@ class Absolute_Positioner extends Positioner {
         if ($bottom === "auto") {
         // A or E - Keep the frame at the same position
         $y = $frame->get_parent()->get_current_line_box()->y;
-        }
-        else {
+        } else {
         if ($orig_height === "auto") {
             // C
             $y += $h - $height - $bottom;
-        }
-        else {
+        } else {
             // G
             $y += $h - $height - $bottom;
         }
         }
-    }
-    else {
+    } else {
         if ($bottom === "auto") {
         // B or F
         $y += $top;
-        }
-        else {
+        } else {
         if ($orig_height === "auto") {
             // D - TODO change height
             $y += $top;
-        }
-        else {
+        } else {
             // H - Everything is fixed: top + height win
             $y += $top;
         }

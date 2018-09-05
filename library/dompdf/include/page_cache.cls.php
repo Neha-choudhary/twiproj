@@ -31,16 +31,18 @@ class Page_Cache {
         " user=".self::DB_USER.
         " password=".self::DB_PASS;
       
-        if (!self::$__connection = pg_connect($con_str))
-        throw new Exception("Database connection failed.");
+        if (!self::$__connection = pg_connect($con_str)) {
+                throw new Exception("Database connection failed.");
+        }
     }
     }
   
     function __construct() { throw new Exception("Can not create instance of Page_Class.  Class is static."); }
 
     private static function __query($sql) {
-    if (!($res = pg_query(self::$__connection, $sql)))
-        throw new Exception(pg_last_error(self::$__connection));
+    if (!($res = pg_query(self::$__connection, $sql))) {
+            throw new Exception(pg_last_error(self::$__connection));
+    }
     return $res;
     }
   
@@ -52,12 +54,13 @@ class Page_Cache {
 
     $row = pg_fetch_assoc($res);
     
-    if ($row) 
-        self::__query("UPDATE page_cache SET data='".pg_escape_string($data)."' ".$where);
-    else 
-        self::__query("INSERT INTO page_cache (id, page_num, data) VALUES ('".pg_escape_string($id)."', ".
+    if ($row) {
+            self::__query("UPDATE page_cache SET data='".pg_escape_string($data)."' ".$where);
+    } else {
+            self::__query("INSERT INTO page_cache (id, page_num, data) VALUES ('".pg_escape_string($id)."', ".
                         pg_escape_string($page_num).", ".
                         "'".pg_escape_string($data)."')");
+    }
 
     }
 
@@ -66,9 +69,10 @@ class Page_Cache {
     // Update the font information
     self::__query("DELETE FROM page_fonts WHERE id='".pg_escape_string($id)."'");
 
-    foreach (array_keys($fonts) as $font)
-        self::__query("INSERT INTO page_fonts (id, font_name) VALUES ('".
+    foreach (array_keys($fonts) as $font) {
+            self::__query("INSERT INTO page_fonts (id, font_name) VALUES ('".
                     pg_escape_string($id)."', '".pg_escape_string($font)."')");
+    }
     self::__query("COMMIT");
     }
   
@@ -99,21 +103,24 @@ class Page_Cache {
 
     // Ensure that the fonts needed by the cached document are loaded into
     // the pdf
-    while ($row = pg_fetch_assoc($res)) 
-        $pdf->get_cpdf()->selectFont($row["font_name"]);
+    while ($row = pg_fetch_assoc($res)) {
+            $pdf->get_cpdf()->selectFont($row["font_name"]);
+    }
     
     $res = self::__query("SELECT data FROM page_cache WHERE id='".pg_escape_string($id)."'");
 
-    if ($new_page)
-        $pdf->new_page();
+    if ($new_page) {
+            $pdf->new_page();
+    }
 
     $first = true;
     while ($row = pg_fetch_assoc($res)) {
 
-        if (!$first) 
-        $pdf->new_page();
-        else 
-        $first = false;        
+        if (!$first) {
+                $pdf->new_page();
+        } else {
+                $first = false;
+        }
       
         $page = $pdf->reopen_serialized_object($row["data"]);
         //$pdf->close_object();

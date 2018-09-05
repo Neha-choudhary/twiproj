@@ -25,8 +25,9 @@ class Inline_Frame_Decorator extends Frame_Decorator {
         return;
     }
 
-    if ($frame->get_parent() !== $this)
-        throw new DOMPDF_Exception("Unable to split: frame is not a child of this one.");
+    if ($frame->get_parent() !== $this) {
+            throw new DOMPDF_Exception("Unable to split: frame is not a child of this one.");
+    }
         
     $split = $this->copy($this->_frame->get_node()->cloneNode()); 
     $this->get_parent()->insert_child_after($split, $this);

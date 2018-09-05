@@ -39,8 +39,9 @@ class Block_Renderer extends Abstract_Renderer {
         $this->_canvas->filled_rectangle($x, $y, $w, $h, $bg);
     }
 
-    if (($url = $style->background_image) && $url !== "none")
-        $this->_background_image($url, $x, $y, $w, $h, $style);
+    if (($url = $style->background_image) && $url !== "none") {
+            $this->_background_image($url, $x, $y, $w, $h, $style);
+    }
 
     $this->_render_border($frame);
     $this->_render_outline($frame);
@@ -72,7 +73,9 @@ class Block_Renderer extends Abstract_Renderer {
       $bp["bottom"] == $bp["left"]
     ) {
         $props = $bp["top"];
-        if ($props["color"] === "transparent" || $props["width"] <= 0) return;
+        if ($props["color"] === "transparent" || $props["width"] <= 0) {
+            return;
+        }
       
         list($x, $y, $w, $h) = $bbox;
         $width = $style->length_in_pt($props["width"]);
@@ -89,14 +92,14 @@ class Block_Renderer extends Abstract_Renderer {
     foreach ($bp as $side => $props) {
         list($x, $y, $w, $h) = $bbox;
 
-        if ( !$props["style"] || 
+        if (!$props["style"] || 
             $props["style"] === "none" || 
             $props["width"] <= 0 || 
-            $props["color"] == "transparent" ) {
+            $props["color"] == "transparent") {
                 continue;
         }
 
-        switch($side) {
+        switch ($side) {
             case "top":
             $length = $w;
             break;
@@ -132,8 +135,9 @@ class Block_Renderer extends Abstract_Renderer {
         "color" => $style->outline_color,
     );
     
-    if (!$props["style"] || $props["style"] === "none" || $props["width"] <= 0)
-        return;
+    if (!$props["style"] || $props["style"] === "none" || $props["width"] <= 0) {
+            return;
+    }
       
     $bbox = $frame->get_border_box();
     $offset = $style->length_in_pt($props["width"]);
@@ -156,14 +160,14 @@ class Block_Renderer extends Abstract_Renderer {
     $bbox[2] += $offset * 2;
     $bbox[3] += $offset * 2;
     
-    $method = "_border_" . $props["style"];
+    $method = "_border_".$props["style"];
     $widths = array_fill(0, 4, $props["width"]);
     $sides = array("top", "right", "left", "bottom");
     
     foreach ($sides as $side) {
         list($x, $y, $w, $h) = $bbox;
 
-        switch($side) {
+        switch ($side) {
             case "top":
             $length = $w;
             break;

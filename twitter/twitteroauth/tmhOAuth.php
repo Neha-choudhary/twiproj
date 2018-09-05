@@ -193,8 +193,9 @@ class tmhOAuth {
     );
 
     // include the user token if it exists
-    if ($this->config['user_token'])
-        $defaults['oauth_token'] = $this->config['user_token'];
+    if ($this->config['user_token']) {
+            $defaults['oauth_token'] = $this->config['user_token'];
+    }
 
     // safely encode
     foreach ($defaults as $k => $v) {
@@ -317,8 +318,9 @@ class tmhOAuth {
     }
 
     // request_params is already set if we're doing multipart, if not we need to set them now
-    if (!$this->config['multipart'])
-        $this->request_params = array_diff_key($_signing_params, $this->get_defaults());
+    if (!$this->config['multipart']) {
+            $this->request_params = array_diff_key($_signing_params, $this->get_defaults());
+    }
 
     // create the parameter part of the base string
     $this->signing_params = implode('&', $kv);
@@ -436,8 +438,9 @@ class tmhOAuth {
 
     $this->sign($method, $url, $params, $useauth);
 
-    if (!empty($this->custom_headers))
-        $this->headers = array_merge((array) $this->headers, (array) $this->custom_headers);
+    if (!empty($this->custom_headers)) {
+            $this->headers = array_merge((array) $this->headers, (array) $this->custom_headers);
+    }
 
     return $this->curlit();
     }
@@ -504,14 +507,16 @@ class tmhOAuth {
     $proto = $this->config['use_ssl'] ? 'https:/' : 'http:/';
 
     // backwards compatibility with v0.1
-    if (isset($this->config['v']))
-        $this->config['host'] = $this->config['host'].'/'.$this->config['v'];
+    if (isset($this->config['v'])) {
+            $this->config['host'] = $this->config['host'].'/'.$this->config['v'];
+    }
 
     $request = ltrim($request, '/');
 
     $pos = strlen($request) - strlen($format);
-    if (substr($request, $pos) === $format)
-        $request = substr_replace($request, '', $pos);
+    if (substr($request, $pos) === $format) {
+            $request = substr_replace($request, '', $pos);
+    }
 
     return implode('/', array(
         $proto,
@@ -583,8 +588,9 @@ class tmhOAuth {
     $this->metrics['tweets']++;
     $this->metrics['bytes'] += strlen($content);
 
-    if (!is_callable($this->config['streaming_callback']))
-        return 0;
+    if (!is_callable($this->config['streaming_callback'])) {
+            return 0;
+    }
 
     $metrics = $this->update_metrics();
     $stop = call_user_func(

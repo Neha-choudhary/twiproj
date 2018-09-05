@@ -118,8 +118,9 @@ class Table_Frame_Decorator extends Frame_Decorator {
 
         $new_header = $header->deep_copy();
 
-        if (is_null($first_header))
-            $first_header = $new_header;
+        if (is_null($first_header)) {
+                    $first_header = $new_header;
+        }
 
         $this->insert_child_before($new_header, $child);
         }
@@ -168,9 +169,10 @@ class Table_Frame_Decorator extends Frame_Decorator {
      */
     static function find_parent_table(Frame $frame) {
 
-    while ($frame = $frame->get_parent())
-        if ($frame->is_table())
+    while ($frame = $frame->get_parent()) {
+            if ($frame->is_table())
         break;
+    }
 
     return $frame;
     }
@@ -263,8 +265,9 @@ class Table_Frame_Decorator extends Frame_Decorator {
             // Lookup styles for tr tags.  If the user wants styles to work
             // better, they should make the tr explicit... I'm not going to
             // try to guess what they intended.
-            if ($tr_style = $css->lookup("tr"))
-            $style->merge($tr_style);
+            if ($tr_style = $css->lookup("tr")) {
+                        $style->merge($tr_style);
+            }
 
             // Okay, I have absolutely no idea why I need this clone here, but
             // if it's omitted, php (as of 2004-07-28) segfaults.
@@ -286,16 +289,17 @@ class Table_Frame_Decorator extends Frame_Decorator {
 
         // Normalise other table parts (i.e. row groups)
         foreach ($child->get_children() as $grandchild) {
-            if ($grandchild->get_style()->display === "table-row")
-            $grandchild->normalise();
+            if ($grandchild->get_style()->display === "table-row") {
+                        $grandchild->normalise();
+            }
         }
 
         // Add headers and footers
-        if ($display === "table-header-group")
-            $this->_headers[] = $child;
-
-        else if ($display === "table-footer-group")
-            $this->_footers[] = $child;
+        if ($display === "table-header-group") {
+                    $this->_headers[] = $child;
+        } else if ($display === "table-footer-group") {
+                    $this->_footers[] = $child;
+        }
         }
     }
 

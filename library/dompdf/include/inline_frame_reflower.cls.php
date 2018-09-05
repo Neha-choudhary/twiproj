@@ -26,8 +26,9 @@ class Inline_Frame_Reflower extends Frame_Reflower {
     $page = $frame->get_root();
     $page->check_forced_page_break($frame);
     
-    if ($page->is_full())
-        return;
+    if ($page->is_full()) {
+            return;
+    }
       
     $style = $frame->get_style();
     

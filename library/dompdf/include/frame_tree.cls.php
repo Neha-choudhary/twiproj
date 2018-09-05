@@ -107,11 +107,13 @@ class Frame_Tree {
      */
     function build_tree() {
     $html = $this->_dom->getElementsByTagName("html")->item(0);
-    if (is_null($html))
-        $html = $this->_dom->firstChild;
+    if (is_null($html)) {
+            $html = $this->_dom->firstChild;
+    }
 
-    if (is_null($html))
-        throw new DOMPDF_Exception("Requested HTML document contains no data.");
+    if (is_null($html)) {
+            throw new DOMPDF_Exception("Requested HTML document contains no data.");
+    }
 
     $this->fix_tables();
     
@@ -158,8 +160,9 @@ class Frame_Tree {
     $id = $frame->get_id();
     $this->_registry[$id] = $frame;
     
-    if (!$node->hasChildNodes())
-        return $frame;
+    if (!$node->hasChildNodes()) {
+            return $frame;
+    }
 
     // Fixes 'cannot access undefined property for object with
     // overloaded access', fix by Stefan radulian
@@ -178,8 +181,9 @@ class Frame_Tree {
         // Skip non-displaying nodes
         if (in_array($node_name, self::$_HIDDEN_TAGS)) {
         if ($node_name !== "head" &&
-             $node_name !== "style") 
-            $child->parentNode->removeChild($child);
+             $node_name !== "style") {
+                    $child->parentNode->removeChild($child);
+        }
         continue;
         }
 

@@ -143,8 +143,9 @@ abstract class Frame_Reflower {
     $delta = $style->length_in_pt($dims, $cb_w);
 
     // Handle degenerate case
-    if (!$this->_frame->get_first_child())
-        return $this->_min_max_cache = array($delta, $delta, "min" => $delta, "max" => $delta);
+    if (!$this->_frame->get_first_child()) {
+            return $this->_min_max_cache = array($delta, $delta, "min" => $delta, "max" => $delta);
+    }
 
     $low = array();
     $high = array();
@@ -163,21 +164,24 @@ abstract class Frame_Reflower {
 
         $minmax = $child->get_min_max_width();
 
-        if (in_array($iter->current()->get_style()->white_space, array("pre", "nowrap")))
-            $inline_min += $minmax["min"];
-        else
-            $low[] = $minmax["min"];
+        if (in_array($iter->current()->get_style()->white_space, array("pre", "nowrap"))) {
+                    $inline_min += $minmax["min"];
+        } else {
+                    $low[] = $minmax["min"];
+        }
 
         $inline_max += $minmax["max"];
         $iter->next();
 
         }
 
-        if ($inline_max > 0)
-        $high[] = $inline_max;
+        if ($inline_max > 0) {
+                $high[] = $inline_max;
+        }
 
-        if ($inline_min > 0)
-        $low[] = $inline_min;
+        if ($inline_min > 0) {
+                $low[] = $inline_min;
+        }
 
         if ($iter->valid()) {
         list($low[], $high[]) = $iter->current()->get_min_max_width();
@@ -193,10 +197,12 @@ abstract class Frame_Reflower {
     $width = $style->width;
     if ($width !== "auto" && !is_percent($width)) {
         $width = $style->length_in_pt($width, $cb_w);
-        if ($min < $width)
-        $min = $width;
-        if ($max < $width)
-        $max = $width;
+        if ($min < $width) {
+                $min = $width;
+        }
+        if ($max < $width) {
+                $max = $width;
+        }
     }
 
     $min += $delta;
@@ -281,21 +287,25 @@ abstract class Frame_Reflower {
     $quotes = $this->_parse_quotes();
     
     // split on spaces, except within quotes
-    if (!preg_match_all($re, $content, $matches, PREG_SET_ORDER))
-        return;
+    if (!preg_match_all($re, $content, $matches, PREG_SET_ORDER)) {
+            return;
+    }
       
     $text = "";
 
     foreach ($matches as $match) {
       
-        if (isset($match[2]) && $match[2] !== "")
-        $match[1] = $match[2];
+        if (isset($match[2]) && $match[2] !== "") {
+                $match[1] = $match[2];
+        }
 
-        if (isset($match[6]) && $match[6] !== "")
-        $match[4] = $match[6];
+        if (isset($match[6]) && $match[6] !== "") {
+                $match[4] = $match[6];
+        }
 
-        if (isset($match[8]) && $match[8] !== "")
-        $match[7] = $match[8];
+        if (isset($match[8]) && $match[8] !== "") {
+                $match[7] = $match[8];
+        }
 
         if (isset($match[1]) && $match[1] !== "") {
         
@@ -306,8 +316,9 @@ abstract class Frame_Reflower {
         // http://www.w3.org/TR/CSS21/generate.html#content
 
         $i = mb_strpos($match[1], ")");
-        if ($i === false)
-            continue;
+        if ($i === false) {
+                    continue;
+        }
 
         $args = explode(",", mb_substr($match[1], 8, $i - 8));
         $counter_id = $args[0];
@@ -315,10 +326,11 @@ abstract class Frame_Reflower {
         if ($match[1][7] === "(") {
             // counter(name [,style])
 
-            if (isset($args[1]))
-            $type = trim($args[1]);
-            else
-            $type = null;
+            if (isset($args[1])) {
+                        $type = trim($args[1]);
+            } else {
+                        $type = null;
+            }
 
             $p = $this->_frame->lookup_counter_frame($counter_id);
           
@@ -326,15 +338,17 @@ abstract class Frame_Reflower {
 
         } else if ($match[1][7] === "s") {
             // counters(name, string [,style])
-            if (isset($args[1]))
-            $string = $this->_parse_string(trim($args[1]));
-            else
-            $string = "";
+            if (isset($args[1])) {
+                        $string = $this->_parse_string(trim($args[1]));
+            } else {
+                        $string = "";
+            }
 
-            if (isset($args[2]))
-            $type = $args[2];
-            else
-            $type = null;
+            if (isset($args[2])) {
+                        $type = $args[2];
+            } else {
+                        $type = null;
+            }
 
             $p = $this->_frame->lookup_counter_frame($counter_id);
             $tmp = "";
@@ -369,16 +383,19 @@ abstract class Frame_Reflower {
         } else if (mb_strpos($match[7], "attr(") === 0) {
 
             $i = mb_strpos($match[7], ")");
-            if ($i === false)
-            continue;
+            if ($i === false) {
+                        continue;
+            }
 
             $attr = mb_substr($match[7], 5, $i - 5);
-            if ($attr == "")
-            continue;
+            if ($attr == "") {
+                        continue;
+            }
             
             $text .= $this->_frame->get_parent()->get_node()->getAttribute($attr);
-        } else
-            continue;
+        } else {
+                    continue;
+        }
         }
     }
 
@@ -407,10 +424,12 @@ abstract class Frame_Reflower {
         $frame->append_child($new_frame);
     }
     
-    if ($style->counter_reset && ($reset = $style->counter_reset) !== "none")
-        $frame->reset_counter($reset);
+    if ($style->counter_reset && ($reset = $style->counter_reset) !== "none") {
+            $frame->reset_counter($reset);
+    }
     
-    if ($style->counter_increment && ($increment = $style->counter_increment) !== "none")
-        $frame->increment_counters($increment);
+    if ($style->counter_increment && ($increment = $style->counter_increment) !== "none") {
+            $frame->increment_counters($increment);
+    }
     }
 }

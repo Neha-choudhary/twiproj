@@ -88,8 +88,9 @@ class Table_Cell_Renderer extends Block_Renderer {
 
         if ($draw_bottom) {
         $bp = $cellmap->get_border_properties($num_rows - 1, $j);
-        if ($bp["bottom"]["style"] === "none" || $bp["bottom"]["width"] <= 0)
-            continue;
+        if ($bp["bottom"]["style"] === "none" || $bp["bottom"]["width"] <= 0) {
+                    continue;
+        }
 
         $y = $bottom_row["y"] + $bottom_row["height"] + $bp["bottom"]["width"] / 2;
 
@@ -138,8 +139,9 @@ class Table_Cell_Renderer extends Block_Renderer {
 
         if ($draw_right) {
         $bp = $cellmap->get_border_properties($i, $num_cols - 1);
-        if ($bp["right"]["style"] === "none" || $bp["right"]["width"] <= 0)
-            continue;
+        if ($bp["right"]["style"] === "none" || $bp["right"]["width"] <= 0) {
+                    continue;
+        }
 
         $x = $right_col["x"] + $right_col["used-width"] + $bp["right"]["width"] / 2;
 

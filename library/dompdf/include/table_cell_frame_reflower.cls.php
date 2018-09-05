@@ -79,8 +79,9 @@ class Table_Cell_Frame_Reflower extends Block_Frame_Reflower {
     // Set the containing blocks and reflow each child
     foreach ($this->_frame->get_children() as $child) {
       
-        if ($page->is_full())
-        break;
+        if ($page->is_full()) {
+                break;
+        }
     
         $child->set_containing_block($content_x, $content_y, $cb_w, $h);
         $child->reflow($this->_frame);

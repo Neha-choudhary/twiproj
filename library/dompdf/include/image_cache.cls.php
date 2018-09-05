@@ -129,8 +129,7 @@ class Image_Cache {
             unlink($resolved_url);
         }
         }
-    }
-    catch (DOMPDF_Image_Exception $e) {
+    } catch (DOMPDF_Image_Exception $e) {
         $resolved_url = self::$broken_image;
         $type = IMAGETYPE_PNG;
         $message = $e->getMessage()." \n $url";
@@ -144,10 +143,14 @@ class Image_Cache {
      * or converted)
      */
     static function clear() {
-    if (empty(self::$_cache) || DEBUGKEEPTEMP) return;
+    if (empty(self::$_cache) || DEBUGKEEPTEMP) {
+        return;
+    }
     
     foreach (self::$_cache as $file) {
-        if (DEBUGPNG) print "[clear unlink $file]";
+        if (DEBUGPNG) {
+            print "[clear unlink $file]";
+        }
         unlink($file);
     }
     }

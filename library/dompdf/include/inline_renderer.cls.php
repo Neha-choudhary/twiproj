@@ -20,8 +20,10 @@ class Inline_Renderer extends Abstract_Renderer {
     function render(Frame $frame) {
     $style = $frame->get_style();
 
-    if (!$frame->get_first_child())
-        return; // No children, no service
+    if (!$frame->get_first_child()) {
+            return;
+    }
+    // No children, no service
     
     // Draw the left border if applicable
     $bp = $style->get_border_properties();
@@ -56,8 +58,9 @@ class Inline_Renderer extends Abstract_Renderer {
         // borders on this line.
 
         // Background:
-        if (($bg = $style->background_color) !== "transparent")
-            $this->_canvas->filled_rectangle($x, $y, $w, $h, $bg);
+        if (($bg = $style->background_color) !== "transparent") {
+                    $this->_canvas->filled_rectangle($x, $y, $w, $h, $bg);
+        }
 
         if (($url = $style->background_image) && $url !== "none") {
             $this->_background_image($url, $x, $y, $w, $h, $style);
@@ -88,8 +91,7 @@ class Inline_Renderer extends Abstract_Renderer {
         $link_node = null;
         if ($frame->get_node()->nodeName === "a") {
             $link_node = $frame->get_node();
-        }
-        else if ($frame->get_parent()->get_node()->nodeName === "a") {
+        } else if ($frame->get_parent()->get_node()->nodeName === "a") {
             $link_node = $frame->get_parent()->get_node();
         }
         
@@ -104,18 +106,20 @@ class Inline_Renderer extends Abstract_Renderer {
         continue;
         }
 
-        if (is_null($w))
-        $w = $child_w;
-        else
-        $w += $child_w;
+        if (is_null($w)) {
+                $w = $child_w;
+        } else {
+                $w += $child_w;
+        }
       
         $h = max($h, $child_h);
     }
 
     
     // Handle the last child
-    if (($bg = $style->background_color) !== "transparent") 
-        $this->_canvas->filled_rectangle($x + $widths[3], $y + $widths[0], $w, $h, $bg);
+    if (($bg = $style->background_color) !== "transparent") {
+            $this->_canvas->filled_rectangle($x + $widths[3], $y + $widths[0], $w, $h, $bg);
+    }
 
     //On continuation lines (after line break) of inline elements, the style got copied.
     //But a non repeatable background image should not be repeated on the next line.
@@ -125,8 +129,9 @@ class Inline_Renderer extends Abstract_Renderer {
     // Repeat not given: default is Style::__construct
     // ... && (!($repeat = $style->background_repeat) || $repeat === "repeat" ...
     //different position? $this->_background_image($url, $x, $y, $w, $h, $style);
-    if (($url = $style->background_image) && $url !== "none")           
-        $this->_background_image($url, $x + $widths[3], $y + $widths[0], $w, $h, $style);
+    if (($url = $style->background_image) && $url !== "none") {
+            $this->_background_image($url, $x + $widths[3], $y + $widths[0], $w, $h, $style);
+    }
         
     // Add the border widths
     $w += $widths[1] + $widths[3];
@@ -177,8 +182,9 @@ class Inline_Renderer extends Abstract_Renderer {
     
     // Handle anchors & links
     if ($link_node) {
-        if ($href = $link_node->getAttribute("href"))
-        $this->_canvas->add_link($href, $x, $y, $w, $h);
+        if ($href = $link_node->getAttribute("href")) {
+                $this->_canvas->add_link($href, $x, $y, $w, $h);
+        }
     }
     
     if (DEBUG_LAYOUT && DEBUG_LAYOUT_INLINE) {

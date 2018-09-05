@@ -50,8 +50,9 @@ function getoptions() {
 
     $opts = array();
 
-    if ($_SERVER["argc"] == 1)
-    return $opts;
+    if ($_SERVER["argc"] == 1) {
+        return $opts;
+    }
 
     $i = 1;
     while ($i < $_SERVER["argc"]) {
@@ -70,30 +71,30 @@ function getoptions() {
             break;
 
         case "-p":
-          if ( !isset($_SERVER["argv"][$i+1]) )
+          if (!isset($_SERVER["argv"][$i + 1]))
             die("-p switch requires a size parameter\n");
-            $opts["p"] = $_SERVER["argv"][$i+1];
+            $opts["p"] = $_SERVER["argv"][$i + 1];
             $i += 2;
             break;
 
         case "-o":
-          if ( !isset($_SERVER["argv"][$i+1]) )
+          if (!isset($_SERVER["argv"][$i + 1]))
             die("-o switch requires an orientation parameter\n");
-            $opts["o"] = $_SERVER["argv"][$i+1];
+            $opts["o"] = $_SERVER["argv"][$i + 1];
             $i += 2;
             break;
 
         case "-b":
-          if ( !isset($_SERVER["argv"][$i+1]) )
+          if (!isset($_SERVER["argv"][$i + 1]))
             die("-b switch requires a path parameter\n");
-            $opts["b"] = $_SERVER["argv"][$i+1];
+            $opts["b"] = $_SERVER["argv"][$i + 1];
             $i += 2;
             break;
 
         case "-f":
-          if ( !isset($_SERVER["argv"][$i+1]) )
+          if (!isset($_SERVER["argv"][$i + 1]))
             die("-f switch requires a filename parameter\n");
-            $opts["f"] = $_SERVER["argv"][$i+1];
+            $opts["f"] = $_SERVER["argv"][$i + 1];
             $i += 2;
             break;
 
@@ -108,9 +109,9 @@ function getoptions() {
             break;
 
         case "-t":
-          if ( !isset($_SERVER['argv'][$i + 1]) )
+          if (!isset($_SERVER['argv'][$i + 1]))
             die("-t switch requires a comma separated list of types\n");
-            $opts["t"] = $_SERVER['argv'][$i+1];
+            $opts["t"] = $_SERVER['argv'][$i + 1];
             $i += 2;
             break;
 
@@ -144,36 +145,42 @@ switch ($sapi) {
     if (isset($opts["l"])) {
     echo "\nUnderstood paper sizes:\n";
 
-    foreach (array_keys(CPDF_Adapter::$PAPER_SIZES) as $size)
-        echo "  ".mb_strtoupper($size)."\n";
+    foreach (array_keys(CPDF_Adapter::$PAPER_SIZES) as $size) {
+            echo "  ".mb_strtoupper($size)."\n";
+    }
     exit;
     }
     $file = $opts["filename"];
 
-    if (isset($opts["p"]))
-    $paper = $opts["p"];
-    else
-    $paper = DOMPDF_DEFAULT_PAPER_SIZE;
-
-    if (isset($opts["o"]))
-    $orientation = $opts["o"];
-    else
-    $orientation = "portrait";
-
-    if (isset($opts["b"]))
-    $base_path = $opts["b"];
-
-    if (isset($opts["f"]))
-    $outfile = $opts["f"];
-    else {
-    if ($file === "-")
-        $outfile = "dompdf_out.pdf";
-    else
-        $outfile = str_ireplace(array(".html", ".htm", ".php"), "", $file).".pdf";
+    if (isset($opts["p"])) {
+        $paper = $opts["p"];
+    } else {
+        $paper = DOMPDF_DEFAULT_PAPER_SIZE;
     }
 
-    if (isset($opts["v"]))
-    $_dompdf_show_warnings = true;
+    if (isset($opts["o"])) {
+        $orientation = $opts["o"];
+    } else {
+        $orientation = "portrait";
+    }
+
+    if (isset($opts["b"])) {
+        $base_path = $opts["b"];
+    }
+
+    if (isset($opts["f"])) {
+        $outfile = $opts["f"];
+    } else {
+    if ($file === "-") {
+            $outfile = "dompdf_out.pdf";
+    } else {
+            $outfile = str_ireplace(array(".html", ".htm", ".php"), "", $file).".pdf";
+    }
+    }
+
+    if (isset($opts["v"])) {
+        $_dompdf_show_warnings = true;
+    }
 
     if (isset($opts["d"])) {
     $_dompdf_show_warnings = true;
@@ -183,8 +190,9 @@ switch ($sapi) {
     if (isset($opts['t'])) {
     $arr = split(',', $opts['t']);
     $types = array();
-    foreach ($arr as $type)
-        $types[trim($type)] = 1;
+    foreach ($arr as $type) {
+            $types[trim($type)] = 1;
+    }
     $_DOMPDF_DEBUG_TYPES = $types;
     }
   
@@ -194,20 +202,23 @@ switch ($sapi) {
 
     default:
 
-  if (isset($_GET["input_file"]))
-    $file = rawurldecode($_GET["input_file"]);
-    else
-    throw new DOMPDF_Exception("An input file is required (i.e. input_file _GET variable).");
+  if (isset($_GET["input_file"])) {
+      $file = rawurldecode($_GET["input_file"]);
+  } else {
+        throw new DOMPDF_Exception("An input file is required (i.e. input_file _GET variable).");
+    }
   
-    if (isset($_GET["paper"]))
-    $paper = rawurldecode($_GET["paper"]);
-    else
-    $paper = DOMPDF_DEFAULT_PAPER_SIZE;
+    if (isset($_GET["paper"])) {
+        $paper = rawurldecode($_GET["paper"]);
+    } else {
+        $paper = DOMPDF_DEFAULT_PAPER_SIZE;
+    }
   
-    if (isset($_GET["orientation"]))
-    $orientation = rawurldecode($_GET["orientation"]);
-    else
-    $orientation = "portrait";
+    if (isset($_GET["orientation"])) {
+        $orientation = rawurldecode($_GET["orientation"]);
+    } else {
+        $orientation = "portrait";
+    }
   
     if (isset($_GET["base_path"])) {
     $base_path = rawurldecode($_GET["base_path"]);
@@ -238,13 +249,15 @@ $dompdf = new DOMPDF();
 
 if ($file === "-") {
     $str = "";
-    while (!feof(STDIN))
-    $str .= fread(STDIN, 4096);
+    while (!feof(STDIN)) {
+        $str .= fread(STDIN, 4096);
+    }
 
     $dompdf->load_html($str);
 
-} else
+} else {
     $dompdf->load_html_file($file);
+}
 
 if (isset($base_path)) {
     $dompdf->set_base_path($base_path);
@@ -256,8 +269,9 @@ $dompdf->render();
 
 if ($_dompdf_show_warnings) {
     global $_dompdf_warnings;
-    foreach ($_dompdf_warnings as $msg)
-    echo $msg."\n";
+    foreach ($_dompdf_warnings as $msg) {
+        echo $msg."\n";
+    }
     echo $dompdf->get_canvas()->get_cpdf()->messages;
     flush();
 }
@@ -265,17 +279,22 @@ if ($_dompdf_show_warnings) {
 if ($save_file) {
 //   if ( !is_writable($outfile) )
 //     throw new DOMPDF_Exception("'$outfile' is not writable.");
-    if (strtolower(DOMPDF_PDF_BACKEND) === "gd")
-    $outfile = str_replace(".pdf", ".png", $outfile);
+    if (strtolower(DOMPDF_PDF_BACKEND) === "gd") {
+        $outfile = str_replace(".pdf", ".png", $outfile);
+    }
 
     list($proto, $host, $path, $file) = explode_url($outfile);
-    if ($proto != "") // i.e. not file://
-    $outfile = $file; // just save it locally, FIXME? could save it like wget: ./host/basepath/file
+    if ($proto != "") {
+        // i.e. not file://
+    $outfile = $file;
+    }
+    // just save it locally, FIXME? could save it like wget: ./host/basepath/file
 
     $outfile = realpath(dirname($outfile)).DIRECTORY_SEPARATOR.basename($outfile);
 
-    if (strpos($outfile, DOMPDF_CHROOT) !== 0)
-    throw new DOMPDF_Exception("Permission denied.");
+    if (strpos($outfile, DOMPDF_CHROOT) !== 0) {
+        throw new DOMPDF_Exception("Permission denied.");
+    }
 
     file_put_contents($outfile, $dompdf->output(array("compress" => 0)));
     exit(0);
