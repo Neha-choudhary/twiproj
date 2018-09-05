@@ -142,7 +142,7 @@ class Cache
             $resolved_url = self::$broken_image;
             $type = "png";
             $message = self::$error_message;
-            Helpers::record_warnings($e->getCode(), $e->getMessage() . " \n $url", $e->getFile(), $e->getLine());
+            Helpers::record_warnings($e->getCode(), $e->getMessage()." \n $url", $e->getFile(), $e->getLine());
         }
 
         return array($resolved_url, $type, $message);
@@ -170,7 +170,7 @@ class Cache
 
     static function detect_type($file, $context = null)
     {
-        list(, , $type) = Helpers::dompdf_getimagesize($file, $context);
+        list(,, $type) = Helpers::dompdf_getimagesize($file, $context);
 
         return $type;
     }
@@ -181,6 +181,6 @@ class Cache
     }
 }
 
-if (file_exists(realpath(__DIR__ . "/../../lib/res/broken_image.png"))) {
-    Cache::$broken_image = realpath(__DIR__ . "/../../lib/res/broken_image.png");
+if (file_exists(realpath(__DIR__."/../../lib/res/broken_image.png"))) {
+    Cache::$broken_image = realpath(__DIR__."/../../lib/res/broken_image.png");
 }

@@ -731,7 +731,7 @@ class GD implements Canvas
             if (!method_exists("Dompdf\Helpers", $func_name)) {
                 throw new \Exception("Function $func_name() not found.  Cannot convert $type image: $img_url.  Please install the image PHP extension.");
             }
-            $func_name = "\\Dompdf\\Helpers::" . $func_name;
+            $func_name = "\\Dompdf\\Helpers::".$func_name;
         }
         $src = @call_user_func($func_name, $img_url);
 
@@ -866,7 +866,7 @@ class GD implements Canvas
         $text = mb_encode_numericentity($text, array(0x0080, 0xffff, 0, 0xffff), 'UTF-8');
 
         // FIXME: word spacing
-        list($x1, , $x2) = imagettfbbox($size, 0, $font, $text);
+        list($x1,, $x2) = imagettfbbox($size, 0, $font, $text);
 
         // Add additional 1pt to prevent text overflow issues
         return $this->_downscale($x2 - $x1) + 1;
@@ -878,22 +878,22 @@ class GD implements Canvas
      */
     public function get_ttf_file($font)
     {
-        if ( stripos($font, ".ttf") === false ) {
+        if (stripos($font, ".ttf") === false) {
             $font .= ".ttf";
         }
 
         if (!file_exists($font)) {
             $font_metrics = $this->_dompdf->getFontMetrics();
-            $font = $font_metrics->getFont($this->_dompdf->getOptions()->getDefaultFont()) . ".ttf";
+            $font = $font_metrics->getFont($this->_dompdf->getOptions()->getDefaultFont()).".ttf";
             if (!file_exists($font)) {
                 if (strpos($font, "mono")) {
-                    $font = $font_metrics->getFont("DejaVu Mono") . ".ttf";
+                    $font = $font_metrics->getFont("DejaVu Mono").".ttf";
                 } elseif (strpos($font, "sans") !== false) {
-                    $font = $font_metrics->getFont("DejaVu Sans") . ".ttf";
+                    $font = $font_metrics->getFont("DejaVu Sans").".ttf";
                 } elseif (strpos($font, "serif")) {
-                    $font = $font_metrics->getFont("DejaVu Serif") . ".ttf";
+                    $font = $font_metrics->getFont("DejaVu Serif").".ttf";
                 } else {
-                    $font = $font_metrics->getFont("DejaVu Sans") . ".ttf";
+                    $font = $font_metrics->getFont("DejaVu Sans").".ttf";
                 }
             }
         }
@@ -923,7 +923,7 @@ class GD implements Canvas
         $ratio = $this->_dompdf->getOptions()->getFontHeightRatio();
 
         // FIXME: word spacing
-        list(, $y2, , , , $y1) = imagettfbbox($size, 0, $font, "MXjpqytfhl"); // Test string with ascenders, descenders and caps
+        list(, $y2,,,, $y1) = imagettfbbox($size, 0, $font, "MXjpqytfhl"); // Test string with ascenders, descenders and caps
         return ($y2 - $y1) * $ratio;
     }
 
@@ -991,8 +991,12 @@ class GD implements Canvas
             die("Unable to stream image: headers already sent");
         }
 
-        if (!isset($options["type"])) $options["type"] = "png";
-        if (!isset($options["Attachment"])) $options["Attachment"] = true;
+        if (!isset($options["type"])) {
+            $options["type"] = "png";
+        }
+        if (!isset($options["Attachment"])) {
+            $options["Attachment"] = true;
+        }
         $type = strtolower($options["type"]);
 
         switch ($type) {
@@ -1011,7 +1015,7 @@ class GD implements Canvas
         header("Cache-Control: private");
         header("Content-Type: $contentType");
 
-        $filename = str_replace(array("\n", "'"), "", basename($filename, ".$type")) . $extension;
+        $filename = str_replace(array("\n", "'"), "", basename($filename, ".$type")).$extension;
         $attachment = $options["Attachment"] ? "attachment" : "inline";
         header(Helpers::buildContentDispositionHeader($attachment, $filename));
 
@@ -1043,8 +1047,12 @@ class GD implements Canvas
      */
     private function _output($options = array())
     {
-        if (!isset($options["type"])) $options["type"] = "png";
-        if (!isset($options["page"])) $options["page"] = 1;
+        if (!isset($options["type"])) {
+            $options["type"] = "png";
+        }
+        if (!isset($options["page"])) {
+            $options["page"] = 1;
+        }
         $type = strtolower($options["type"]);
 
         if (isset($this->_imgs[$options["page"] - 1])) {

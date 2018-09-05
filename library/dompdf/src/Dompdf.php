@@ -206,22 +206,22 @@ class Dompdf
     private $quirksmode = false;
 
     /**
-    * Protocol whitelist
-    *
-    * Protocols and PHP wrappers allowed in URLs. Full support is not
-    * guarantee for the protocols/wrappers contained in this array.
-    *
-    * @var array
-    */
+     * Protocol whitelist
+     *
+     * Protocols and PHP wrappers allowed in URLs. Full support is not
+     * guarantee for the protocols/wrappers contained in this array.
+     *
+     * @var array
+     */
     private $allowedProtocols = array(null, "", "file://", "http://", "https://");
 
     /**
-    * Local file extension whitelist
-    *
-    * File extensions supported by dompdf for local files.
-    *
-    * @var array
-    */
+     * Local file extension whitelist
+     *
+     * File extensions supported by dompdf for local files.
+     *
+     * @var array
+     */
     private $allowedLocalFileExtensions = array("htm", "html");
 
     /**
@@ -281,9 +281,9 @@ class Dompdf
             $this->setOptions(new Options());
         }
 
-        $versionFile = realpath(__DIR__ . '/../VERSION');
+        $versionFile = realpath(__DIR__.'/../VERSION');
         if (file_exists($versionFile) && ($version = file_get_contents($versionFile)) !== false && $version !== '$Format:<%h>$') {
-          $this->version = sprintf('dompdf %s', $version);
+            $this->version = sprintf('dompdf %s', $version);
         }
 
         $this->localeStandard = sprintf('%.1f', 1.0) == '1.0';
@@ -350,7 +350,7 @@ class Dompdf
         }
         $protocol = strtolower($this->protocol);
 
-        if ( !in_array($protocol, $this->allowedProtocols) ) {
+        if (!in_array($protocol, $this->allowedProtocols)) {
             throw new Exception("Permission denied on $file. The communication protocol is not supported.");
         }
 
@@ -424,7 +424,7 @@ class Dompdf
         if (($file_encoding = mb_detect_encoding($str, null, true)) === false) {
             $file_encoding = "auto";
         }
-        if (in_array(strtoupper($file_encoding), array('UTF-8','UTF8')) === false) {
+        if (in_array(strtoupper($file_encoding), array('UTF-8', 'UTF8')) === false) {
             $str = mb_convert_encoding($str, 'UTF-8', $file_encoding);
         }
 
@@ -441,19 +441,19 @@ class Dompdf
                 }
             }
         }
-        if (isset($document_encoding) && in_array(strtoupper($document_encoding), array('UTF-8','UTF8')) === false) {
+        if (isset($document_encoding) && in_array(strtoupper($document_encoding), array('UTF-8', 'UTF8')) === false) {
             $str = preg_replace('/charset=([^\s"]+)/i', 'charset=UTF-8', $str);
         } elseif (isset($document_encoding) === false && strpos($str, '<head>') !== false) {
             $str = str_replace('<head>', '<head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">', $str);
         } elseif (isset($document_encoding) === false) {
-            $str = '<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">' . $str;
+            $str = '<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">'.$str;
         }
         //FIXME: since we're not using this just yet
         $encoding = 'UTF-8';
 
         // remove BOM mark from UTF-8, it's treated as document text by DOMDocument
         // FIXME: roll this into the encoding detection using UTF-8/16/32 BOM (http://us2.php.net/manual/en/function.mb-detect-encoding.php#91051)?
-        if (substr($str, 0, 3) == chr(0xEF) . chr(0xBB) . chr(0xBF)) {
+        if (substr($str, 0, 3) == chr(0xEF).chr(0xBB).chr(0xBF)) {
             $str = substr($str, 3);
         }
 
@@ -756,7 +756,7 @@ class Dompdf
 
                 // Handle text nodes
                 if ($node->nodeName === "#text") {
-                    $chars = mb_strtoupper($node->nodeValue) . mb_strtolower($node->nodeValue);
+                    $chars = mb_strtoupper($node->nodeValue).mb_strtolower($node->nodeValue);
                     $canvas->register_string_subset($style->font_family, $chars);
                     continue;
                 }
@@ -786,9 +786,9 @@ class Dompdf
 
                     // the hex-decoded text of the content property, duplicated from AbstrctFrameReflower::_parse_string
                     $decoded_string = preg_replace_callback("/\\\\([0-9a-fA-F]{0,6})/",
-                        function ($matches) { return \Dompdf\Helpers::unichr(hexdec($matches[1])); },
+                        function($matches) { return \Dompdf\Helpers::unichr(hexdec($matches[1])); },
                         $style->content);
-                    $chars = mb_strtoupper($style->content) . mb_strtolower($style->content) . mb_strtoupper($decoded_string) . mb_strtolower($decoded_string);
+                    $chars = mb_strtoupper($style->content).mb_strtolower($style->content).mb_strtoupper($decoded_string).mb_strtolower($decoded_string);
                     $canvas->register_string_subset($style->font_family, $chars);
                     continue;
                 }
@@ -835,7 +835,7 @@ class Dompdf
             }
         }
 
-        $root->set_containing_block(0, 0,$canvas->get_width(), $canvas->get_height());
+        $root->set_containing_block(0, 0, $canvas->get_width(), $canvas->get_height());
         $root->set_renderer(new Renderer($this));
 
         // This is where the magic happens:
@@ -848,7 +848,7 @@ class Dompdf
         if ($_dompdf_show_warnings && isset($_dompdf_warnings)) {
             echo '<b>Dompdf Warnings</b><br><pre>';
             foreach ($_dompdf_warnings as $msg) {
-                echo $msg . "\n";
+                echo $msg."\n";
             }
 
             if ($canvas instanceof CPDF) {
@@ -894,11 +894,11 @@ class Dompdf
         $time = (microtime(true) - $this->startTime) * 1000;
 
         $out = sprintf(
-            "<span style='color: #000' title='Frames'>%6d</span>" .
-            "<span style='color: #009' title='Memory'>%10.2f KB</span>" .
-            "<span style='color: #900' title='Time'>%10.2f ms</span>" .
-            "<span  title='Quirksmode'>  " .
-            ($this->quirksmode ? "<span style='color: #d00'> ON</span>" : "<span style='color: #0d0'>OFF</span>") .
+            "<span style='color: #000' title='Frames'>%6d</span>".
+            "<span style='color: #009' title='Memory'>%10.2f KB</span>".
+            "<span style='color: #900' title='Time'>%10.2f ms</span>".
+            "<span  title='Quirksmode'>  ".
+            ($this->quirksmode ? "<span style='color: #d00'> ON</span>" : "<span style='color: #0d0'>OFF</span>").
             "</span><br />", $frames, $memory, $time);
 
         $out .= ob_get_contents();
@@ -1505,7 +1505,7 @@ class Dompdf
             case 'version' :
                 return $this->version;
             default:
-                throw new Exception( 'Invalid property: ' . $prop );
+                throw new Exception('Invalid property: '.$prop);
         }
     }
 }

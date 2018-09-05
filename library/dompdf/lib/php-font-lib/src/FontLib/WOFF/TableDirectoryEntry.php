@@ -16,13 +16,13 @@ use FontLib\Table\DirectoryEntry;
  * @package php-font-lib
  */
 class TableDirectoryEntry extends DirectoryEntry {
-  public $origLength;
+    public $origLength;
 
-  function __construct(File $font) {
+    function __construct(File $font) {
     parent::__construct($font);
-  }
+    }
 
-  function parse() {
+    function parse() {
     parent::parse();
 
     $font             = $this->font;
@@ -30,5 +30,5 @@ class TableDirectoryEntry extends DirectoryEntry {
     $this->length     = $font->readUInt32();
     $this->origLength = $font->readUInt32();
     $this->checksum   = $font->readUInt32();
-  }
+    }
 }

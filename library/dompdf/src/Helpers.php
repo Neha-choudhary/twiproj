@@ -17,7 +17,7 @@ class Helpers
     public static function pre_r($mixed, $return = false)
     {
         if ($return) {
-            return "<pre>" . print_r($mixed, true) . "</pre>";
+            return "<pre>".print_r($mixed, true)."</pre>";
         }
 
         if (php_sapi_name() !== "cli") {
@@ -37,29 +37,29 @@ class Helpers
         return null;
     }
 
-      /**
-     * builds a full url given a protocol, hostname, base path and url
-     *
-     * @param string $protocol
-     * @param string $host
-     * @param string $base_path
-     * @param string $url
-     * @return string
-     *
-     * Initially the trailing slash of $base_path was optional, and conditionally appended.
-     * However on dynamically created sites, where the page is given as url parameter,
-     * the base path might not end with an url.
-     * Therefore do not append a slash, and **require** the $base_url to ending in a slash
-     * when needed.
-     * Vice versa, on using the local file system path of a file, make sure that the slash
-     * is appended (o.k. also for Windows)
-     */
+        /**
+         * builds a full url given a protocol, hostname, base path and url
+         *
+         * @param string $protocol
+         * @param string $host
+         * @param string $base_path
+         * @param string $url
+         * @return string
+         *
+         * Initially the trailing slash of $base_path was optional, and conditionally appended.
+         * However on dynamically created sites, where the page is given as url parameter,
+         * the base path might not end with an url.
+         * Therefore do not append a slash, and **require** the $base_url to ending in a slash
+         * when needed.
+         * Vice versa, on using the local file system path of a file, make sure that the slash
+         * is appended (o.k. also for Windows)
+         */
     public static function build_url($protocol, $host, $base_path, $url)
     {
         $protocol = mb_strtolower($protocol);
         if (strlen($url) == 0) {
             //return $protocol . $host . rtrim($base_path, "/\\") . "/";
-            return $protocol . $host . $base_path;
+            return $protocol.$host.$base_path;
         }
 
         // Is the url already fully qualified, a Data URI, or a reference to a named anchor?
@@ -76,7 +76,7 @@ class Helpers
             //($url[1] !== ':' || ($url[2]!=='\\' && $url[2]!=='/'))
             if ($url[0] !== '/' && (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' || (mb_strlen($url) > 1 && $url[0] !== '\\' && $url[1] !== ':'))) {
                 // For rel path and local acess we ignore the host, and run the path through realpath()
-                $ret .= realpath($base_path) . '/';
+                $ret .= realpath($base_path).'/';
             }
             $ret .= $url;
             $ret = preg_replace('/\?(.*)$/', "", $ret);
@@ -89,11 +89,11 @@ class Helpers
             //remote urls with backslash in html/css are not really correct, but lets be genereous
         } elseif ($url[0] === '/' || $url[0] === '\\') {
             // Absolute path
-            $ret .= $host . $url;
+            $ret .= $host.$url;
         } else {
             // Relative path
             //$base_path = $base_path !== "" ? rtrim($base_path, "/\\") . "/" : "";
-            $ret .= $host . $base_path . $url;
+            $ret .= $host.$base_path.$url;
         }
 
         return $ret;
@@ -150,7 +150,7 @@ class Helpers
             return "(out of range)";
         }
 
-        $num = strrev((string)$num);
+        $num = strrev((string) $num);
 
         $ret = "";
         switch (mb_strlen($num)) {
@@ -227,17 +227,17 @@ class Helpers
      */
     public static function encodeURI($uri) {
         $unescaped = array(
-            '%2D'=>'-','%5F'=>'_','%2E'=>'.','%21'=>'!', '%7E'=>'~',
+            '%2D'=>'-', '%5F'=>'_', '%2E'=>'.', '%21'=>'!', '%7E'=>'~',
             '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')'
         );
         $reserved = array(
-            '%3B'=>';','%2C'=>',','%2F'=>'/','%3F'=>'?','%3A'=>':',
-            '%40'=>'@','%26'=>'&','%3D'=>'=','%2B'=>'+','%24'=>'$'
+            '%3B'=>';', '%2C'=>',', '%2F'=>'/', '%3F'=>'?', '%3A'=>':',
+            '%40'=>'@', '%26'=>'&', '%3D'=>'=', '%2B'=>'+', '%24'=>'$'
         );
         $score = array(
             '%23'=>'#'
         );
-        return strtr(rawurlencode(rawurldecode($uri)), array_merge($reserved,$unescaped,$score));
+        return strtr(rawurlencode(rawurldecode($uri)), array_merge($reserved, $unescaped, $score));
     }
 
     /**
@@ -382,19 +382,19 @@ class Helpers
         $file = "";
 
         $arr = parse_url($url);
-        if ( isset($arr["scheme"]) ) {
+        if (isset($arr["scheme"])) {
             $arr["scheme"] = mb_strtolower($arr["scheme"]);
         }
 
         // Exclude windows drive letters...
         if (isset($arr["scheme"]) && $arr["scheme"] !== "file" && strlen($arr["scheme"]) > 1) {
-            $protocol = $arr["scheme"] . "://";
+            $protocol = $arr["scheme"]."://";
 
             if (isset($arr["user"])) {
                 $host .= $arr["user"];
 
                 if (isset($arr["pass"])) {
-                    $host .= ":" . $arr["pass"];
+                    $host .= ":".$arr["pass"];
                 }
 
                 $host .= "@";
@@ -405,7 +405,7 @@ class Helpers
             }
 
             if (isset($arr["port"])) {
-                $host .= ":" . $arr["port"];
+                $host .= ":".$arr["port"];
             }
 
             if (isset($arr["path"]) && $arr["path"] !== "") {
@@ -414,17 +414,17 @@ class Helpers
                     $path = $arr["path"];
                     $file = "";
                 } else {
-                    $path = rtrim(dirname($arr["path"]), '/\\') . "/";
+                    $path = rtrim(dirname($arr["path"]), '/\\')."/";
                     $file = basename($arr["path"]);
                 }
             }
 
             if (isset($arr["query"])) {
-                $file .= "?" . $arr["query"];
+                $file .= "?".$arr["query"];
             }
 
             if (isset($arr["fragment"])) {
-                $file .= "#" . $arr["fragment"];
+                $file .= "#".$arr["fragment"];
             }
 
         } else {
@@ -455,7 +455,7 @@ class Helpers
                 if (substr($arr["path"], 0, 1) === '/') {
                     $path = dirname($arr["path"]);
                 } else {
-                    $path = '/' . rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/') . '/' . $arr["path"];
+                    $path = '/'.rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/').'/'.$arr["path"];
                 }
             }
         }
@@ -480,7 +480,7 @@ class Helpers
         if (isset($_DOMPDF_DEBUG_TYPES[$type]) && ($_dompdf_show_warnings || $_dompdf_debug)) {
             $arr = debug_backtrace();
 
-            echo basename($arr[0]["file"]) . " (" . $arr[0]["line"] . "): " . $arr[1]["function"] . ": ";
+            echo basename($arr[0]["file"])." (".$arr[0]["line"]."): ".$arr[1]["function"].": ";
             Helpers::pre_r($msg);
         }
     }
@@ -504,14 +504,14 @@ class Helpers
     {
         // Not a warning or notice
         if (!($errno & (E_WARNING | E_NOTICE | E_USER_NOTICE | E_USER_WARNING))) {
-            throw new Exception($errstr . " $errno");
+            throw new Exception($errstr." $errno");
         }
 
         global $_dompdf_warnings;
         global $_dompdf_show_warnings;
 
         if ($_dompdf_show_warnings) {
-            echo $errstr . "\n";
+            echo $errstr."\n";
         }
 
         $_dompdf_warnings[] = $errstr;
@@ -526,12 +526,12 @@ class Helpers
         if ($c <= 0x7F) {
             return chr($c);
         } else if ($c <= 0x7FF) {
-            return chr(0xC0 | $c >> 6) . chr(0x80 | $c & 0x3F);
+            return chr(0xC0 | $c >> 6).chr(0x80 | $c & 0x3F);
         } else if ($c <= 0xFFFF) {
-            return chr(0xE0 | $c >> 12) . chr(0x80 | $c >> 6 & 0x3F)
+            return chr(0xE0 | $c >> 12).chr(0x80 | $c >> 6 & 0x3F)
             . chr(0x80 | $c & 0x3F);
         } else if ($c <= 0x10FFFF) {
-            return chr(0xF0 | $c >> 18) . chr(0x80 | $c >> 12 & 0x3F)
+            return chr(0xF0 | $c >> 18).chr(0x80 | $c >> 12 & 0x3F)
             . chr(0x80 | $c >> 6 & 0x3F)
             . chr(0x80 | $c & 0x3F);
         }
@@ -610,11 +610,10 @@ class Helpers
 
             if (substr($data, 0, 2) === "BM") {
                 $meta = unpack('vtype/Vfilesize/Vreserved/Voffset/Vheadersize/Vwidth/Vheight', $data);
-                $width = (int)$meta['width'];
-                $height = (int)$meta['height'];
+                $width = (int) $meta['width'];
+                $height = (int) $meta['height'];
                 $type = "bmp";
-            }
-            else {
+            } else {
                 if (strpos($data, "<svg") !== false) {
                     $doc = new \Svg\Document();
                     $doc->loadFile($filename);
@@ -643,7 +642,7 @@ class Helpers
 
         // version 1.00
         if (!($fh = fopen($filename, 'rb'))) {
-            trigger_error('imagecreatefrombmp: Can not open ' . $filename, E_USER_WARNING);
+            trigger_error('imagecreatefrombmp: Can not open '.$filename, E_USER_WARNING);
             return false;
         }
 
@@ -654,7 +653,7 @@ class Helpers
 
         // check for bitmap
         if ($meta['type'] != 19778) {
-            trigger_error('imagecreatefrombmp: ' . $filename . ' is not a bitmap!', E_USER_WARNING);
+            trigger_error('imagecreatefrombmp: '.$filename.' is not a bitmap!', E_USER_WARNING);
             return false;
         }
 
@@ -682,7 +681,7 @@ class Helpers
             if ($meta['imagesize'] < 1) {
                 $meta['imagesize'] = @filesize($filename) - $meta['offset'];
                 if ($meta['imagesize'] < 1) {
-                    trigger_error('imagecreatefrombmp: Can not obtain filesize of ' . $filename . '!', E_USER_WARNING);
+                    trigger_error('imagecreatefrombmp: Can not obtain filesize of '.$filename.'!', E_USER_WARNING);
                     return false;
                 }
             }
@@ -694,7 +693,7 @@ class Helpers
         // read color palette
         $palette = array();
         if ($meta['bits'] < 16) {
-            $palette = unpack('l' . $meta['colors'], fread($fh, $meta['colors'] * 4));
+            $palette = unpack('l'.$meta['colors'], fread($fh, $meta['colors'] * 4));
             // in rare cases the color value is signed
             if ($palette[1] < 0) {
                 foreach ($palette as $i => $color) {
@@ -725,7 +724,7 @@ class Helpers
         $p = 0;
         $vide = chr(0);
         $y = $meta['height'] - 1;
-        $error = 'imagecreatefrombmp: ' . $filename . ' has not enough data!';
+        $error = 'imagecreatefrombmp: '.$filename.' has not enough data!';
 
         // loop through the image data beginning with the lower left corner
         while ($y >= 0) {
@@ -738,7 +737,7 @@ class Helpers
                             trigger_error($error, E_USER_WARNING);
                             return $im;
                         }
-                        $color = unpack('V', $part . $vide);
+                        $color = unpack('V', $part.$vide);
                         break;
                     case 16:
                         if (!($part = substr($data, $p, 2 /*$meta['bytes']*/))) {
@@ -754,16 +753,16 @@ class Helpers
                         }
                         break;
                     case 8:
-                        $color = unpack('n', $vide . substr($data, $p, 1));
+                        $color = unpack('n', $vide.substr($data, $p, 1));
                         $color[1] = $palette[$color[1] + 1];
                         break;
                     case 4:
-                        $color = unpack('n', $vide . substr($data, floor($p), 1));
+                        $color = unpack('n', $vide.substr($data, floor($p), 1));
                         $color[1] = ($p * 2) % 2 == 0 ? $color[1] >> 4 : $color[1] & 0x0F;
                         $color[1] = $palette[$color[1] + 1];
                         break;
                     case 1:
-                        $color = unpack('n', $vide . substr($data, floor($p), 1));
+                        $color = unpack('n', $vide.substr($data, floor($p), 1));
                         switch (($p * 8) % 8) {
                             case 0:
                                 $color[1] = $color[1] >> 7;
@@ -793,7 +792,7 @@ class Helpers
                         $color[1] = $palette[$color[1] + 1];
                         break;
                     default:
-                        trigger_error('imagecreatefrombmp: ' . $filename . ' has ' . $meta['bits'] . ' bits and this is not supported!', E_USER_WARNING);
+                        trigger_error('imagecreatefrombmp: '.$filename.' has '.$meta['bits'].' bits and this is not supported!', E_USER_WARNING);
                         return false;
                 }
                 imagesetpixel($im, $x, $y, $color[1]);
@@ -871,7 +870,7 @@ class Helpers
             return mb_strtoupper($str);
         }
 
-        $str = mb_strtoupper(mb_substr($str, 0, 1)) . mb_substr($str, 1);
+        $str = mb_strtoupper(mb_substr($str, 0, 1)).mb_substr($str, 1);
 
         foreach (array(' ', '.', ',', '!', '?', '-', '+') as $s) {
             $pos = 0;
@@ -881,9 +880,9 @@ class Helpers
                 if ($pos !== false && $pos < $max_len) {
                     // If the char we want to upper is the last char there is nothing to append behind
                     if ($pos + 1 < $max_len) {
-                        $str = mb_substr($str, 0, $pos) . mb_strtoupper(mb_substr($str, $pos, 1)) . mb_substr($str, $pos + 1);
+                        $str = mb_substr($str, 0, $pos).mb_strtoupper(mb_substr($str, $pos, 1)).mb_substr($str, $pos + 1);
                     } else {
-                        $str = mb_substr($str, 0, $pos) . mb_strtoupper(mb_substr($str, $pos, 1));
+                        $str = mb_substr($str, 0, $pos).mb_strtoupper(mb_substr($str, $pos, 1));
                     }
                 }
             }

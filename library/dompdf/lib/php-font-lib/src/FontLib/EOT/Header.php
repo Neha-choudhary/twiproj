@@ -19,39 +19,39 @@ use FontLib\Font;
  * @property File $font
  */
 class Header extends \FontLib\Header {
-  protected $def = array(
+    protected $def = array(
     "format"        => self::uint32,
     "numTables"     => self::uint16,
     "searchRange"   => self::uint16,
     "entrySelector" => self::uint16,
     "rangeShift"    => self::uint16,
-  );
+    );
 
-  public function parse() {
+    public function parse() {
     $font = $this->font;
 
     $this->data = $font->unpack(array(
-      "EOTSize"            => self::uint32,
-      "FontDataSize"       => self::uint32,
-      "Version"            => self::uint32,
-      "Flags"              => self::uint32,
-      "FontPANOSE"         => array(self::uint8, 10),
-      "Charset"            => self::uint8,
-      "Italic"             => self::uint8,
-      "Weight"             => self::uint32,
-      "fsType"             => self::uint16,
-      "MagicNumber"        => self::uint16,
-      "UnicodeRange1"      => self::uint32,
-      "UnicodeRange2"      => self::uint32,
-      "UnicodeRange3"      => self::uint32,
-      "UnicodeRange4"      => self::uint32,
-      "CodePageRange1"     => self::uint32,
-      "CodePageRange2"     => self::uint32,
-      "CheckSumAdjustment" => self::uint32,
-      "Reserved1"          => self::uint32,
-      "Reserved2"          => self::uint32,
-      "Reserved3"          => self::uint32,
-      "Reserved4"          => self::uint32,
+        "EOTSize"            => self::uint32,
+        "FontDataSize"       => self::uint32,
+        "Version"            => self::uint32,
+        "Flags"              => self::uint32,
+        "FontPANOSE"         => array(self::uint8, 10),
+        "Charset"            => self::uint8,
+        "Italic"             => self::uint8,
+        "Weight"             => self::uint32,
+        "fsType"             => self::uint16,
+        "MagicNumber"        => self::uint16,
+        "UnicodeRange1"      => self::uint32,
+        "UnicodeRange2"      => self::uint32,
+        "UnicodeRange3"      => self::uint32,
+        "UnicodeRange4"      => self::uint32,
+        "CodePageRange1"     => self::uint32,
+        "CodePageRange2"     => self::uint32,
+        "CheckSumAdjustment" => self::uint32,
+        "Reserved1"          => self::uint32,
+        "Reserved2"          => self::uint32,
+        "Reserved3"          => self::uint32,
+        "Reserved4"          => self::uint32,
     ));
 
     $this->data["Padding1"] = $font->readUInt16();
@@ -67,19 +67,19 @@ class Header extends \FontLib\Header {
     $this->readString("FullName");
 
     switch ($this->data["Version"]) {
-      default:
+        default:
         throw new Exception("Unknown EOT version " . $this->data["Version"]);
 
-      case 0x00010000:
+        case 0x00010000:
         // Nothing to do more
         break;
 
-      case 0x00020001:
+        case 0x00020001:
         $this->data["Padding5"] = $font->readUInt16();
         $this->readString("RootString");
         break;
 
-      case 0x00020002:
+        case 0x00020002:
         $this->data["Padding5"] = $font->readUInt16();
         $this->readString("RootString");
 
@@ -95,19 +95,19 @@ class Header extends \FontLib\Header {
     }
 
     if (!empty($this->data["RootString"])) {
-      $this->data["RootString"] = explode("\0", $this->data["RootString"]);
+        $this->data["RootString"] = explode("\0", $this->data["RootString"]);
     }
-  }
+    }
 
-  private function readString($name) {
+    private function readString($name) {
     $font = $this->font;
     $size = $font->readUInt16();
 
     $this->data["{$name}Size"] = $size;
     $this->data[$name]         = Font::UTF16ToUTF8($font->read($size));
-  }
+    }
 
-  public function encode() {
+    public function encode() {
     //return $this->font->pack($this->def, $this->data);
-  }
+    }
 }

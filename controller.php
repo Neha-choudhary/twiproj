@@ -1,6 +1,6 @@
 <?php
 session_start();
-ini_set("display_errors",1);
+ini_set("display_errors", 1);
 //require "autoload.php";
 //include_once "googleloginfunc.php";
 
@@ -8,7 +8,7 @@ include 'common.inc.php';
 require '/home/bme2kggy0iwu/public_html/twiproj/twitter/twitteroauth/autoload.php';
 use Abraham\TwitterOAuth\TwitterOAuth;
 
- $user = $flwdwn = null;
+    $user = $flwdwn = null;
 
 // if(isset($_REQUEST['btnlogout']))
 // {
@@ -49,48 +49,48 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 // 	$follower_name = json_encode($follower_name);
 // }
 
- $result = [];
+    $result = [];
 if(isset($_REQUEST['flwdwn']))
-       {
+        {
         $token = $_SESSION['access_token'];
         $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $token['oauth_token'], $token['oauth_token_secret']);
         $flwdwn=$connection->get('users/lookup',["screen_name"=>$_REQUEST['flwdwn']]);
-              if(isset($flwdwn->errors))
-              {
-                  $result['success'] = false;
-                  $result['message'] = 'No User found';
-              }
-              else
-              {
-                  $result['success'] = true;
-                  $_SESSION['flwdwn']=$flwdwn[0]->screen_name;
-              }
-         echo json_encode($result);
-  }
+                if(isset($flwdwn->errors))
+                {
+                    $result['success'] = false;
+                    $result['message'] = 'No User found';
+                }
+                else
+                {
+                    $result['success'] = true;
+                    $_SESSION['flwdwn']=$flwdwn[0]->screen_name;
+                }
+            echo json_encode($result);
+    }
 
 
 if(isset($_REQUEST['format']))
 {
-	$file = fopen("cron.txt","a");
-	$email = $_REQUEST['email'];
-	$format = $_REQUEST['format'];
-	$str = "*/15 * * * * /usr/local/bin/php ".getcwd()."/flwdwn.php ".$format." -1 ".$_SESSION['flwdwn']." ".$email." \n";
+    $file = fopen("cron.txt","a");
+    $email = $_REQUEST['email'];
+    $format = $_REQUEST['format'];
+    $str = "*/15 * * * * /usr/local/bin/php ".getcwd()."/flwdwn.php ".$format." -1 ".$_SESSION['flwdwn']." ".$email." \n";
 
-	//$str = "*/15 * * * * /usr/local/bin/php7.6 ".getcwd()."/flwdwn.php ".$format." -1 ".$_SESSION['flwdwn']." ".$email." \n";
+    //$str = "*/15 * * * * /usr/local/bin/php7.6 ".getcwd()."/flwdwn.php ".$format." -1 ".$_SESSION['flwdwn']." ".$email." \n";
 
-	$result = fwrite($file,$str);
-	if($result == true)
-	{
-		//$cmd = "sudo bash".getcwd()."/cron.sh";
-         //@exec($cmd);
-		//$cmd = ".".getcwd()."/cron.sh > ./home/bme2kggy0iwu/public_html/twiproj/log.txt";
+    $result = fwrite($file,$str);
+    if($result == true)
+    {
+        //$cmd = "sudo bash".getcwd()."/cron.sh";
+            //@exec($cmd);
+        //$cmd = ".".getcwd()."/cron.sh > ./home/bme2kggy0iwu/public_html/twiproj/log.txt";
 
-		//$out=shell_exec("./home/bme2kggy0iwu/public_html/twiproj/cron.sh > ./home/bme2kggy0iwu/public_html/twiproj/log.txt");
-		echo shell_exec('sh ./cron.sh');
+        //$out=shell_exec("./home/bme2kggy0iwu/public_html/twiproj/cron.sh > ./home/bme2kggy0iwu/public_html/twiproj/log.txt");
+        echo shell_exec('sh ./cron.sh');
 
-	     $output = exec('crontab -l');
-	     echo "cron Running output ==> ".$output;
-	}
+            $output = exec('crontab -l');
+            echo "cron Running output ==> ".$output;
+    }
 }
 
 //}

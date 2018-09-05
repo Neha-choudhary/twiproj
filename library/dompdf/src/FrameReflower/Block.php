@@ -77,7 +77,7 @@ class Block extends AbstractFrameReflower
             $absolute = false;
         }
 
-        $sum = (float)$style->length_in_pt($dims, $w);
+        $sum = (float) $style->length_in_pt($dims, $w);
 
         // Compare to the containing block
         $diff = $w - $sum;
@@ -198,9 +198,9 @@ class Block extends AbstractFrameReflower
         $calculate_width = $this->_calculate_width($width);
         $margin_left = $calculate_width['margin_left'];
         $margin_right = $calculate_width['margin_right'];
-        $width =  $calculate_width['width'];
-        $left =  $calculate_width['left'];
-        $right =  $calculate_width['right'];
+        $width = $calculate_width['width'];
+        $left = $calculate_width['left'];
+        $right = $calculate_width['right'];
 
         // Handle min/max width
         $min_width = $style->length_in_pt($style->min_width, $cb["w"]);
@@ -218,9 +218,9 @@ class Block extends AbstractFrameReflower
             $calculate_width = $this->_calculate_width($min_width);
             $margin_left = $calculate_width['margin_left'];
             $margin_right = $calculate_width['margin_right'];
-            $width =  $calculate_width['width'];
-            $left =  $calculate_width['left'];
-            $right =  $calculate_width['right'];
+            $width = $calculate_width['width'];
+            $left = $calculate_width['left'];
+            $right = $calculate_width['right'];
         }
 
         return array($width, $margin_left, $margin_right, $left, $right);
@@ -279,7 +279,7 @@ class Block extends AbstractFrameReflower
                 $style->margin_bottom !== "auto" ? $style->margin_bottom : 0,
                 $bottom !== "auto" ? $bottom : 0);
 
-            $sum = (float)$style->length_in_pt($dims, $cb["h"]);
+            $sum = (float) $style->length_in_pt($dims, $cb["h"]);
 
             $diff = $cb["h"] - $sum;
 
@@ -430,7 +430,7 @@ class Block extends AbstractFrameReflower
     {
         $style = $this->_frame->get_style();
         $w = $this->_frame->get_containing_block("w");
-        $width = (float)$style->length_in_pt($style->width, $w);
+        $width = (float) $style->length_in_pt($style->width, $w);
 
         switch ($style->text_align) {
             default:
@@ -506,7 +506,7 @@ class Block extends AbstractFrameReflower
                         $text = $frame->get_text();
                         $spaces = mb_substr_count($text, " ");
 
-                        $char_spacing = (float)$style->length_in_pt($style->letter_spacing);
+                        $char_spacing = (float) $style->length_in_pt($style->letter_spacing);
                         $_spacing = $spacing + $char_spacing;
 
                         $frame->set_position($frame->get_position("x") + $dx);
@@ -580,13 +580,13 @@ class Block extends AbstractFrameReflower
                 $y_offset = 0;
 
                 //FIXME: The 0.8 ratio applied to the height is arbitrary (used to accommodate descenders?)
-                if($isInlineBlock) {
+                if ($isInlineBlock) {
                     $lineFrames = $line->get_frames();
                     if (count($lineFrames) == 1) {
                         continue;
                     }
                     $frameBox = $frame->get_frame()->get_border_box();
-                    $imageHeightDiff = $height * 0.8 - (float)$frameBox['h'];
+                    $imageHeightDiff = $height * 0.8 - (float) $frameBox['h'];
 
                     $align = $frame->get_style()->vertical_align;
                     if (in_array($align, Style::$vertical_align_keywords) === true) {
@@ -604,7 +604,7 @@ class Block extends AbstractFrameReflower
                                 break;
 
                             case "text-top": // FIXME: this should be the height of the frame minus the height of the text
-                                $y_offset = $height - (float)$style->length_in_pt($style->get_line_height(), $style->font_size);
+                                $y_offset = $height - (float) $style->length_in_pt($style->get_line_height(), $style->font_size);
                                 break;
 
                             case "top":
@@ -621,7 +621,7 @@ class Block extends AbstractFrameReflower
                                 break;
                         }
                     } else {
-                        $y_offset = $baseline - (float)$style->length_in_pt($align, $style->font_size) - (float)$frameBox['h'];
+                        $y_offset = $baseline - (float) $style->length_in_pt($align, $style->font_size) - (float) $frameBox['h'];
                     }
                 } else {
                     $parent = $frame->get_parent();
@@ -659,7 +659,7 @@ class Block extends AbstractFrameReflower
                                 break;
                         }
                     } else {
-                        $y_offset = $height * 0.8 - $baseline - (float)$style->length_in_pt($align, $style->font_size);
+                        $y_offset = $height * 0.8 - $baseline - (float) $style->length_in_pt($align, $style->font_size);
                     }
                 }
 
@@ -806,19 +806,19 @@ class Block extends AbstractFrameReflower
         list($x, $y) = $this->_frame->get_position();
 
         // Adjust the first line based on the text-indent property
-        $indent = (float)$style->length_in_pt($style->text_indent, $cb["w"]);
+        $indent = (float) $style->length_in_pt($style->text_indent, $cb["w"]);
         $this->_frame->increase_line_width($indent);
 
         // Determine the content edge
-        $top = (float)$style->length_in_pt(array($style->margin_top,
+        $top = (float) $style->length_in_pt(array($style->margin_top,
             $style->padding_top,
             $style->border_top_width), $cb["h"]);
 
-        $bottom = (float)$style->length_in_pt(array($style->border_bottom_width,
+        $bottom = (float) $style->length_in_pt(array($style->border_bottom_width,
             $style->margin_bottom,
             $style->padding_bottom), $cb["h"]);
 
-        $cb_x = $x + (float)$left_margin + (float)$style->length_in_pt(array($style->border_left_width,
+        $cb_x = $x + (float) $left_margin + (float) $style->length_in_pt(array($style->border_left_width,
                 $style->padding_left), $cb["w"]);
 
         $cb_y = $y + $top;

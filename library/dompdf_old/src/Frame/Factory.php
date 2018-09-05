@@ -31,11 +31,11 @@ use Dompdf\Positioner\AbstractPositioner;
 class Factory
 {
 
-     /**
-     * Array of positioners for specific frame types
-     *
-     * @var AbstractPositioner[]
-     */
+        /**
+         * Array of positioners for specific frame types
+         *
+         * @var AbstractPositioner[]
+         */
     protected static $_positioners;
 
     /**
@@ -251,7 +251,7 @@ class Factory
                     if (!$parent_node->hasAttribute("dompdf-counter")) {
                         $index = ($parent_node->hasAttribute("start") ? $parent_node->getAttribute("start") : 1);
                     } else {
-                        $index = (int)$parent_node->getAttribute("dompdf-counter") + 1;
+                        $index = (int) $parent_node->getAttribute("dompdf-counter") + 1;
                     }
                 }
 

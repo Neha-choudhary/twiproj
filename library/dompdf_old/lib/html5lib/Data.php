@@ -66,7 +66,7 @@ class HTML5_Data
     public static function getNamedCharacterReferences() {
         if (!self::$namedCharacterReferences) {
             self::$namedCharacterReferences = unserialize(
-                file_get_contents(dirname(__FILE__) . '/named-character-references.ser'));
+                file_get_contents(dirname(__FILE__).'/named-character-references.ser'));
         }
         return self::$namedCharacterReferences;
     }
@@ -93,7 +93,7 @@ class HTML5_Data
             // set up bits for UTF-8
             $x = ($code & 0x3F) | 0x80;
             if ($code < 0x800) {
-               $y = (($code & 0x7FF) >> 6) | 0xC0;
+                $y = (($code & 0x7FF) >> 6) | 0xC0;
             } else {
                 $y = (($code & 0xFC0) >> 6) | 0x80;
                 if ($code < 0x10000) {

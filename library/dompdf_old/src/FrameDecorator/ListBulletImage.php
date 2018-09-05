@@ -60,8 +60,8 @@ class ListBulletImage extends AbstractFrameDecorator
         // See also Image::get_min_max_width
         // Tested php ver: value measured in px, suffix "px" not in value: rtrim unnecessary.
         $dpi = $this->_dompdf->getOptions()->getDpi();
-        $this->_width = ((float)rtrim($width, "px") * 72) / $dpi;
-        $this->_height = ((float)rtrim($height, "px") * 72) / $dpi;
+        $this->_width = ((float) rtrim($width, "px") * 72) / $dpi;
+        $this->_height = ((float) rtrim($height, "px") * 72) / $dpi;
 
         //If an image is taller as the containing block/box, the box should be extended.
         //Neighbour elements are overwriting the overlapping image areas.

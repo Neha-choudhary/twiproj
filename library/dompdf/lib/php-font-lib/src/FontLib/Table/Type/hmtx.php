@@ -15,7 +15,7 @@ use FontLib\Table\Table;
  * @package php-font-lib
  */
 class hmtx extends Table {
-  protected function _parse() {
+    protected function _parse() {
     $font   = $this->getFont();
     $offset = $font->pos();
 
@@ -27,22 +27,22 @@ class hmtx extends Table {
     $data = array();
     $metrics = $font->readUInt16Many($numOfLongHorMetrics * 2);
     for ($gid = 0, $mid = 0; $gid < $numOfLongHorMetrics; $gid++) {
-      $advanceWidth    = isset($metrics[$mid]) ? $metrics[$mid] : 0;
-      $mid += 1;
-      $leftSideBearing = isset($metrics[$mid]) ? $metrics[$mid] : 0;
-      $mid += 1;
-      $data[$gid]      = array($advanceWidth, $leftSideBearing);
+        $advanceWidth    = isset($metrics[$mid]) ? $metrics[$mid] : 0;
+        $mid += 1;
+        $leftSideBearing = isset($metrics[$mid]) ? $metrics[$mid] : 0;
+        $mid += 1;
+        $data[$gid]      = array($advanceWidth, $leftSideBearing);
     }
 
     if ($numOfLongHorMetrics < $numGlyphs) {
-      $lastWidth = end($data);
-      $data      = array_pad($data, $numGlyphs, $lastWidth);
+        $lastWidth = end($data);
+        $data      = array_pad($data, $numGlyphs, $lastWidth);
     }
 
     $this->data = $data;
-  }
+    }
 
-  protected function _encode() {
+    protected function _encode() {
     $font   = $this->getFont();
     $subset = $font->getSubset();
     $data   = $this->data;
@@ -50,10 +50,10 @@ class hmtx extends Table {
     $length = 0;
 
     foreach ($subset as $gid) {
-      $length += $font->writeUInt16($data[$gid][0]);
-      $length += $font->writeUInt16($data[$gid][1]);
+        $length += $font->writeUInt16($data[$gid][0]);
+        $length += $font->writeUInt16($data[$gid][1]);
     }
 
     return $length;
-  }
+    }
 }

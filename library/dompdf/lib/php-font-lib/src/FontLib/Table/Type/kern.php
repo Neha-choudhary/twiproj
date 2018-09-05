@@ -15,17 +15,17 @@ use FontLib\Table\Table;
  * @package php-font-lib
  */
 class kern extends Table {
-  protected function _parse() {
+    protected function _parse() {
     $font = $this->getFont();
 
     $data = $font->unpack(array(
-      "version"         => self::uint16,
-      "nTables"         => self::uint16,
+        "version"         => self::uint16,
+        "nTables"         => self::uint16,
 
-      // only the first subtable will be parsed
-      "subtableVersion" => self::uint16,
-      "length"          => self::uint16,
-      "coverage"        => self::uint16,
+        // only the first subtable will be parsed
+        "subtableVersion" => self::uint16,
+        "length"          => self::uint16,
+        "coverage"        => self::uint16,
     ));
 
     $data["format"] = ($data["coverage"] >> 8);
@@ -33,12 +33,12 @@ class kern extends Table {
     $subtable = array();
 
     switch ($data["format"]) {
-      case 0:
+        case 0:
         $subtable = $font->unpack(array(
-          "nPairs"        => self::uint16,
-          "searchRange"   => self::uint16,
-          "entrySelector" => self::uint16,
-          "rangeShift"    => self::uint16,
+            "nPairs"        => self::uint16,
+            "searchRange"   => self::uint16,
+            "entrySelector" => self::uint16,
+            "rangeShift"    => self::uint16,
         ));
 
         $pairs = array();
@@ -46,28 +46,28 @@ class kern extends Table {
 
         $values = $font->readUInt16Many($subtable["nPairs"] * 3);
         for ($i = 0, $idx = 0; $i < $subtable["nPairs"]; $i++) {
-          $left  = $values[$idx++];
-          $right = $values[$idx++];
-          $value = $values[$idx++];
+            $left  = $values[$idx++];
+            $right = $values[$idx++];
+            $value = $values[$idx++];
 
-          if ($value >= 0x8000) {
+            if ($value >= 0x8000) {
             $value -= 0x10000;
-          }
+            }
 
-          $pairs[] = array(
+            $pairs[] = array(
             "left"  => $left,
             "right" => $right,
             "value" => $value,
-          );
+            );
 
-          $tree[$left][$right] = $value;
+            $tree[$left][$right] = $value;
         }
 
         //$subtable["pairs"] = $pairs;
         $subtable["tree"] = $tree;
         break;
 
-      case 1:
+        case 1:
       case 2:
       case 3:
         break;
@@ -76,5 +76,5 @@ class kern extends Table {
     $data["subtable"] = $subtable;
 
     $this->data = $data;
-  }
+    }
 }

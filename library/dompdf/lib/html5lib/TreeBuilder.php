@@ -62,16 +62,16 @@ class HTML5_TreeBuilder {
     private $fragment = false;
     private $root;
 
-    private $scoping = array('applet','button','caption','html','marquee','object','table','td','th', 'svg:foreignObject');
-    private $formatting = array('a','b','big','code','em','font','i','nobr','s','small','strike','strong','tt','u');
+    private $scoping = array('applet', 'button', 'caption', 'html', 'marquee', 'object', 'table', 'td', 'th', 'svg:foreignObject');
+    private $formatting = array('a', 'b', 'big', 'code', 'em', 'font', 'i', 'nobr', 's', 'small', 'strike', 'strong', 'tt', 'u');
     // dl and ds are speculative
-    private $special = array('address','area','article','aside','base','basefont','bgsound',
-    'blockquote','body','br','center','col','colgroup','command','dc','dd','details','dir','div','dl','ds',
-    'dt','embed','fieldset','figure','footer','form','frame','frameset','h1','h2','h3','h4','h5',
-    'h6','head','header','hgroup','hr','iframe','img','input','isindex','li','link',
-    'listing','menu','meta','nav','noembed','noframes','noscript','ol',
-    'p','param','plaintext','pre','script','select','spacer','style',
-    'tbody','textarea','tfoot','thead','title','tr','ul','wbr');
+    private $special = array('address', 'area', 'article', 'aside', 'base', 'basefont', 'bgsound',
+    'blockquote', 'body', 'br', 'center', 'col', 'colgroup', 'command', 'dc', 'dd', 'details', 'dir', 'div', 'dl', 'ds',
+    'dt', 'embed', 'fieldset', 'figure', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5',
+    'h6', 'head', 'header', 'hgroup', 'hr', 'iframe', 'img', 'input', 'isindex', 'li', 'link',
+    'listing', 'menu', 'meta', 'nav', 'noembed', 'noframes', 'noscript', 'ol',
+    'p', 'param', 'plaintext', 'pre', 'script', 'select', 'spacer', 'style',
+    'tbody', 'textarea', 'tfoot', 'thead', 'title', 'tr', 'ul', 'wbr');
 
     private $pendingTableCharacters;
     private $pendingTableCharactersDirty;
@@ -93,8 +93,8 @@ class HTML5_TreeBuilder {
     const IN_ROW            = 13;
     const IN_CELL           = 14;
     const IN_SELECT         = 15;
-    const IN_SELECT_IN_TABLE= 16;
-    const IN_FOREIGN_CONTENT= 17;
+    const IN_SELECT_IN_TABLE = 16;
+    const IN_FOREIGN_CONTENT = 17;
     const AFTER_BODY        = 18;
     const IN_FRAMESET       = 19;
     const AFTER_FRAMESET    = 20;
@@ -132,7 +132,7 @@ class HTML5_TreeBuilder {
     const LIMITED_QUIRKS_MODE   = 202;
 
     // Marker to be placed in $a_formatting
-    const MARKER     = 300;
+    const MARKER = 300;
 
     // Namespaces for foreign content
     const NS_HTML   = null; // to prevent DOM from requiring NS on everything
@@ -161,7 +161,7 @@ class HTML5_TreeBuilder {
     }
 
     public function getQuirksMode(){
-      return $this->quirks_mode;
+        return $this->quirks_mode;
     }
 
     /**
@@ -254,76 +254,76 @@ class HTML5_TreeBuilder {
                     $public = is_null($token['public']) ? false : strtolower($token['public']);
                     $system = is_null($token['system']) ? false : strtolower($token['system']);
                     $publicStartsWithForQuirks = array(
-                     "+//silmaril//dtd html pro v0r11 19970101//",
-                     "-//advasoft ltd//dtd html 3.0 aswedit + extensions//",
-                     "-//as//dtd html 3.0 aswedit + extensions//",
-                     "-//ietf//dtd html 2.0 level 1//",
-                     "-//ietf//dtd html 2.0 level 2//",
-                     "-//ietf//dtd html 2.0 strict level 1//",
-                     "-//ietf//dtd html 2.0 strict level 2//",
-                     "-//ietf//dtd html 2.0 strict//",
-                     "-//ietf//dtd html 2.0//",
-                     "-//ietf//dtd html 2.1e//",
-                     "-//ietf//dtd html 3.0//",
-                     "-//ietf//dtd html 3.2 final//",
-                     "-//ietf//dtd html 3.2//",
-                     "-//ietf//dtd html 3//",
-                     "-//ietf//dtd html level 0//",
-                     "-//ietf//dtd html level 1//",
-                     "-//ietf//dtd html level 2//",
-                     "-//ietf//dtd html level 3//",
-                     "-//ietf//dtd html strict level 0//",
-                     "-//ietf//dtd html strict level 1//",
-                     "-//ietf//dtd html strict level 2//",
-                     "-//ietf//dtd html strict level 3//",
-                     "-//ietf//dtd html strict//",
-                     "-//ietf//dtd html//",
-                     "-//metrius//dtd metrius presentational//",
-                     "-//microsoft//dtd internet explorer 2.0 html strict//",
-                     "-//microsoft//dtd internet explorer 2.0 html//",
-                     "-//microsoft//dtd internet explorer 2.0 tables//",
-                     "-//microsoft//dtd internet explorer 3.0 html strict//",
-                     "-//microsoft//dtd internet explorer 3.0 html//",
-                     "-//microsoft//dtd internet explorer 3.0 tables//",
-                     "-//netscape comm. corp.//dtd html//",
-                     "-//netscape comm. corp.//dtd strict html//",
-                     "-//o'reilly and associates//dtd html 2.0//",
-                     "-//o'reilly and associates//dtd html extended 1.0//",
-                     "-//o'reilly and associates//dtd html extended relaxed 1.0//",
-                     "-//spyglass//dtd html 2.0 extended//",
-                     "-//sq//dtd html 2.0 hotmetal + extensions//",
-                     "-//sun microsystems corp.//dtd hotjava html//",
-                     "-//sun microsystems corp.//dtd hotjava strict html//",
-                     "-//w3c//dtd html 3 1995-03-24//",
-                     "-//w3c//dtd html 3.2 draft//",
-                     "-//w3c//dtd html 3.2 final//",
-                     "-//w3c//dtd html 3.2//",
-                     "-//w3c//dtd html 3.2s draft//",
-                     "-//w3c//dtd html 4.0 frameset//",
-                     "-//w3c//dtd html 4.0 transitional//",
-                     "-//w3c//dtd html experimental 19960712//",
-                     "-//w3c//dtd html experimental 970421//",
-                     "-//w3c//dtd w3 html//",
-                     "-//w3o//dtd w3 html 3.0//",
-                     "-//webtechs//dtd mozilla html 2.0//",
-                     "-//webtechs//dtd mozilla html//",
+                        "+//silmaril//dtd html pro v0r11 19970101//",
+                        "-//advasoft ltd//dtd html 3.0 aswedit + extensions//",
+                        "-//as//dtd html 3.0 aswedit + extensions//",
+                        "-//ietf//dtd html 2.0 level 1//",
+                        "-//ietf//dtd html 2.0 level 2//",
+                        "-//ietf//dtd html 2.0 strict level 1//",
+                        "-//ietf//dtd html 2.0 strict level 2//",
+                        "-//ietf//dtd html 2.0 strict//",
+                        "-//ietf//dtd html 2.0//",
+                        "-//ietf//dtd html 2.1e//",
+                        "-//ietf//dtd html 3.0//",
+                        "-//ietf//dtd html 3.2 final//",
+                        "-//ietf//dtd html 3.2//",
+                        "-//ietf//dtd html 3//",
+                        "-//ietf//dtd html level 0//",
+                        "-//ietf//dtd html level 1//",
+                        "-//ietf//dtd html level 2//",
+                        "-//ietf//dtd html level 3//",
+                        "-//ietf//dtd html strict level 0//",
+                        "-//ietf//dtd html strict level 1//",
+                        "-//ietf//dtd html strict level 2//",
+                        "-//ietf//dtd html strict level 3//",
+                        "-//ietf//dtd html strict//",
+                        "-//ietf//dtd html//",
+                        "-//metrius//dtd metrius presentational//",
+                        "-//microsoft//dtd internet explorer 2.0 html strict//",
+                        "-//microsoft//dtd internet explorer 2.0 html//",
+                        "-//microsoft//dtd internet explorer 2.0 tables//",
+                        "-//microsoft//dtd internet explorer 3.0 html strict//",
+                        "-//microsoft//dtd internet explorer 3.0 html//",
+                        "-//microsoft//dtd internet explorer 3.0 tables//",
+                        "-//netscape comm. corp.//dtd html//",
+                        "-//netscape comm. corp.//dtd strict html//",
+                        "-//o'reilly and associates//dtd html 2.0//",
+                        "-//o'reilly and associates//dtd html extended 1.0//",
+                        "-//o'reilly and associates//dtd html extended relaxed 1.0//",
+                        "-//spyglass//dtd html 2.0 extended//",
+                        "-//sq//dtd html 2.0 hotmetal + extensions//",
+                        "-//sun microsystems corp.//dtd hotjava html//",
+                        "-//sun microsystems corp.//dtd hotjava strict html//",
+                        "-//w3c//dtd html 3 1995-03-24//",
+                        "-//w3c//dtd html 3.2 draft//",
+                        "-//w3c//dtd html 3.2 final//",
+                        "-//w3c//dtd html 3.2//",
+                        "-//w3c//dtd html 3.2s draft//",
+                        "-//w3c//dtd html 4.0 frameset//",
+                        "-//w3c//dtd html 4.0 transitional//",
+                        "-//w3c//dtd html experimental 19960712//",
+                        "-//w3c//dtd html experimental 970421//",
+                        "-//w3c//dtd w3 html//",
+                        "-//w3o//dtd w3 html 3.0//",
+                        "-//webtechs//dtd mozilla html 2.0//",
+                        "-//webtechs//dtd mozilla html//",
                     );
                     $publicSetToForQuirks = array(
-                     "-//w3o//dtd w3 html strict 3.0//",
-                     "-/w3c/dtd html 4.0 transitional/en",
-                     "html",
+                        "-//w3o//dtd w3 html strict 3.0//",
+                        "-/w3c/dtd html 4.0 transitional/en",
+                        "html",
                     );
                     $publicStartsWithAndSystemForQuirks = array(
-                     "-//w3c//dtd html 4.01 frameset//",
-                     "-//w3c//dtd html 4.01 transitional//",
+                        "-//w3c//dtd html 4.01 frameset//",
+                        "-//w3c//dtd html 4.01 transitional//",
                     );
                     $publicStartsWithForLimitedQuirks = array(
-                     "-//w3c//dtd xhtml 1.0 frameset//",
-                     "-//w3c//dtd xhtml 1.0 transitional//",
+                        "-//w3c//dtd xhtml 1.0 frameset//",
+                        "-//w3c//dtd xhtml 1.0 transitional//",
                     );
                     $publicStartsWithAndSystemForLimitedQuirks = array(
-                     "-//w3c//dtd html 4.01 frameset//",
-                     "-//w3c//dtd html 4.01 transitional//",
+                        "-//w3c//dtd html 4.01 frameset//",
+                        "-//w3c//dtd html 4.01 transitional//",
                     );
                     // first, do easy checks
                     if (
@@ -751,7 +751,7 @@ class HTML5_TreeBuilder {
             case self::IN_BODY:
                 /* Handle the token as follows: */
 
-                switch($token['type']) {
+                switch ($token['type']) {
                     /* A character token */
                     case HTML5_Tokenizer::CHARACTER:
                     case HTML5_Tokenizer::SPACECHARACTER:
@@ -786,14 +786,14 @@ class HTML5_TreeBuilder {
                     break;
 
                     case HTML5_Tokenizer::STARTTAG:
-                    switch($token['name']) {
+                    switch ($token['name']) {
                         case 'html':
                             // parse error
                             /* For each attribute on the token, check to see if the
                              * attribute is already present on the top element of the
                              * stack of open elements. If it is not, add the attribute
                              * and its corresponding value to that element. */
-                            foreach($token['attr'] as $attr) {
+                            foreach ($token['attr'] as $attr) {
                                 if (!$this->stack[0]->hasAttribute($attr['name'])) {
                                     $this->stack[0]->setAttribute($attr['name'], $attr['value']);
                                 }
@@ -823,7 +823,7 @@ class HTML5_TreeBuilder {
                             add the attribute and its corresponding value to that
                             element. */
                             } else {
-                                foreach($token['attr'] as $attr) {
+                                foreach ($token['attr'] as $attr) {
                                     if (!$this->stack[1]->hasAttribute($attr['name'])) {
                                         $this->stack[1]->setAttribute($attr['name'], $attr['value']);
                                     }
@@ -959,7 +959,7 @@ class HTML5_TreeBuilder {
                             $this->flag_frameset_ok = false;
 
                             $stack_length = count($this->stack) - 1;
-                            for($n = $stack_length; 0 <= $n; $n--) {
+                            for ($n = $stack_length; 0 <= $n; $n--) {
                                 /* 2. Initialise node to be the current node (the
                                 bottommost node of the stack). */
                                 $stop = false;
@@ -1410,7 +1410,7 @@ class HTML5_TreeBuilder {
                              * select". */
                             if (
                                 $this->mode === self::IN_TABLE || $this->mode === self::IN_CAPTION ||
-                                $this->mode === self::IN_COLUMN_GROUP || $this->mode ==+self::IN_TABLE_BODY ||
+                                $this->mode === self::IN_COLUMN_GROUP || $this->mode == +self::IN_TABLE_BODY ||
                                 $this->mode === self::IN_ROW || $this->mode === self::IN_CELL
                             ) {
                                 $this->mode = self::IN_SELECT_IN_TABLE;
@@ -2400,7 +2400,7 @@ class HTML5_TreeBuilder {
 
                 /* A start tag whose tag name is one of: "th", "td" */
                 } elseif ($token['type'] === HTML5_Tokenizer::STARTTAG &&
-                ($token['name'] === 'th' ||    $token['name'] === 'td')) {
+                ($token['name'] === 'th' || $token['name'] === 'td')) {
                     /* Parse error. Act as if a start tag with the tag name "tr" had
                     been seen, then reprocess the current token. */
                     $this->emitToken(array(
@@ -2781,7 +2781,7 @@ class HTML5_TreeBuilder {
                     ));
 
                 } elseif ($token['type'] === HTML5_Tokenizer::STARTTAG &&
-                ($token['name'] === 'input' || $token['name'] === 'keygen' ||  $token['name'] === 'textarea')) {
+                ($token['name'] === 'input' || $token['name'] === 'keygen' || $token['name'] === 'textarea')) {
                     // parse error
                     $this->emitToken(array(
                         'name' => 'select',
@@ -2818,7 +2818,7 @@ class HTML5_TreeBuilder {
                 /* An end tag whose tag name is one of: "caption", "table", "tbody",
                 "tfoot", "thead", "tr", "td", "th" */
                 } elseif ($token['type'] === HTML5_Tokenizer::ENDTAG &&
-                in_array($token['name'], array('caption', 'table', 'tbody', 'tfoot', 'thead', 'tr', 'td', 'th')))  {
+                in_array($token['name'], array('caption', 'table', 'tbody', 'tfoot', 'thead', 'tr', 'td', 'th'))) {
                     /* Parse error. */
                     // parse error
 
@@ -2911,8 +2911,8 @@ class HTML5_TreeBuilder {
                 (in_array($token['name'], array('b', "big", "blockquote", "body", "br",
                 "center", "code", "dc", "dd", "div", "dl", "ds", "dt", "em", "embed", "h1", "h2",
                 "h3", "h4", "h5", "h6", "head", "hr", "i", "img", "li", "listing",
-                "menu", "meta", "nobr", "ol", "p", "pre", "ruby", "s",  "small",
-                "span", "strong", "strike",  "sub", "sup", "table", "tt", "u", "ul",
+                "menu", "meta", "nobr", "ol", "p", "pre", "ruby", "s", "small",
+                "span", "strong", "strike", "sub", "sup", "table", "tt", "u", "ul",
                 "var")) || ($token['name'] === 'font' && ($this->getAttr($token, 'color') ||
                 $this->getAttr($token, 'face') || $this->getAttr($token, 'size')))))) {
                     // XERROR: parse error
@@ -3267,7 +3267,7 @@ class HTML5_TreeBuilder {
      */
     private function elementInScope($el, $scope = self::SCOPE) {
         if (is_array($el)) {
-            foreach($el as $element) {
+            foreach ($el as $element) {
                 if ($this->elementInScope($element, $scope)) {
                     return true;
                 }
@@ -3735,7 +3735,7 @@ class HTML5_TreeBuilder {
         foreach ($this->stack as $i => $element) {
             $names[] = $element->tagName;
         }
-        echo "  -> stack [" . implode(', ', $names) . "]\n";
+        echo "  -> stack [".implode(', ', $names)."]\n";
     }
 
     /**
@@ -3753,7 +3753,7 @@ class HTML5_TreeBuilder {
                 $names[] = $node->tagName;
             }
         }
-        echo "  -> active formatting [" . implode(', ', $names) . "]\n";
+        echo "  -> active formatting [".implode(', ', $names)."]\n";
     }
 
     /**

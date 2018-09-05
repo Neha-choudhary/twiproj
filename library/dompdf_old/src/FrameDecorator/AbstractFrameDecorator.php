@@ -744,7 +744,7 @@ abstract class AbstractFrameDecorator extends Frame
         // If this node resets a counter save the current value to use when rendering on the next page
         if ($style->counter_reset && ($reset = $style->counter_reset) !== "none") {
             $vars = preg_split('/\s+/', trim($reset), 2);
-            $split->_counters['__' . $vars[0]] = $this->lookup_counter_frame($vars[0])->_counters[$vars[0]];
+            $split->_counters['__'.$vars[0]] = $this->lookup_counter_frame($vars[0])->_counters[$vars[0]];
         }
     }
 

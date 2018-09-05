@@ -16,7 +16,7 @@ use FontLib\TrueType\File;
  * @package php-font-lib
  */
 class post extends Table {
-  protected $def = array(
+    protected $def = array(
     "format"             => self::Fixed,
     "italicAngle"        => self::Fixed,
     "underlinePosition"  => self::FWord,
@@ -26,20 +26,20 @@ class post extends Table {
     "maxMemType42"       => self::uint32,
     "minMemType1"        => self::uint32,
     "maxMemType1"        => self::uint32,
-  );
+    );
 
-  protected function _parse() {
+    protected function _parse() {
     $font = $this->getFont();
     $data = $font->unpack($this->def);
 
     $names = array();
 
     switch ($data["format"]) {
-      case 1:
+        case 1:
         $names = File::$macCharNames;
         break;
 
-      case 2:
+        case 2:
         $data["numberOfGlyphs"] = $font->readUInt16();
 
         $glyphNameIndex = $font->readUInt16Many($data["numberOfGlyphs"]);
@@ -48,30 +48,30 @@ class post extends Table {
 
         $namesPascal = array();
         for ($i = 0; $i < $data["numberOfGlyphs"]; $i++) {
-          $len           = $font->readUInt8();
-          $namesPascal[] = $font->read($len);
+            $len           = $font->readUInt8();
+            $namesPascal[] = $font->read($len);
         }
 
         foreach ($glyphNameIndex as $g => $index) {
-          if ($index < 258) {
+            if ($index < 258) {
             $names[$g] = File::$macCharNames[$index];
-          }
-          else {
+            }
+            else {
             $names[$g] = $namesPascal[$index - 258];
-          }
+            }
         }
 
         break;
 
-      case 2.5:
+        case 2.5:
         // TODO
         break;
 
-      case 3:
+        case 3:
         // nothing
         break;
 
-      case 4:
+        case 4:
         // TODO
         break;
     }
@@ -79,9 +79,9 @@ class post extends Table {
     $data["names"] = $names;
 
     $this->data = $data;
-  }
+    }
 
-  function _encode() {
+    function _encode() {
     $font           = $this->getFont();
     $data           = $this->data;
     $data["format"] = 3;
@@ -137,5 +137,5 @@ class post extends Table {
     }
 
     return $length;*/
-  }
+    }
 }

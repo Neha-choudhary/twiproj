@@ -16,7 +16,7 @@ use Exception;
  * @package php-font-lib
  */
 class head extends Table {
-  protected $def = array(
+    protected $def = array(
     "tableVersion"       => self::Fixed,
     "fontRevision"       => self::Fixed,
     "checkSumAdjustment" => self::uint32,
@@ -34,13 +34,13 @@ class head extends Table {
     "fontDirectionHint"  => self::int16,
     "indexToLocFormat"   => self::int16,
     "glyphDataFormat"    => self::int16,
-  );
+    );
 
-  protected function _parse() {
+    protected function _parse() {
     parent::_parse();
 
     if ($this->data["magicNumber"] != 0x5F0F3CF5) {
-      throw new Exception("Incorrect magic number (" . dechex($this->data["magicNumber"]) . ")");
+        throw new Exception("Incorrect magic number (" . dechex($this->data["magicNumber"]) . ")");
     }
-  }
+    }
 }

@@ -15,7 +15,7 @@ use FontLib\Table\Table;
  * @package php-font-lib
  */
 class os2 extends Table {
-  protected $def = array(
+    protected $def = array(
     "version"             => self::uint16,
     "xAvgCharWidth"       => self::int16,
     "usWeightClass"       => self::uint16,
@@ -43,5 +43,5 @@ class os2 extends Table {
     "typoLineGap"         => self::int16,
     "winAscent"           => self::int16,
     "winDescent"          => self::int16,
-  );
+    );
 }

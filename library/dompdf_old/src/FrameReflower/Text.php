@@ -78,13 +78,13 @@ class Text extends AbstractFrameReflower
         $available_width = $line_width - $current_line_width;
 
         // Account for word-spacing
-        $word_spacing = (float)$style->length_in_pt($style->word_spacing);
-        $char_spacing = (float)$style->length_in_pt($style->letter_spacing);
+        $word_spacing = (float) $style->length_in_pt($style->word_spacing);
+        $char_spacing = (float) $style->length_in_pt($style->letter_spacing);
 
         // Determine the frame width including margin, padding & border
         $text_width = $this->getFontMetrics()->getTextWidth($text, $font, $size, $word_spacing, $char_spacing);
         $mbp_width =
-            (float)$style->length_in_pt(array($style->margin_left,
+            (float) $style->length_in_pt(array($style->margin_left,
                 $style->border_left_width,
                 $style->padding_left,
                 $style->padding_right,
@@ -119,7 +119,7 @@ class Text extends AbstractFrameReflower
 
         // @todo support <shy>, <wbr>
         for ($i = 0; $i < $wc; $i += 2) {
-            $word = $words[$i] . (isset($words[$i + 1]) ? $words[$i + 1] : "");
+            $word = $words[$i].(isset($words[$i + 1]) ? $words[$i + 1] : "");
             $word_width = $this->getFontMetrics()->getTextWidth($word, $font, $size, $word_spacing, $char_spacing);
             if ($width + $word_width + $mbp_width > $available_width) {
                 break;
@@ -243,8 +243,9 @@ class Text extends AbstractFrameReflower
                 if (($tmp = $this->_line_break($text)) !== false) {
                     $add_line = $split < $tmp;
                     $split = min($tmp, $split);
-                } else
-                    $add_line = true;
+                } else {
+                                    $add_line = true;
+                }
 
                 break;
 
@@ -393,8 +394,8 @@ class Text extends AbstractFrameReflower
         $size = $style->font_size;
         $font = $style->font_family;
 
-        $word_spacing = (float)$style->length_in_pt($style->word_spacing);
-        $char_spacing = (float)$style->length_in_pt($style->letter_spacing);
+        $word_spacing = (float) $style->length_in_pt($style->word_spacing);
+        $char_spacing = (float) $style->length_in_pt($style->letter_spacing);
 
         switch ($style->white_space) {
             default:
@@ -460,7 +461,7 @@ class Text extends AbstractFrameReflower
 
         $max = $this->getFontMetrics()->getTextWidth($str, $font, $size, $word_spacing, $char_spacing);
 
-        $delta = (float)$style->length_in_pt(array($style->margin_left,
+        $delta = (float) $style->length_in_pt(array($style->margin_left,
             $style->border_left_width,
             $style->padding_left,
             $style->padding_right,

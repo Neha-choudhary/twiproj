@@ -13,7 +13,7 @@ use Sabberworm\CSS\Parsing\UnexpectedTokenException;
 class ParserTest extends \PHPUnit_Framework_TestCase {
 
 	function testFiles() {
-		$sDirectory = dirname(__FILE__) . '/../../files';
+		$sDirectory = dirname(__FILE__).'/../../files';
 		if ($rHandle = opendir($sDirectory)) {
 			/* This is the correct way to loop over the directory. */
 			while (false !== ($sFileName = readdir($rHandle))) {
@@ -27,7 +27,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase {
 					//Either a file which SHOULD fail (at least in strict mode) or a future test of a as-of-now missing feature
 					continue;
 				}
-				$oParser = new Parser(file_get_contents($sDirectory . DIRECTORY_SEPARATOR . $sFileName));
+				$oParser = new Parser(file_get_contents($sDirectory.DIRECTORY_SEPARATOR.$sFileName));
 				try {
 					$this->assertNotEquals('', $oParser->parse()->render());
 				} catch (\Exception $e) {
@@ -64,7 +64,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase {
 				$aColorRule = $oRuleSet->getRules('outline-color');
 				$oColor = $aColorRule[0]->getValue();
 				$this->assertEquals(array('r' => new Size(34.0, null, true, $oColor->getLineNo()), 'g' => new Size(34.0, null, true, $oColor->getLineNo()), 'b' => new Size(34.0, null, true, $oColor->getLineNo())), $oColor->getColor());
-			} else if($sSelector === '#yours') {
+			} else if ($sSelector === '#yours') {
 				$aColorRule = $oRuleSet->getRules('background-color');
 				$oColor = $aColorRule[0]->getValue();
 				$this->assertEquals(array('h' => new Size(220.0, null, true, $oColor->getLineNo()), 's' => new Size(10.0, '%', true, $oColor->getLineNo()), 'l' => new Size(220.0, '%', true, $oColor->getLineNo())), $oColor->getColor());
@@ -149,7 +149,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase {
 					$this->assertSame(11, $oSelector->getSpecificity());
 					break;
 				default:
-					$this->fail("specificity: untested selector " . $oSelector->getSelector());
+					$this->fail("specificity: untested selector ".$oSelector->getSelector());
 			}
 		}
 		$this->assertEquals(array(new Selector('#test .help', true)), $oDoc->getSelectorsBySpecificity('> 100'));
@@ -175,7 +175,7 @@ html, body {font-size: -.6em;}
 		foreach ($oDoc->getAllDeclarationBlocks() as $oBlock) {
 			foreach ($oBlock->getSelectors() as $oSelector) {
 				//Loop over all selector parts (the comma-separated strings in a selector) and prepend the id
-				$oSelector->setSelector('#my_id ' . $oSelector->getSelector());
+				$oSelector->setSelector('#my_id '.$oSelector->getSelector());
 			}
 		}
 		$this->assertSame('@charset "utf-8";
@@ -433,7 +433,7 @@ body {background-url: url("http://somesite.com/images/someimage.gif");}';
 	}
 
 	function parsedStructureForFile($sFileName, $oSettings = null) {
-		$sFile = dirname(__FILE__) . '/../../files' . DIRECTORY_SEPARATOR . "$sFileName.css";
+		$sFile = dirname(__FILE__).'/../../files'.DIRECTORY_SEPARATOR."$sFileName.css";
 		$oParser = new Parser(file_get_contents($sFile), $oSettings);
 		return $oParser->parse();
 	}

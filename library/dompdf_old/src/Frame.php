@@ -195,18 +195,18 @@ class Frame
             "h" => null,
         );
 
-        $this->_containing_block[0] =& $this->_containing_block["x"];
-        $this->_containing_block[1] =& $this->_containing_block["y"];
-        $this->_containing_block[2] =& $this->_containing_block["w"];
-        $this->_containing_block[3] =& $this->_containing_block["h"];
+        $this->_containing_block[0] = & $this->_containing_block["x"];
+        $this->_containing_block[1] = & $this->_containing_block["y"];
+        $this->_containing_block[2] = & $this->_containing_block["w"];
+        $this->_containing_block[3] = & $this->_containing_block["h"];
 
         $this->_position = array(
             "x" => null,
             "y" => null,
         );
 
-        $this->_position[0] =& $this->_position["x"];
-        $this->_position[1] =& $this->_position["y"];
+        $this->_position[0] = & $this->_position["x"];
+        $this->_position[1] = & $this->_position["y"];
 
         $this->_opacity = 1.0;
         $this->_decorator = null;
@@ -475,7 +475,7 @@ class Frame
     {
         $style = $this->_style;
 
-        return (float)$style->length_in_pt(array(
+        return (float) $style->length_in_pt(array(
             $style->height,
             $style->margin_top,
             $style->margin_bottom,
@@ -496,7 +496,7 @@ class Frame
     {
         $style = $this->_style;
 
-        return (float)$style->length_in_pt(array(
+        return (float) $style->length_in_pt(array(
             $style->width,
             $style->margin_left,
             $style->margin_right,
@@ -514,7 +514,7 @@ class Frame
     {
         $style = $this->_style;
 
-        return (float)$style->length_in_pt(array(
+        return (float) $style->length_in_pt(array(
             //$style->height,
             $style->margin_top,
             $style->margin_bottom,
@@ -536,13 +536,13 @@ class Frame
         $cb = $this->_containing_block;
 
         $x = $this->_position["x"] +
-            (float)$style->length_in_pt(array($style->margin_left,
+            (float) $style->length_in_pt(array($style->margin_left,
                     $style->border_left_width,
                     $style->padding_left),
                 $cb["w"]);
 
         $y = $this->_position["y"] +
-            (float)$style->length_in_pt(array($style->margin_top,
+            (float) $style->length_in_pt(array($style->margin_top,
                     $style->border_top_width,
                     $style->padding_top),
                 $cb["h"]);
@@ -568,12 +568,12 @@ class Frame
         $cb = $this->_containing_block;
 
         $x = $this->_position["x"] +
-            (float)$style->length_in_pt(array($style->margin_left,
+            (float) $style->length_in_pt(array($style->margin_left,
                     $style->border_left_width),
                 $cb["w"]);
 
         $y = $this->_position["y"] +
-            (float)$style->length_in_pt(array($style->margin_top,
+            (float) $style->length_in_pt(array($style->margin_top,
                     $style->border_top_width),
                 $cb["h"]);
 
@@ -603,9 +603,9 @@ class Frame
         $style = $this->_style;
         $cb = $this->_containing_block;
 
-        $x = $this->_position["x"] + (float)$style->length_in_pt($style->margin_left, $cb["w"]);
+        $x = $this->_position["x"] + (float) $style->length_in_pt($style->margin_left, $cb["w"]);
 
-        $y = $this->_position["y"] + (float)$style->length_in_pt($style->margin_top, $cb["h"]);
+        $y = $this->_position["y"] + (float) $style->length_in_pt($style->margin_top, $cb["h"]);
 
         $w = $style->length_in_pt(array($style->border_left_width,
                 $style->padding_left,
@@ -1138,49 +1138,49 @@ class Frame
 //       return "";
 
 
-        $str = "<b>" . $this->_node->nodeName . ":</b><br/>";
+        $str = "<b>".$this->_node->nodeName.":</b><br/>";
         //$str .= spl_object_hash($this->_node) . "<br/>";
-        $str .= "Id: " . $this->get_id() . "<br/>";
-        $str .= "Class: " . get_class($this) . "<br/>";
+        $str .= "Id: ".$this->get_id()."<br/>";
+        $str .= "Class: ".get_class($this)."<br/>";
 
         if ($this->is_text_node()) {
             $tmp = htmlspecialchars($this->_node->nodeValue);
-            $str .= "<pre>'" . mb_substr($tmp, 0, 70) .
-                (mb_strlen($tmp) > 70 ? "..." : "") . "'</pre>";
+            $str .= "<pre>'".mb_substr($tmp, 0, 70).
+                (mb_strlen($tmp) > 70 ? "..." : "")."'</pre>";
         } elseif ($css_class = $this->_node->getAttribute("class")) {
             $str .= "CSS class: '$css_class'<br/>";
         }
 
         if ($this->_parent) {
-            $str .= "\nParent:" . $this->_parent->_node->nodeName .
-                " (" . spl_object_hash($this->_parent->_node) . ") " .
+            $str .= "\nParent:".$this->_parent->_node->nodeName.
+                " (".spl_object_hash($this->_parent->_node).") ".
                 "<br/>";
         }
 
         if ($this->_prev_sibling) {
-            $str .= "Prev: " . $this->_prev_sibling->_node->nodeName .
-                " (" . spl_object_hash($this->_prev_sibling->_node) . ") " .
+            $str .= "Prev: ".$this->_prev_sibling->_node->nodeName.
+                " (".spl_object_hash($this->_prev_sibling->_node).") ".
                 "<br/>";
         }
 
         if ($this->_next_sibling) {
-            $str .= "Next: " . $this->_next_sibling->_node->nodeName .
-                " (" . spl_object_hash($this->_next_sibling->_node) . ") " .
+            $str .= "Next: ".$this->_next_sibling->_node->nodeName.
+                " (".spl_object_hash($this->_next_sibling->_node).") ".
                 "<br/>";
         }
 
         $d = $this->get_decorator();
         while ($d && $d != $d->get_decorator()) {
-            $str .= "Decorator: " . get_class($d) . "<br/>";
+            $str .= "Decorator: ".get_class($d)."<br/>";
             $d = $d->get_decorator();
         }
 
-        $str .= "Position: " . Helpers::pre_r($this->_position, true);
-        $str .= "\nContaining block: " . Helpers::pre_r($this->_containing_block, true);
-        $str .= "\nMargin width: " . Helpers::pre_r($this->get_margin_width(), true);
-        $str .= "\nMargin height: " . Helpers::pre_r($this->get_margin_height(), true);
+        $str .= "Position: ".Helpers::pre_r($this->_position, true);
+        $str .= "\nContaining block: ".Helpers::pre_r($this->_containing_block, true);
+        $str .= "\nMargin width: ".Helpers::pre_r($this->get_margin_width(), true);
+        $str .= "\nMargin height: ".Helpers::pre_r($this->get_margin_height(), true);
 
-        $str .= "\nStyle: <pre>" . $this->_style->__toString() . "</pre>";
+        $str .= "\nStyle: <pre>".$this->_style->__toString()."</pre>";
 
         if ($this->_decorator instanceof FrameDecorator\Block) {
             $str .= "Lines:<pre>";
@@ -1188,18 +1188,18 @@ class Frame
                 foreach ($line->get_frames() as $frame) {
                     if ($frame instanceof FrameDecorator\Text) {
                         $str .= "\ntext: ";
-                        $str .= "'" . htmlspecialchars($frame->get_text()) . "'";
+                        $str .= "'".htmlspecialchars($frame->get_text())."'";
                     } else {
-                        $str .= "\nBlock: " . $frame->get_node()->nodeName . " (" . spl_object_hash($frame->get_node()) . ")";
+                        $str .= "\nBlock: ".$frame->get_node()->nodeName." (".spl_object_hash($frame->get_node()).")";
                     }
                 }
 
                 $str .=
-                    "\ny => " . $line->y . "\n" .
-                    "w => " . $line->w . "\n" .
-                    "h => " . $line->h . "\n" .
-                    "left => " . $line->left . "\n" .
-                    "right => " . $line->right . "\n";
+                    "\ny => ".$line->y."\n".
+                    "w => ".$line->w."\n".
+                    "h => ".$line->h."\n".
+                    "left => ".$line->left."\n".
+                    "right => ".$line->right."\n";
             }
             $str .= "</pre>";
         }

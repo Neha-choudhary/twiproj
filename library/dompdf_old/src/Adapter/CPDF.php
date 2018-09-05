@@ -203,7 +203,7 @@ class CPDF implements Canvas
         );
 
         $this->_pdf->addInfo("Producer", sprintf("%s + CPDF", $dompdf->version));
-        $time = substr_replace(date('YmdHisO'), '\'', -2, 0) . '\'';
+        $time = substr_replace(date('YmdHisO'), '\'', -2, 0).'\'';
         $this->_pdf->addInfo("CreationDate", "D:$time");
         $this->_pdf->addInfo("ModDate", "D:$time");
 
@@ -243,7 +243,7 @@ class CPDF implements Canvas
             }
 
             if ($this->_dompdf->getOptions()->getDebugPng()) {
-                print '[__destruct unlink ' . $img . ']';
+                print '[__destruct unlink '.$img.']';
             }
             if (!$this->_dompdf->getOptions()->getDebugKeepTemp()) {
                 unlink($img);
@@ -617,7 +617,7 @@ class CPDF implements Canvas
             if (!method_exists("Dompdf\Helpers", $func_name)) {
                 throw new Exception("Function $func_name() not found.  Cannot convert $type image: $image_url.  Please install the image PHP extension.");
             }
-            $func_name = "\\Dompdf\\Helpers::" . $func_name;
+            $func_name = "\\Dompdf\\Helpers::".$func_name;
         }
 
         set_error_handler(array("\\Dompdf\\Helpers", "record_warnings"));
@@ -854,24 +854,32 @@ class CPDF implements Canvas
             case "gif":
             /** @noinspection PhpMissingBreakStatementInspection */
             case "bmp":
-                if ($debug_png) print '!!!bmp or gif!!!';
+                if ($debug_png) {
+                    print '!!!bmp or gif!!!';
+                }
                 // @todo use cache for BMP and GIF
                 $img = $this->_convert_gif_bmp_to_png($img, $type);
 
             case "png":
-                if ($debug_png) print '!!!png!!!';
+                if ($debug_png) {
+                    print '!!!png!!!';
+                }
 
                 $this->_pdf->addPngFromFile($img, $x, $this->y($y) - $h, $w, $h);
                 break;
 
             case "svg":
-                if ($debug_png) print '!!!SVG!!!';
+                if ($debug_png) {
+                    print '!!!SVG!!!';
+                }
 
                 $this->_pdf->addSvgFromFile($img, $x, $this->y($y) - $h, $w, $h);
                 break;
 
             default:
-                if ($debug_png) print '!!!unknown!!!';
+                if ($debug_png) {
+                    print '!!!unknown!!!';
+                }
         }
     }
 
@@ -1113,7 +1121,7 @@ class CPDF implements Canvas
                         break;
 
                     case 'line':
-                        $this->line( $x1, $y1, $x2, $y2, $color, $width, $style );
+                        $this->line($x1, $y1, $x2, $y2, $color, $width, $style);
                         break;
                 }
             }
@@ -1135,8 +1143,12 @@ class CPDF implements Canvas
             die("Unable to stream pdf: headers already sent");
         }
 
-        if (!isset($options["compress"])) $options["compress"] = true;
-        if (!isset($options["Attachment"])) $options["Attachment"] = true;
+        if (!isset($options["compress"])) {
+            $options["compress"] = true;
+        }
+        if (!isset($options["Attachment"])) {
+            $options["Attachment"] = true;
+        }
 
         $this->_add_page_text();
 
@@ -1145,9 +1157,9 @@ class CPDF implements Canvas
 
         header("Cache-Control: private");
         header("Content-Type: application/pdf");
-        header("Content-Length: " . mb_strlen($tmp, "8bit"));
+        header("Content-Length: ".mb_strlen($tmp, "8bit"));
 
-        $filename = str_replace(array("\n", "'"), "", basename($filename, ".pdf")) . ".pdf";
+        $filename = str_replace(array("\n", "'"), "", basename($filename, ".pdf")).".pdf";
         $attachment = $options["Attachment"] ? "attachment" : "inline";
         header(Helpers::buildContentDispositionHeader($attachment, $filename));
 
@@ -1163,7 +1175,9 @@ class CPDF implements Canvas
      */
     public function output($options = array())
     {
-        if (!isset($options["compress"])) $options["compress"] = true;
+        if (!isset($options["compress"])) {
+            $options["compress"] = true;
+        }
 
         $this->_add_page_text();
 

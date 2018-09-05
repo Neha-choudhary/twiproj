@@ -16,11 +16,11 @@ use FontLib\Table\DirectoryEntry;
  * @package php-font-lib
  */
 class TableDirectoryEntry extends DirectoryEntry {
-  function __construct(File $font) {
+    function __construct(File $font) {
     parent::__construct($font);
-  }
+    }
 
-  function parse() {
+    function parse() {
     parent::parse();
 
     $font           = $this->font;
@@ -28,6 +28,6 @@ class TableDirectoryEntry extends DirectoryEntry {
     $this->offset   = $font->readUInt32();
     $this->length   = $font->readUInt32();
     $this->entryLength += 12;
-  }
+    }
 }
 

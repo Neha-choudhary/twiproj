@@ -135,7 +135,7 @@ class ListBullet extends AbstractRenderer
     {
         $style = $frame->get_style();
         $font_size = $style->get_font_size();
-        $line_height = (float)$style->length_in_pt($style->line_height, $frame->get_containing_block("h"));
+        $line_height = (float) $style->length_in_pt($style->line_height, $frame->get_containing_block("h"));
 
         $this->_set_opacity($frame->get_opacity($style->opacity));
 
@@ -159,8 +159,8 @@ class ListBullet extends AbstractRenderer
             //$h = $frame->get_height();
             list($width, $height) = Helpers::dompdf_getimagesize($img, $this->_dompdf->getHttpContext());
             $dpi = $this->_dompdf->getOptions()->getDpi();
-            $w = ((float)rtrim($width, "px") * 72) / $dpi;
-            $h = ((float)rtrim($height, "px") * 72) / $dpi;
+            $w = ((float) rtrim($width, "px") * 72) / $dpi;
+            $h = ((float) rtrim($height, "px") * 72) / $dpi;
 
             $x -= $w;
             $y -= ($line_height - $font_size) / 2; //Reverse hinting of list_bullet_positioner
@@ -248,7 +248,7 @@ class ListBullet extends AbstractRenderer
         }
 
         $id = $frame->get_node()->getAttribute("id");
-        if (strlen($id) > 0)  {
+        if (strlen($id) > 0) {
             $this->_canvas->add_named_dest($id);
         }
     }

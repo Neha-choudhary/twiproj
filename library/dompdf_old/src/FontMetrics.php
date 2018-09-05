@@ -97,8 +97,8 @@ class FontMetrics
             $cacheData .= sprintf("  '%s' => array(%s", addslashes($family), PHP_EOL);
             foreach ($variants as $variant => $path) {
                 $path = sprintf("'%s'", $path);
-                $path = str_replace('\'' . $this->getOptions()->getFontDir() , '$fontDir . \'' , $path);
-                $path = str_replace('\'' . $this->getOptions()->getRootDir() , '$rootDir . \'' , $path);
+                $path = str_replace('\''.$this->getOptions()->getFontDir(), '$fontDir . \'', $path);
+                $path = str_replace('\''.$this->getOptions()->getRootDir(), '$rootDir . \'', $path);
                 $cacheData .= sprintf("    '%s' => %s,%s", $variant, $path, PHP_EOL);
             }
             $cacheData .= sprintf("  ),%s", PHP_EOL);
@@ -129,7 +129,7 @@ class FontMetrics
         if (!defined("DOMPDF_DIR")) { define("DOMPDF_DIR", $rootDir); }
         if (!defined("DOMPDF_FONT_DIR")) { define("DOMPDF_FONT_DIR", $fontDir); }
 
-        $file = $rootDir . "/lib/fonts/dompdf_font_family_cache.dist.php";
+        $file = $rootDir."/lib/fonts/dompdf_font_family_cache.dist.php";
         $distFonts = require $file;
 
         if (!is_readable($this->getCacheFile())) {
@@ -185,11 +185,11 @@ class FontMetrics
 
         $fontDir = $this->getOptions()->getFontDir();
         $remoteHash = md5($remoteFile);
-        $localFile = $fontDir . DIRECTORY_SEPARATOR . $remoteHash;
+        $localFile = $fontDir.DIRECTORY_SEPARATOR.$remoteHash;
         $localTempFile = tempnam($this->options->get("tempDir"), "dompdf-font-");
 
         $cacheEntry = $localFile;
-        $localFile .= ".".strtolower(pathinfo(parse_url($remoteFile, PHP_URL_PATH),PATHINFO_EXTENSION));
+        $localFile .= ".".strtolower(pathinfo(parse_url($remoteFile, PHP_URL_PATH), PATHINFO_EXTENSION));
 
         $entry[$styleString] = $cacheEntry;
 
@@ -213,14 +213,14 @@ class FontMetrics
 
         unlink($localTempFile);
 
-        if ( !file_exists("$cacheEntry.ufm") ) {
+        if (!file_exists("$cacheEntry.ufm")) {
             return false;
         }
 
         // Save the changes
         file_put_contents($localFile, $remoteFileContent);
 
-        if ( !file_exists($localFile) ) {
+        if (!file_exists($localFile)) {
             unlink("$cacheEntry.ufm");
             return false;
         }
@@ -494,7 +494,7 @@ class FontMetrics
      */
     public function getCacheFile()
     {
-        return $this->getOptions()->getFontDir() . DIRECTORY_SEPARATOR . self::CACHE_FILE;
+        return $this->getOptions()->getFontDir().DIRECTORY_SEPARATOR.self::CACHE_FILE;
     }
 
     /**

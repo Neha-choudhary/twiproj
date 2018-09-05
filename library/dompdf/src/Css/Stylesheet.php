@@ -355,7 +355,7 @@ class Stylesheet
 
             // Fix submitted by Nick Oostveen for aliased directory support:
             if ($this->_protocol == "") {
-                $file = $this->_base_path . $filename;
+                $file = $this->_base_path.$filename;
             } else {
                 $file = Helpers::build_url($this->_protocol, $this->_base_host, $this->_base_path, $filename);
             }
@@ -613,9 +613,9 @@ class Stylesheet
                         case "nth-of-type":
                             //FIXME: this fix-up is pretty ugly, would parsing the selector in reverse work better generally?
                             $descendant_delimeter = strrpos($query, "::");
-                            $isChild = substr($query, $descendant_delimeter-5, 5) == "child";
-                            $el = substr($query, $descendant_delimeter+2);
-                            $query = substr($query, 0, strrpos($query, "/")) . ($isChild ? "/" : "//") . $el;
+                            $isChild = substr($query, $descendant_delimeter - 5, 5) == "child";
+                            $el = substr($query, $descendant_delimeter + 2);
+                            $query = substr($query, 0, strrpos($query, "/")).($isChild ? "/" : "//").$el;
 
                             $pseudo_classes[$tok] = true;
                             $p = $i + 1;
@@ -644,9 +644,9 @@ class Stylesheet
                         case "nth-child":
                             //FIXME: this fix-up is pretty ugly, would parsing the selector in reverse work better generally?
                             $descendant_delimeter = strrpos($query, "::");
-                            $isChild = substr($query, $descendant_delimeter-5, 5) == "child";
-                            $el = substr($query, $descendant_delimeter+2);
-                            $query = substr($query, 0, strrpos($query, "/")) . ($isChild ? "/" : "//") . "*";
+                            $isChild = substr($query, $descendant_delimeter - 5, 5) == "child";
+                            $el = substr($query, $descendant_delimeter + 2);
+                            $query = substr($query, 0, strrpos($query, "/")).($isChild ? "/" : "//")."*";
 
                             $pseudo_classes[$tok] = true;
                             $p = $i + 1;
@@ -685,7 +685,7 @@ class Stylesheet
                                 $element = "name() = '$element'";
                             }
 
-                            $query .= "[" . implode(" or ", $elements) . "]";
+                            $query .= "[".implode(" or ", $elements)."]";
                             $tok = "";
                             break;
 
@@ -827,7 +827,7 @@ class Stylesheet
                                 $query .= "@$attr=\"$val\" or ";
                             }
 
-                            $query = rtrim($query, " or ") . "]";
+                            $query = rtrim($query, " or ")."]";
                             break;
 
                         case "|=":
@@ -838,11 +838,11 @@ class Stylesheet
                                 $query .= "starts-with(@$attr, \"$val\") or ";
                             }
 
-                            $query = rtrim($query, " or ") . "]";
+                            $query = rtrim($query, " or ")."]";
                             break;
 
                         case "$=":
-                            $query .= "[substring(@$attr, string-length(@$attr)-" . (strlen($value) - 1) . ")=\"$value\"]";
+                            $query .= "[substring(@$attr, string-length(@$attr)-".(strlen($value) - 1).")=\"$value\"]";
                             break;
 
                         case "^=":
@@ -915,7 +915,7 @@ class Stylesheet
             if ($b2 >= 0) {
                 $b2 = "+$b2";
             }
-            return "($position $compare $b) and ((($position $b2) mod " . abs($a) . ") = 0)";
+            return "($position $compare $b) and ((($position $b2) mod ".abs($a).") = 0)";
         }
     }
 
@@ -958,7 +958,7 @@ class Stylesheet
 
                 // Retrieve the nodes, limit to body for generated content
                 //TODO: If we use a context node can we remove the leading dot?
-                $nodes = @$xp->query('.' . $query["query"]);
+                $nodes = @$xp->query('.'.$query["query"]);
                 if ($nodes == null) {
                     Helpers::record_warnings(E_USER_WARNING, "The CSS selector '$selector' is not valid", __FILE__, __LINE__);
                     continue;
@@ -1122,34 +1122,34 @@ class Stylesheet
                             } else {
                                 switch ($media_query_feature) {
                                     case "height":
-                                        if ($paper_height !== (float)$style->length_in_pt($media_query_value)) {
+                                        if ($paper_height !== (float) $style->length_in_pt($media_query_value)) {
                                             continue (3);
                                         }
                                         break;
                                     case "min-height":
-                                        if ($paper_height < (float)$style->length_in_pt($media_query_value)) {
+                                        if ($paper_height < (float) $style->length_in_pt($media_query_value)) {
                                             continue (3);
                                         }
                                         break;
                                     case "max-height":
-                                        if ($paper_height > (float)$style->length_in_pt($media_query_value)) {
+                                        if ($paper_height > (float) $style->length_in_pt($media_query_value)) {
                                             continue (3);
                                         }
                                         break;
                                     case "width":
-                                        if ($paper_width !== (float)$style->length_in_pt($media_query_value)) {
+                                        if ($paper_width !== (float) $style->length_in_pt($media_query_value)) {
                                             continue (3);
                                         }
                                         break;
                                     case "min-width":
                                         //if (min($paper_width, $media_query_width) === $paper_width) {
-                                        if ($paper_width < (float)$style->length_in_pt($media_query_value)) {
+                                        if ($paper_width < (float) $style->length_in_pt($media_query_value)) {
                                             continue (3);
                                         }
                                         break;
                                     case "max-width":
                                         //if (max($paper_width, $media_query_width) === $paper_width) {
-                                        if ($paper_width > (float)$style->length_in_pt($media_query_value)) {
+                                        if ($paper_width > (float) $style->length_in_pt($media_query_value)) {
                                             continue (3);
                                         }
                                         break;
@@ -1205,8 +1205,8 @@ class Stylesheet
                 if ($style->size !== "auto") {
                     list($paper_width, $paper_height) = $style->size;
                 }
-                $paper_width = $paper_width - (float)$style->length_in_pt($style->margin_left) - (float)$style->length_in_pt($style->margin_right);
-                $paper_height = $paper_height - (float)$style->length_in_pt($style->margin_top) - (float)$style->length_in_pt($style->margin_bottom);
+                $paper_width = $paper_width - (float) $style->length_in_pt($style->margin_left) - (float) $style->length_in_pt($style->margin_right);
+                $paper_height = $paper_height - (float) $style->length_in_pt($style->margin_top) - (float) $style->length_in_pt($style->margin_bottom);
                 $paper_orientation = ($paper_width > $paper_height ? "landscape" : "portrait");
             }
         }
@@ -1244,16 +1244,16 @@ class Stylesheet
 
         // Something more legible:
         $re =
-            "/\s*                                   # Skip leading whitespace                             \n" .
-            "( @([^\s{]+)\s*([^{;]*) (?:;|({)) )?   # Match @rules followed by ';' or '{'                 \n" .
-            "(?(1)                                  # Only parse sub-sections if we're in an @rule...     \n" .
-            "  (?(4)                                # ...and if there was a leading '{'                   \n" .
-            "    \s*( (?:(?>[^{}]+) ({)?            # Parse rulesets and individual @page rules           \n" .
-            "            (?(6) (?>[^}]*) }) \s*)+?                                                        \n" .
-            "       )                                                                                     \n" .
-            "   })                                  # Balancing '}'                                       \n" .
-            "|                                      # Branch to match regular rules (not preceded by '@') \n" .
-            "([^{]*{[^}]*}))                        # Parse normal rulesets                               \n" .
+            "/\s*                                   # Skip leading whitespace                             \n".
+            "( @([^\s{]+)\s*([^{;]*) (?:;|({)) )?   # Match @rules followed by ';' or '{'                 \n".
+            "(?(1)                                  # Only parse sub-sections if we're in an @rule...     \n".
+            "  (?(4)                                # ...and if there was a leading '{'                   \n".
+            "    \s*( (?:(?>[^{}]+) ({)?            # Parse rulesets and individual @page rules           \n".
+            "            (?(6) (?>[^}]*) }) \s*)+?                                                        \n".
+            "       )                                                                                     \n".
+            "   })                                  # Balancing '}'                                       \n".
+            "|                                      # Branch to match regular rules (not preceded by '@') \n".
+            "([^{]*{[^}]*}))                        # Parse normal rulesets                               \n".
             "/xs";
 
         if (preg_match_all($re, $css, $matches, PREG_SET_ORDER) === false) {
@@ -1273,7 +1273,7 @@ class Stylesheet
         // [7] => individual rules, outside of media rules
         //
 
-        $media_query_regex = "/(?:((only|not)?\s*(" . implode("|", self::$VALID_MEDIA_TYPES) . "))|(\s*\(\s*((?:(min|max)-)?([\w\-]+))\s*(?:\:\s*(.*?)\s*)?\)))/isx";
+        $media_query_regex = "/(?:((only|not)?\s*(".implode("|", self::$VALID_MEDIA_TYPES)."))|(\s*\(\s*((?:(min|max)-)?([\w\-]+))\s*(?:\:\s*(.*?)\s*)?\)))/isx";
 
         //Helpers::pre_r($matches);
         foreach ($matches as $match) {
@@ -1407,12 +1407,12 @@ class Stylesheet
             $parsed_url = Helpers::explode_url($val);
             if ($parsed_url["protocol"] == "" && $this->get_protocol() == "") {
                 if ($parsed_url["path"][0] === '/' || $parsed_url["path"][0] === '\\') {
-                    $path = $_SERVER["DOCUMENT_ROOT"] . '/';
+                    $path = $_SERVER["DOCUMENT_ROOT"].'/';
                 } else {
                     $path = $this->get_base_path();
                 }
 
-                $path .= $parsed_url["path"] . $parsed_url["file"];
+                $path .= $parsed_url["path"].$parsed_url["file"];
                 $path = realpath($path);
                 // If realpath returns FALSE then specifically state that there is no background image
                 // FIXME: Is this causing problems for imported CSS files? There are some './none' references when running the test cases.
@@ -1430,8 +1430,8 @@ class Stylesheet
         if ($DEBUGCSS) {
             print "<pre>[_image\n";
             print_r($parsed_url);
-            print $this->get_protocol() . "\n" . $this->get_base_path() . "\n" . $path . "\n";
-            print "_image]</pre>";;
+            print $this->get_protocol()."\n".$this->get_base_path()."\n".$path."\n";
+            print "_image]</pre>"; ;
         }
 
         return $path;
@@ -1577,7 +1577,9 @@ class Stylesheet
             }
             $prop = trim($prop);
             */
-            if ($DEBUGCSS) print '(';
+            if ($DEBUGCSS) {
+                print '(';
+            }
 
             $important = false;
             $prop = trim($prop);
@@ -1598,13 +1600,13 @@ class Stylesheet
 
             $i = mb_strpos($prop, ":");
             if ($i === false) {
-                if ($DEBUGCSS) print 'novalue' . $prop . ')';
+                if ($DEBUGCSS) print 'novalue'.$prop.')';
                 continue;
             }
 
             $prop_name = rtrim(mb_strtolower(mb_substr($prop, 0, $i)));
             $value = ltrim(mb_substr($prop, $i + 1));
-            if ($DEBUGCSS) print $prop_name . ':=' . $value . ($important ? '!IMPORTANT' : '') . ')';
+            if ($DEBUGCSS) print $prop_name.':='.$value.($important ? '!IMPORTANT' : '').')';
             //New style, anyway empty
             //if ($important || !$style->important_get($prop_name) ) {
             //$style->$prop_name = array($value,$important);
@@ -1618,7 +1620,9 @@ class Stylesheet
             $style->$prop_name = $value;
             //$style->props_set($prop_name, $value);
         }
-        if ($DEBUGCSS) print '_parse_properties]';
+        if ($DEBUGCSS) {
+            print '_parse_properties]';
+        }
 
         return $style;
     }
@@ -1646,7 +1650,7 @@ class Stylesheet
             if ($i === false) { continue; }
 
             //$selectors = explode(",", mb_substr($sect, 0, $i));
-            $selectors = preg_split("/,(?![^\(]*\))/", mb_substr($sect, 0, $i),0, PREG_SPLIT_NO_EMPTY);
+            $selectors = preg_split("/,(?![^\(]*\))/", mb_substr($sect, 0, $i), 0, PREG_SPLIT_NO_EMPTY);
             if ($DEBUGCSS) print '[section';
 
             $style = $this->_parse_properties(trim(mb_substr($sect, $i + 1)));
@@ -1659,7 +1663,7 @@ class Stylesheet
                     if ($DEBUGCSS) print '#empty#';
                     continue;
                 }
-                if ($DEBUGCSS) print '#' . $selector . '#';
+                if ($DEBUGCSS) print '#'.$selector.'#';
                 //if ($DEBUGCSS) { if (strpos($selector,'p') !== false) print '!!!p!!!#'; }
 
                 //FIXME: tag the selector with a hash of the media query to separate it from non-conditional styles (?), xpath comments are probably not what we want to do here
@@ -1684,8 +1688,8 @@ class Stylesheet
      */
     public static function getDefaultStylesheet()
     {
-        $dir = realpath(__DIR__ . "/../..");
-        return $dir . self::DEFAULT_STYLESHEET;
+        $dir = realpath(__DIR__."/../..");
+        return $dir.self::DEFAULT_STYLESHEET;
     }
 
     /**
@@ -1720,7 +1724,7 @@ class Stylesheet
         foreach ($this->_styles as $selector => $selector_styles) {
             /** @var Style $style */
             foreach ($selector_styles as $style) {
-                $str .= "$selector => " . $style->__toString() . "\n";
+                $str .= "$selector => ".$style->__toString()."\n";
             }
         }
 
