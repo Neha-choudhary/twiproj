@@ -1594,19 +1594,25 @@ class Stylesheet
             }
 
             if ($prop === "") {
-                if ($DEBUGCSS) print 'empty)';
+                if ($DEBUGCSS) {
+                    print 'empty)';
+                }
                 continue;
             }
 
             $i = mb_strpos($prop, ":");
             if ($i === false) {
-                if ($DEBUGCSS) print 'novalue'.$prop.')';
+                if ($DEBUGCSS) {
+                    print 'novalue'.$prop.')';
+                }
                 continue;
             }
 
             $prop_name = rtrim(mb_strtolower(mb_substr($prop, 0, $i)));
             $value = ltrim(mb_substr($prop, $i + 1));
-            if ($DEBUGCSS) print $prop_name.':='.$value.($important ? '!IMPORTANT' : '').')';
+            if ($DEBUGCSS) {
+                print $prop_name.':='.$value.($important ? '!IMPORTANT' : '').')';
+            }
             //New style, anyway empty
             //if ($important || !$style->important_get($prop_name) ) {
             //$style->$prop_name = array($value,$important);
@@ -1644,14 +1650,18 @@ class Stylesheet
         $DEBUGCSS = $this->_dompdf->getOptions()->getDebugCss();
 
         $sections = explode("}", $str);
-        if ($DEBUGCSS) print '[_parse_sections';
+        if ($DEBUGCSS) {
+            print '[_parse_sections';
+        }
         foreach ($sections as $sect) {
             $i = mb_strpos($sect, "{");
             if ($i === false) { continue; }
 
             //$selectors = explode(",", mb_substr($sect, 0, $i));
             $selectors = preg_split("/,(?![^\(]*\))/", mb_substr($sect, 0, $i), 0, PREG_SPLIT_NO_EMPTY);
-            if ($DEBUGCSS) print '[section';
+            if ($DEBUGCSS) {
+                print '[section';
+            }
 
             $style = $this->_parse_properties(trim(mb_substr($sect, $i + 1)));
 
@@ -1660,10 +1670,14 @@ class Stylesheet
                 $selector = trim($selector);
 
                 if ($selector == "") {
-                    if ($DEBUGCSS) print '#empty#';
+                    if ($DEBUGCSS) {
+                        print '#empty#';
+                    }
                     continue;
                 }
-                if ($DEBUGCSS) print '#'.$selector.'#';
+                if ($DEBUGCSS) {
+                    print '#'.$selector.'#';
+                }
                 //if ($DEBUGCSS) { if (strpos($selector,'p') !== false) print '!!!p!!!#'; }
 
                 //FIXME: tag the selector with a hash of the media query to separate it from non-conditional styles (?), xpath comments are probably not what we want to do here

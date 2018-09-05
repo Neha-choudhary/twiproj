@@ -48,8 +48,7 @@ class Outline extends BinaryStream {
     if ($font->readInt16() > -1) {
         /** @var OutlineSimple $glyph */
         $glyph = new OutlineSimple($table, $offset, $size);
-    }
-    else {
+    } else {
         /** @var OutlineComposite $glyph */
         $glyph = new OutlineComposite($table, $offset, $size);
     }

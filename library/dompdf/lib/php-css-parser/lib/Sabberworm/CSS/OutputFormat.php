@@ -65,9 +65,9 @@ class OutputFormat {
 	
     public function get($sName) {
         $aVarPrefixes = array('a', 's', 'm', 'b', 'f', 'o', 'c', 'i');
-        foreach($aVarPrefixes as $sPrefix) {
+        foreach ($aVarPrefixes as $sPrefix) {
             $sFieldName = $sPrefix.ucfirst($sName);
-            if(isset($this->$sFieldName)) {
+            if (isset($this->$sFieldName)) {
                 return $this->$sFieldName;
             }
         }
@@ -76,21 +76,21 @@ class OutputFormat {
 	
     public function set($aNames, $mValue) {
         $aVarPrefixes = array('a', 's', 'm', 'b', 'f', 'o', 'c', 'i');
-        if(is_string($aNames) && strpos($aNames, '*') !== false) {
+        if (is_string($aNames) && strpos($aNames, '*') !== false) {
             $aNames = array(str_replace('*', 'Before', $aNames), str_replace('*', 'Between', $aNames), str_replace('*', 'After', $aNames));
-        } else if(!is_array($aNames)) {
+        } else if (!is_array($aNames)) {
             $aNames = array($aNames);
         }
-        foreach($aVarPrefixes as $sPrefix) {
+        foreach ($aVarPrefixes as $sPrefix) {
             $bDidReplace = false;
-            foreach($aNames as $sName) {
+            foreach ($aNames as $sName) {
                 $sFieldName = $sPrefix.ucfirst($sName);
-                if(isset($this->$sFieldName)) {
+                if (isset($this->$sFieldName)) {
                     $this->$sFieldName = $mValue;
                     $bDidReplace = true;
                 }
             }
-            if($bDidReplace) {
+            if ($bDidReplace) {
                 return $this;
             }
         }
@@ -99,11 +99,11 @@ class OutputFormat {
     }
 	
     public function __call($sMethodName, $aArguments) {
-        if(strpos($sMethodName, 'set') === 0) {
+        if (strpos($sMethodName, 'set') === 0) {
             return $this->set(substr($sMethodName, 3), $aArguments[0]);
-        } else if(strpos($sMethodName, 'get') === 0) {
+        } else if (strpos($sMethodName, 'get') === 0) {
             return $this->get(substr($sMethodName, 3));
-        } else if(method_exists('\\Sabberworm\\CSS\\OutputFormatter', $sMethodName)) {
+        } else if (method_exists('\\Sabberworm\\CSS\\OutputFormatter', $sMethodName)) {
             return call_user_func_array(array($this->getFormatter(), $sMethodName), $aArguments);
         } else {
             throw new \Exception('Unknown OutputFormat method called: '.$sMethodName);
@@ -119,7 +119,7 @@ class OutputFormat {
     }
 	
     public function nextLevel() {
-        if($this->oNextLevelFormat === null) {
+        if ($this->oNextLevelFormat === null) {
             $this->oNextLevelFormat = clone $this;
             $this->oNextLevelFormat->iIndentationLevel++;
             $this->oNextLevelFormat->oFormatter = null;
@@ -132,7 +132,7 @@ class OutputFormat {
     }
 	
     public function getFormatter() {
-        if($this->oFormatter === null) {
+        if ($this->oFormatter === null) {
             $this->oFormatter = new OutputFormatter($this);
         }
         return $this->oFormatter;
@@ -165,8 +165,8 @@ class OutputFormatter {
     public function space($sName, $sType = null) {
         $sSpaceString = $this->oFormat->get("Space$sName");
         // If $sSpaceString is an array, we have multple values configured depending on the type of object the space applies to
-        if(is_array($sSpaceString)) {
-            if($sType !== null && isset($sSpaceString[$sType])) {
+        if (is_array($sSpaceString)) {
+            if ($sType !== null && isset($sSpaceString[$sType])) {
                 $sSpaceString = $sSpaceString[$sType];
             } else {
                 $sSpaceString = reset($sSpaceString);
@@ -227,7 +227,7 @@ class OutputFormatter {
      * Runs the given code, either swallowing or passing exceptions, depending on the bIgnoreExceptions setting.
      */
     public function safely($cCode) {
-        if($this->oFormat->get('IgnoreExceptions')) {
+        if ($this->oFormat->get('IgnoreExceptions')) {
             // If output exceptions are ignored, run the code with exception guards
             try {
                 return $cCode();
@@ -246,17 +246,17 @@ class OutputFormatter {
     public function implode($sSeparator, $aValues, $bIncreaseLevel = false) {
         $sResult = '';
         $oFormat = $this->oFormat;
-        if($bIncreaseLevel) {
+        if ($bIncreaseLevel) {
             $oFormat = $oFormat->nextLevel();
         }
         $bIsFirst = true;
-        foreach($aValues as $mValue) {
-            if($bIsFirst) {
+        foreach ($aValues as $mValue) {
+            if ($bIsFirst) {
                 $bIsFirst = false;
             } else {
                 $sResult .= $sSeparator;
             }
-            if($mValue instanceof \Sabberworm\CSS\Renderable) {
+            if ($mValue instanceof \Sabberworm\CSS\Renderable) {
                 $sResult .= $mValue->render($oFormat);
             } else {
                 $sResult .= $mValue;
@@ -266,11 +266,11 @@ class OutputFormatter {
     }
 	
     public function removeLastSemicolon($sString) {
-        if($this->oFormat->get('SemicolonAfterLastRule')) {
+        if ($this->oFormat->get('SemicolonAfterLastRule')) {
             return $sString;
         }
         $sString = explode(';', $sString);
-        if(count($sString) < 2) {
+        if (count($sString) < 2) {
             return $sString[0];
         }
         $sLast = array_pop($sString);

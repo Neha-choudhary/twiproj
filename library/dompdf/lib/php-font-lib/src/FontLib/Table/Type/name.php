@@ -180,7 +180,7 @@ class name extends Table {
         $record->length = mb_strlen($record->getUTF16(), "8bit");
         $record->offset = $offset;
         $offset += $record->length;
-        $length += $font->pack(nameRecord::$format, (array)$record);
+        $length += $font->pack(nameRecord::$format, (array) $record);
     }
 
     foreach ($records as $record) {

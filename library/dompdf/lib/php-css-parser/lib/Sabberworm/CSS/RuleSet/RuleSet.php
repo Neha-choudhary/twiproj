@@ -31,7 +31,7 @@ abstract class RuleSet implements Renderable, Commentable {
 
     public function addRule(Rule $oRule, Rule $oSibling = null) {
         $sRule = $oRule->getRule();
-        if(!isset($this->aRules[$sRule])) {
+        if (!isset($this->aRules[$sRule])) {
             $this->aRules[$sRule] = array();
         }
 
@@ -58,9 +58,9 @@ abstract class RuleSet implements Renderable, Commentable {
             $mRule = $mRule->getRule();
         }
         $aResult = array();
-        foreach($this->aRules as $sName => $aRules) {
+        foreach ($this->aRules as $sName => $aRules) {
             // Either no search rule is given or the search rule matches the found rule exactly or the search rule ends in “-” and the found rule starts with the search rule.
-            if(!$mRule || $sName === $mRule || (strrpos($mRule, '-') === strlen($mRule) - strlen('-') && (strpos($sName, $mRule) === 0 || $sName === substr($mRule, 0, -1)))) {
+            if (!$mRule || $sName === $mRule || (strrpos($mRule, '-') === strlen($mRule) - strlen('-') && (strpos($sName, $mRule) === 0 || $sName === substr($mRule, 0, -1)))) {
                 $aResult = array_merge($aResult, $aRules);
             }
         }
@@ -85,7 +85,7 @@ abstract class RuleSet implements Renderable, Commentable {
      */
     public function getRulesAssoc($mRule = null) {
         $aResult = array();
-        foreach($this->getRules($mRule) as $oRule) {
+        foreach ($this->getRules($mRule) as $oRule) {
             $aResult[$oRule->getRule()] = $oRule;
         }
         return $aResult;
@@ -96,20 +96,20 @@ abstract class RuleSet implements Renderable, Commentable {
      * @param (null|string|Rule) $mRule pattern to remove. If $mRule is null, all rules are removed. If the pattern ends in a dash, all rules starting with the pattern are removed as well as one matching the pattern with the dash excluded. Passing a Rule behaves matches by identity.
      */
     public function removeRule($mRule) {
-        if($mRule instanceof Rule) {
+        if ($mRule instanceof Rule) {
             $sRule = $mRule->getRule();
-            if(!isset($this->aRules[$sRule])) {
+            if (!isset($this->aRules[$sRule])) {
                 return;
             }
-            foreach($this->aRules[$sRule] as $iKey => $oRule) {
-                if($oRule === $mRule) {
+            foreach ($this->aRules[$sRule] as $iKey => $oRule) {
+                if ($oRule === $mRule) {
                     unset($this->aRules[$sRule][$iKey]);
                 }
             }
         } else {
-            foreach($this->aRules as $sName => $aRules) {
+            foreach ($this->aRules as $sName => $aRules) {
                 // Either no search rule is given or the search rule matches the found rule exactly or the search rule ends in “-” and the found rule starts with the search rule or equals it (without the trailing dash).
-                if(!$mRule || $sName === $mRule || (strrpos($mRule, '-') === strlen($mRule) - strlen('-') && (strpos($sName, $mRule) === 0 || $sName === substr($mRule, 0, -1)))) {
+                if (!$mRule || $sName === $mRule || (strrpos($mRule, '-') === strlen($mRule) - strlen('-') && (strpos($sName, $mRule) === 0 || $sName === substr($mRule, 0, -1)))) {
                     unset($this->aRules[$sName]);
                 }
             }
@@ -124,14 +124,14 @@ abstract class RuleSet implements Renderable, Commentable {
         $sResult = '';
         $bIsFirst = true;
         foreach ($this->aRules as $aRules) {
-            foreach($aRules as $oRule) {
+            foreach ($aRules as $oRule) {
                 $sRendered = $oOutputFormat->safely(function() use ($oRule, $oOutputFormat) {
                     return $oRule->render($oOutputFormat->nextLevel());
                 });
-                if($sRendered === null) {
+                if ($sRendered === null) {
                     continue;
                 }
-                if($bIsFirst) {
+                if ($bIsFirst) {
                     $bIsFirst = false;
                     $sResult .= $oOutputFormat->nextLevel()->spaceBeforeRules();
                 } else {
@@ -141,7 +141,7 @@ abstract class RuleSet implements Renderable, Commentable {
             }
         }
 		
-        if(!$bIsFirst) {
+        if (!$bIsFirst) {
             // Had some output
             $sResult .= $oOutputFormat->spaceAfterRules();
         }

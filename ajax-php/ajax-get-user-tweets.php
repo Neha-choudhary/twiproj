@@ -19,11 +19,11 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 $data = array();
 $html_content = '';
-$ip=getenv('REMOTE_ADDR');
+$ip = getenv('REMOTE_ADDR');
 $today = time();
 $access_token = $_SESSION['access_token'];
 
-if(isset($_POST['screen_name']) && trim($_POST['screen_name']) != ''){
+if (isset($_POST['screen_name']) && trim($_POST['screen_name']) != '') {
     $screen_name = trim($_POST['screen_name']);	
 	
     $tmhOAuth = new tmhOAuth(array(
@@ -70,8 +70,8 @@ if(isset($_POST['screen_name']) && trim($_POST['screen_name']) != ''){
     //print_r($response);
     $tweets = json_decode($response, true);
 		
-    if(isset($tweets) && count($tweets) > 0){
-        foreach($tweets as $tweet){	
+    if (isset($tweets) && count($tweets) > 0) {
+        foreach ($tweets as $tweet) {	
             $userid = $tweet['user']['id_str'];
             $username = $tweet['user']['screen_name'];
             $user_fullname = $tweet['user']['name'];
@@ -104,10 +104,10 @@ if(isset($_POST['screen_name']) && trim($_POST['screen_name']) != ''){
 		
         $data['ErrorCode'] = 0;
         $data['Content'] = $html_content;
-    }else{
+    } else {
         $data['ErrorCode'] = 1;
     }
-}else{
+} else {
     $data['ErrorCode'] = 1;
 }
 

@@ -60,7 +60,7 @@ class Table extends BinaryStream {
     }
 
     public function toHTML() {
-    return "<pre>" . var_export($this->data, true) . "</pre>";
+    return "<pre>".var_export($this->data, true)."</pre>";
     }
 
     final public function encode() {
@@ -68,8 +68,7 @@ class Table extends BinaryStream {
 
     if (false && empty($this->def)) {
         $length = $this->_encodeRaw();
-    }
-    else {
+    } else {
         $length = $this->_encode();
     }
 
@@ -83,8 +82,7 @@ class Table extends BinaryStream {
 
     if (false && empty($this->def)) {
         $this->_parseRaw();
-    }
-    else {
+    } else {
         $this->_parse();
     }
 

@@ -1,6 +1,6 @@
-<?php return array (
+<?php return array(
     'codeToName' => 
-    array (
+    array(
     32 => 'space',
     33 => 'exclam',
     34 => 'quotedbl',
@@ -649,7 +649,7 @@
     'Ascender' => '928',
     'Descender' => '-236',
     'FontBBox' => 
-    array (
+    array(
     0 => '-1021',
     1 => '-463',
     2 => '1793',
@@ -657,7 +657,7 @@
     ),
     'StartCharMetrics' => '6253',
     'C' => 
-    array (
+    array(
     32 => 318.0,
     33 => 401.0,
     34 => 460.0,

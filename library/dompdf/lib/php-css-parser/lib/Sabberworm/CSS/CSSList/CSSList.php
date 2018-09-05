@@ -97,17 +97,17 @@ abstract class CSSList implements Renderable, Commentable {
         $sResult = '';
         $bIsFirst = true;
         $oNextLevel = $oOutputFormat;
-        if(!$this->isRootList()) {
+        if (!$this->isRootList()) {
             $oNextLevel = $oOutputFormat->nextLevel();
         }
         foreach ($this->aContents as $oContent) {
             $sRendered = $oOutputFormat->safely(function() use ($oNextLevel, $oContent) {
                 return $oContent->render($oNextLevel);
             });
-            if($sRendered === null) {
+            if ($sRendered === null) {
                 continue;
             }
-            if($bIsFirst) {
+            if ($bIsFirst) {
                 $bIsFirst = false;
                 $sResult .= $oNextLevel->spaceBeforeBlocks();
             } else {
@@ -116,7 +116,7 @@ abstract class CSSList implements Renderable, Commentable {
             $sResult .= $sRendered;
         }
 
-        if(!$bIsFirst) {
+        if (!$bIsFirst) {
             // Had some output
             $sResult .= $oOutputFormat->spaceAfterBlocks();
         }

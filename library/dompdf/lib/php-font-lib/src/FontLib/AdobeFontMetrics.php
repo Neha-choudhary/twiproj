@@ -33,7 +33,7 @@ class AdobeFontMetrics {
 
     if ($encoding) {
         $encoding = preg_replace("/[^a-z0-9-_]/", "", $encoding);
-        $map_file = dirname(__FILE__) . "/../maps/$encoding.map";
+        $map_file = dirname(__FILE__)."/../maps/$encoding.map";
         if (!file_exists($map_file)) {
         throw new \Exception("Unkown encoding ($encoding)");
         }
@@ -77,8 +77,7 @@ class AdobeFontMetrics {
         $this->addPair("FontHeightOffset", $font->normalizeFUnit($hhea["lineGap"]));
         $this->addPair("Ascender", $font->normalizeFUnit($hhea["ascent"]));
         $this->addPair("Descender", $font->normalizeFUnit($hhea["descent"]));
-    }
-    else {
+    } else {
         $this->addPair("FontHeightOffset", $font->normalizeFUnit($os2["typoLineGap"]));
         $this->addPair("Ascender", $font->normalizeFUnit($os2["typoAscender"]));
         $this->addPair("Descender", -abs($font->normalizeFUnit($os2["typoDescender"])));
@@ -120,8 +119,7 @@ class AdobeFontMetrics {
             "N"  => $name,
             ));
         }
-        }
-        else {
+        } else {
         foreach ($glyphIndexArray as $c => $g) {
             if (!isset($hmtx[$g])) {
             $hmtx[$g] = $hmtx[0];
@@ -196,7 +194,7 @@ class AdobeFontMetrics {
     }
 
     function addArray($key, $array) {
-    $this->addLine("$key " . implode(" ", $array));
+    $this->addLine("$key ".implode(" ", $array));
     }
 
     function addMetric($data) {

@@ -160,7 +160,7 @@ class HTML5_TreeBuilder {
         $this->dom->strictErrorChecking = false;
     }
 
-    public function getQuirksMode(){
+    public function getQuirksMode() {
         return $this->quirks_mode;
     }
 
