@@ -78,6 +78,8 @@ GoDaddy have some Strict Rules Related Phpmailer or mail function:
 
 ## Contributing
 
+**If you are Applying for this same twitter Challenge , I advice you to not copy or use my code, Be honest. I will not be Accountable of Any misguided use or unauthorized copy of this code**
+
 Feel Free to Raise Any Issue , Feel Free to Use Code , Also let me know If you created Something Cool From This code, i will be glad to now , Mail me at :
 
 niraj.visana@gmail.com
